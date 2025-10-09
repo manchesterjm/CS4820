@@ -1,0 +1,824 @@
+﻿==== CS 4820/5820 HW01 Full Run ====
+Timestamp: 2025-10-09 09:16:46
+Python: C:\Users\manch\OneDrive\Desktop\CS4820\HW01_Code\.venv\Scripts\python.exe
+
+---- BFS (n_puzzle_BFS.py) ----
+
+
+================================
+Running 3 trial(s) on 3x3 with steps=40
+================================
+
+trial 1:
+
+BFS on 3x3
+start:
+8 1 3
+2 0 5
+4 7 6
+moves: 10
+expanded: 747
+time_s: 0.0015
+
+trial 2:
+
+BFS on 3x3
+start:
+1 2 0
+4 5 3
+7 8 6
+moves: 2
+expanded: 3
+time_s: 0.0
+
+trial 3:
+
+BFS on 3x3
+start:
+7 1 3
+8 2 6
+0 5 4
+moves: 14
+expanded: 2953
+time_s: 0.0046
+
+--- summary ---
+solved: 3/3
+avg_moves: 8.67
+avg_expanded: 1234.33
+avg_time_s: 0.002
+
+================================
+Running 3 trial(s) on 4x4 with steps=12
+================================
+
+trial 1:
+
+BFS on 4x4
+start:
+1 2 3 4
+5 6 7 8
+0 9 10 11
+13 14 15 12
+moves: 4
+expanded: 55
+time_s: 0.0001
+
+trial 2:
+
+BFS on 4x4
+start:
+1 3 0 4
+5 2 7 8
+9 6 11 12
+13 10 14 15
+moves: 6
+expanded: 189
+time_s: 0.0004
+
+trial 3:
+
+BFS on 4x4
+start:
+0 2 3 4
+1 6 7 8
+5 9 10 12
+13 14 11 15
+moves: 6
+expanded: 114
+time_s: 0.0002
+
+--- summary ---
+solved: 3/3
+avg_moves: 5.33
+avg_expanded: 119.33
+avg_time_s: 0.0002
+
+---- DFS (n_puzzle_DFS.py) ----
+
+
+====================================
+Target: 3 successful trial(s) on 3x3 (steps=60)
+====================================
+
+attempt 1:
+
+DFS on 3x3
+start:
+5 2 0
+1 7 8
+4 3 6
+moves: 56106
+expanded: 65837
+time_s: 0.1363
+status: ok
+
+attempt 2:
+
+DFS on 3x3
+start:
+4 1 2
+7 5 3
+0 8 6
+moves: 64326
+expanded: 84888
+time_s: 0.1646
+status: ok
+
+attempt 3:
+
+DFS on 3x3
+start:
+1 3 8
+4 5 6
+7 2 0
+moves: 16928
+expanded: 17467
+time_s: 0.0358
+status: ok
+
+--- summary ---
+attempts: 3
+successful: 3/3
+avg_moves: 45786.67
+avg_expanded: 56064.0
+avg_time_s: 0.1123
+
+====================================
+Target: 3 successful trial(s) on 4x4 (steps=3)
+NOTE: DFS is impractical for 15-puzzle; using minimal scramble
+      Even with light scrambling, DFS may timeout frequently
+====================================
+
+attempt 1:
+
+DFS on 4x4
+start:
+1 2 3 4
+5 6 7 8
+9 10 11 0
+13 14 15 12
+moves: None
+expanded: 10000000
+time_s: 33.872
+status: cap
+retrying due to cap
+
+attempt 2:
+
+DFS on 4x4
+start:
+1 2 3 4
+5 6 7 8
+9 10 11 12
+13 14 0 15
+moves: 1
+expanded: 1
+time_s: 0.0
+status: ok
+
+attempt 3:
+
+DFS on 4x4
+start:
+1 2 3 4
+5 6 7 8
+9 10 11 12
+13 14 0 15
+moves: 1
+expanded: 1
+time_s: 0.0
+status: ok
+
+attempt 4:
+
+DFS on 4x4
+start:
+1 2 3 4
+5 6 7 8
+9 10 11 12
+13 14 0 15
+moves: 1
+expanded: 1
+time_s: 0.0
+status: ok
+
+--- summary ---
+attempts: 4
+successful: 3/3
+avg_moves: 1.0
+avg_expanded: 1.0
+avg_time_s: 0.0
+
+---- IDS (n_puzzle_IDS.py) ----
+
+
+====================================
+Target: 3 successful trial(s) on 3x3 (steps=30)
+====================================
+
+attempt 1:
+
+IDS on 3x3
+start:
+4 2 5
+7 0 1
+8 6 3
+moves: 26
+expanded: 12892
+time_s: 0.0276
+status: ok limit: 14
+
+attempt 2:
+
+IDS on 3x3
+start:
+1 3 6
+7 0 2
+5 4 8
+moves: 10
+expanded: 1096
+time_s: 0.0035
+status: ok limit: 10
+
+attempt 3:
+
+IDS on 3x3
+start:
+1 2 3
+8 7 5
+0 4 6
+moves: 8
+expanded: 254
+time_s: 0.0005
+status: ok limit: 8
+
+--- summary ---
+attempts: 3
+successful: 3/3
+avg_moves: 14.67
+avg_expanded: 4747.33
+avg_time_s: 0.0106
+
+====================================
+Target: 3 successful trial(s) on 4x4 (steps=8)
+====================================
+
+attempt 1:
+
+IDS on 4x4
+start:
+1 2 3 4
+5 6 7 8
+0 9 10 12
+13 14 11 15
+moves: 4
+expanded: 38
+time_s: 0.0001
+status: ok limit: 4
+
+attempt 2:
+
+IDS on 4x4
+start:
+1 2 3 4
+5 6 7 8
+9 10 11 12
+13 0 14 15
+moves: 2
+expanded: 5
+time_s: 0.0
+status: ok limit: 2
+
+attempt 3:
+
+IDS on 4x4
+start:
+1 2 3 4
+5 6 7 8
+9 10 12 15
+13 14 11 0
+moves: 4
+expanded: 19
+time_s: 0.0001
+status: ok limit: 4
+
+--- summary ---
+attempts: 3
+successful: 3/3
+avg_moves: 3.33
+avg_expanded: 20.67
+avg_time_s: 0.0001
+
+---- BDS (n_puzzle_BDS.py) ----
+
+
+====================================
+Target: 3 successful trial(s) on 3x3 (steps=30)
+====================================
+
+attempt 1:
+
+BDS on 3x3
+start:
+1 4 2
+8 7 3
+6 5 0
+moves: 14
+expanded: 161
+time_s: 0.0004
+status: ok
+
+attempt 2:
+
+BDS on 3x3
+start:
+2 4 3
+7 1 6
+5 8 0
+moves: 10
+expanded: 57
+time_s: 0.0002
+status: ok
+
+attempt 3:
+
+BDS on 3x3
+start:
+1 2 3
+7 0 4
+6 5 8
+moves: 12
+expanded: 120
+time_s: 0.0003
+status: ok
+
+--- summary ---
+attempts: 3
+successful: 3/3
+avg_moves: 12.0
+avg_expanded: 112.67
+avg_time_s: 0.0003
+
+====================================
+Target: 3 successful trial(s) on 4x4 (steps=10)
+====================================
+
+attempt 1:
+
+BDS on 4x4
+start:
+1 2 0 3
+5 6 7 4
+9 10 11 8
+13 14 15 12
+moves: 4
+expanded: 7
+time_s: 0.0
+status: ok
+
+attempt 2:
+
+BDS on 4x4
+start:
+1 2 0 3
+5 6 7 4
+9 10 11 8
+13 14 15 12
+moves: 4
+expanded: 7
+time_s: 0.0
+status: ok
+
+attempt 3:
+
+BDS on 4x4
+start:
+1 2 3 4
+6 0 7 8
+5 9 11 12
+13 10 14 15
+moves: 6
+expanded: 19
+time_s: 0.0001
+status: ok
+
+--- summary ---
+attempts: 3
+successful: 3/3
+avg_moves: 4.67
+avg_expanded: 11.0
+avg_time_s: 0.0
+
+---- N-Queens SA (n_queens_SA.py) ----
+
+
+====================================
+Target: 3 successful trial(s) on n=4
+Parameters: T0=1.0, cooling=0.995, max_iters=50000
+====================================
+
+attempt 1:
+
+SA on n=4
+board:
+. Q . .
+. . . Q
+Q . . .
+. . Q .
+conflicts: 0
+expanded: 68
+time_s: 0.0001
+status: ok
+
+attempt 2:
+
+SA on n=4
+board:
+. . Q .
+Q . . .
+. . . Q
+. Q . .
+conflicts: 0
+expanded: 101
+time_s: 0.0002
+status: ok
+
+attempt 3:
+
+SA on n=4
+board:
+. . Q .
+Q . . .
+. . . Q
+. Q . .
+conflicts: 0
+expanded: 42
+time_s: 0.0001
+status: ok
+
+--- summary ---
+attempts: 3
+successful: 3/3
+avg_expanded: 70.33
+avg_time_s: 0.0001
+
+====================================
+Target: 3 successful trial(s) on n=8
+Parameters: T0=2.0, cooling=0.998, max_iters=200000
+====================================
+
+attempt 1:
+
+SA on n=8
+board:
+. . . . Q . . .
+. . . . . . Q .
+. Q . . . . . .
+. . . . . Q . .
+. . Q . . . . .
+Q . . . . . . .
+. . . . . . . Q
+. . . Q . . . .
+conflicts: 0
+expanded: 791
+time_s: 0.003
+status: ok
+
+attempt 2:
+
+SA on n=8
+board:
+. . . . . Q . .
+. . Q . . . . .
+Q . . . . . . .
+. . . . . . . Q
+. . . Q . . . .
+. Q . . . . . .
+. . . . . . Q .
+. . . . Q . . .
+conflicts: 0
+expanded: 1451
+time_s: 0.0055
+status: ok
+
+attempt 3:
+
+SA on n=8
+board:
+. . . Q . . . .
+. . . . . . Q .
+Q . . . . . . .
+. . . . . . . Q
+. . . . Q . . .
+. Q . . . . . .
+. . . . . Q . .
+. . Q . . . . .
+conflicts: 0
+expanded: 571
+time_s: 0.0023
+status: ok
+
+--- summary ---
+attempts: 3
+successful: 3/3
+avg_expanded: 937.67
+avg_time_s: 0.0036
+
+---- N-Queens GA (n_queens_GA.py) ----
+
+========================================
+PHASE 1: Testing 3 configurations on n=4
+========================================
+
+========================================
+Configuration A: pop=40, cx=0.9, mut=0.1, gens=200
+========================================
+
+GA on n=4 attempt 1
+. . Q .
+Q . . .
+. . . Q
+. Q . .
+conflicts: 0
+gens: 7
+evals: 320
+time_s: 0.001
+status: ok
+
+GA on n=4 attempt 2
+. . Q .
+Q . . .
+. . . Q
+. Q . .
+conflicts: 0
+gens: 4
+evals: 200
+time_s: 0.0006
+status: ok
+
+GA on n=4 attempt 3
+. . Q .
+Q . . .
+. . . Q
+. Q . .
+conflicts: 0
+gens: 1
+evals: 80
+time_s: 0.0002
+status: ok
+
+--- summary ---
+config: {'pop': 40, 'cx': 0.9, 'mut': 0.1, 'gens': 200}
+attempts: 3
+successful: 3/3
+avg_gens: 4.0
+avg_evals: 200.0
+avg_time_s: 0.0006
+
+========================================
+Configuration B: pop=80, cx=0.9, mut=0.05, gens=300
+========================================
+
+GA on n=4 attempt 1
+. Q . .
+. . . Q
+Q . . .
+. . Q .
+conflicts: 0
+gens: 1
+evals: 160
+time_s: 0.0004
+status: ok
+
+GA on n=4 attempt 2
+. Q . .
+. . . Q
+Q . . .
+. . Q .
+conflicts: 0
+gens: 1
+evals: 160
+time_s: 0.0005
+status: ok
+
+GA on n=4 attempt 3
+. Q . .
+. . . Q
+Q . . .
+. . Q .
+conflicts: 0
+gens: 0
+evals: 80
+time_s: 0.0001
+status: ok
+
+--- summary ---
+config: {'pop': 80, 'cx': 0.9, 'mut': 0.05, 'gens': 300}
+attempts: 3
+successful: 3/3
+avg_gens: 0.67
+avg_evals: 133.33
+avg_time_s: 0.0003
+
+========================================
+Configuration C: pop=60, cx=0.8, mut=0.15, gens=300
+========================================
+
+GA on n=4 attempt 1
+. Q . .
+. . . Q
+Q . . .
+. . Q .
+conflicts: 0
+gens: 1
+evals: 120
+time_s: 0.0003
+status: ok
+
+GA on n=4 attempt 2
+. . Q .
+Q . . .
+. . . Q
+. Q . .
+conflicts: 0
+gens: 3
+evals: 240
+time_s: 0.0008
+status: ok
+
+GA on n=4 attempt 3
+. . Q .
+Q . . .
+. . . Q
+. Q . .
+conflicts: 0
+gens: 4
+evals: 300
+time_s: 0.001
+status: ok
+
+--- summary ---
+config: {'pop': 60, 'cx': 0.8, 'mut': 0.15, 'gens': 300}
+attempts: 3
+successful: 3/3
+avg_gens: 2.67
+avg_evals: 220.0
+avg_time_s: 0.0007
+
+========================================
+BEST CONFIGURATION SELECTED
+========================================
+Config: pop=80, cx=0.9, mut=0.05, gens=300
+Performance on n=4:
+  avg_gens: 0.67
+  avg_evals: 133.33
+  avg_time_s: 0.0003
+
+========================================
+PHASE 2: Running best config on n=8
+========================================
+
+GA on n=8 attempt 1
+. . . . . . Q .
+. . . . Q . . .
+. . Q . . . . .
+Q . . . . . . .
+. . . . . Q . .
+. . . . . . . Q
+. Q . . . . . .
+. . . Q . . . .
+conflicts: 0
+gens: 15
+evals: 1280
+time_s: 0.0084
+status: ok
+
+GA on n=8 attempt 2
+. . Q . . . . .
+. . . . . . Q .
+. Q . . . . . .
+. . . . . . . Q
+. . . . Q . . .
+Q . . . . . . .
+. . . Q . . . .
+. . . . . Q . .
+conflicts: 0
+gens: 163
+evals: 13120
+time_s: 0.089
+status: ok
+
+GA on n=8 attempt 3
+. . Q . . . . .
+. . . . . Q . .
+. . . . . . . Q
+. Q . . . . . .
+. . . Q . . . .
+Q . . . . . . .
+. . . . . . Q .
+. . . . Q . . .
+conflicts: 0
+gens: 42
+evals: 3440
+time_s: 0.0226
+status: ok
+
+--- summary ---
+config: {'pop': 80, 'cx': 0.9, 'mut': 0.05, 'gens': 300}
+attempts: 3
+successful: 3/3
+avg_gens: 73.33
+avg_evals: 5946.67
+avg_time_s: 0.04
+
+========================================
+EXPERIMENT COMPLETE
+========================================
+
+Key insights:
+- GA performance depends heavily on parameter tuning
+- Population size balances diversity vs computational cost
+- Crossover rate controls exploitation of good solutions
+- Mutation rate controls exploration of new solutions
+- Elitism ensures we never lose best solutions found
+- Fitness-proportionate selection balances pressure and diversity
+
+---- A* (misplaced vs manhattan) (n_puzzle_ASTAR.py) ----
+
+
+============================
+trial 1 on 3x3 (steps=40)
+============================
+
+start:
+4 5 1
+7 8 3
+6 2 0
+
+A* with h_misplaced
+moves: 20
+expanded: 3116
+time_s: 0.0132
+
+A* with h_manhattan
+moves: 20
+expanded: 433
+time_s: 0.002
+
+============================
+trial 2 on 3x3 (steps=40)
+============================
+
+start:
+3 6 5
+1 2 7
+0 4 8
+
+A* with h_misplaced
+moves: 18
+expanded: 1254
+time_s: 0.0047
+
+A* with h_manhattan
+moves: 18
+expanded: 197
+time_s: 0.0008
+
+============================
+trial 3 on 3x3 (steps=40)
+============================
+
+start:
+4 8 1
+2 0 3
+7 6 5
+
+A* with h_misplaced
+moves: 12
+expanded: 99
+time_s: 0.0004
+
+A* with h_manhattan
+moves: 12
+expanded: 18
+time_s: 0.0002
+
+--- summary (averages over same-start trials) ---
+h_misplaced avg_moves: 16.67 avg_expanded: 1489.67 avg_time_s: 0.0061
+h_manhattan avg_moves: 16.67 avg_expanded: 216.0 avg_time_s: 0.001
+
+notes:
+h_misplaced:
+  - Admissible: Never overestimates (each misplaced tile needs ≥1 move)
+  - Consistent: Moving a tile changes misplaced count by at most 1
+  - Weak heuristic: Underestimates significantly, explores many nodes
+
+h_manhattan:
+  - Admissible: Manhattan is minimum moves ignoring obstacles
+  - Consistent: Moving a tile changes its Manhattan distance by ±1
+  - Dominates h_misplaced: h_manhattan(n) ≥ h_misplaced(n) for all n
+  - Strong heuristic: Better estimates → far fewer nodes expanded
+  - Result: Usually finds solution faster despite more complex computation
+
+==== END ====
