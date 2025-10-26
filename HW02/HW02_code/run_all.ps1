@@ -26,23 +26,29 @@ $utf8NoBom = New-Object System.Text.UTF8Encoding $false
 "" | Out-File $log -Append -Encoding UTF8
 
 function Run-One($title, $file) {
-  "---- $title ($file) ----" | Out-File $log -Append -Encoding UTF8
+  $separator = "---- $title ($file) ----"
+  Write-Host $separator -ForegroundColor Yellow
+  $separator | Out-File $log -Append -Encoding UTF8
   "" | Out-File $log -Append -Encoding UTF8
 
   Write-Host "Running: $title..." -ForegroundColor Cyan
+  Write-Host ""
 
   try {
     # Set PYTHONIOENCODING to utf-8 for this script run
     $env:PYTHONIOENCODING = "utf-8"
 
-    # Capture output and append to log
-    & $py $file 2>&1 | Out-File $log -Append -Encoding UTF8
+    # Capture output, display it, AND save to log using Tee-Object
+    & $py $file 2>&1 | Tee-Object -FilePath $log -Append
 
+    Write-Host ""
     Write-Host "  Completed: $title" -ForegroundColor Green
+    Write-Host ""
 
   } catch {
-    "ERROR running $file : $($_.Exception.Message)" | Out-File $log -Append -Encoding UTF8
-    Write-Host "  ERROR: $title - $($_.Exception.Message)" -ForegroundColor Red
+    $errorMsg = "ERROR running $file : $($_.Exception.Message)"
+    Write-Host $errorMsg -ForegroundColor Red
+    $errorMsg | Out-File $log -Append -Encoding UTF8
   }
   "" | Out-File $log -Append -Encoding UTF8
 }
