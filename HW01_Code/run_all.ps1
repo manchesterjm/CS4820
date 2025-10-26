@@ -43,7 +43,7 @@ function Run-One($title, $file) {
 }
 
 Run-One "BFS" "n_puzzle_BFS.py"
-Run-One "DFS" "n_puzzle_DFS.py"
+Run-One "DFS" "n_puzzle_Depth_Limited_DFS.py"
 Run-One "IDS" "n_puzzle_IDS.py"
 Run-One "BDS" "n_puzzle_BDS.py"
 Run-One "N-Queens SA" "n_queens_SA.py"

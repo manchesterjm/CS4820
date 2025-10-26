@@ -1,0 +1,1687 @@
+﻿==== CS 4820/5820 HW02 Full Run ====
+Timestamp: 2025-10-26 08:06:42
+Python: python
+
+---- Sudoku CSP (All Variants) (sudoku_csp.py) ----
+
+Original Puzzle:
+5 3 . | . 7 . | . . . 
+6 . . | 1 9 5 | . . . 
+. 9 8 | . . . | . 6 . 
+---------------------
+8 . . | . 6 . | . . 3 
+4 . . | 8 . 3 | . . 1 
+7 . . | . 2 . | . . 6 
+---------------------
+. 6 . | . . . | 2 8 . 
+. . . | 4 1 9 | . . 5 
+. . . | . 8 . | . 7 9 
+
+
+==================================================
+Basic Backtracking
+==================================================
+Solved in 0.0575 seconds
+
+Solution:
+5 3 4 | 6 7 8 | 9 1 2 
+6 7 2 | 1 9 5 | 3 4 8 
+1 9 8 | 3 4 2 | 5 6 7 
+---------------------
+8 5 9 | 7 6 1 | 4 2 3 
+4 2 6 | 8 5 3 | 7 9 1 
+7 1 3 | 9 2 4 | 8 5 6 
+---------------------
+9 6 1 | 5 3 7 | 2 8 4 
+2 8 7 | 4 1 9 | 6 3 5 
+3 4 5 | 2 8 6 | 1 7 9 
+
+==================================================
+Backtracking + MRV + LCV
+==================================================
+Solved in 0.0213 seconds
+
+Solution:
+5 3 4 | 6 7 8 | 9 1 2 
+6 7 2 | 1 9 5 | 3 4 8 
+1 9 8 | 3 4 2 | 5 6 7 
+---------------------
+8 5 9 | 7 6 1 | 4 2 3 
+4 2 6 | 8 5 3 | 7 9 1 
+7 1 3 | 9 2 4 | 8 5 6 
+---------------------
+9 6 1 | 5 3 7 | 2 8 4 
+2 8 7 | 4 1 9 | 6 3 5 
+3 4 5 | 2 8 6 | 1 7 9 
+
+==================================================
+Backtracking + Forward Checking
+==================================================
+Solved in 0.0201 seconds
+
+Solution:
+5 3 4 | 6 7 8 | 9 1 2 
+6 7 2 | 1 9 5 | 3 4 8 
+1 9 8 | 3 4 2 | 5 6 7 
+---------------------
+8 5 9 | 7 6 1 | 4 2 3 
+4 2 6 | 8 5 3 | 7 9 1 
+7 1 3 | 9 2 4 | 8 5 6 
+---------------------
+9 6 1 | 5 3 7 | 2 8 4 
+2 8 7 | 4 1 9 | 6 3 5 
+3 4 5 | 2 8 6 | 1 7 9 
+
+==================================================
+Backtracking + AC-3
+==================================================
+Solved in 0.0192 seconds
+
+Solution:
+5 3 4 | 6 7 8 | 9 1 2 
+6 7 2 | 1 9 5 | 3 4 8 
+1 9 8 | 3 4 2 | 5 6 7 
+---------------------
+8 5 9 | 7 6 1 | 4 2 3 
+4 2 6 | 8 5 3 | 7 9 1 
+7 1 3 | 9 2 4 | 8 5 6 
+---------------------
+9 6 1 | 5 3 7 | 2 8 4 
+2 8 7 | 4 1 9 | 6 3 5 
+3 4 5 | 2 8 6 | 1 7 9 
+
+---- n-Queens Minimum Conflicts (nqueens_minconflicts.py) ----
+
+============================================================
+CS 4820/5820 Homework 2 - Part B: Minimum Conflicts
+============================================================
+
+============================================================
+n-Queens with Minimum Conflicts: n=8
+Running 5 trials
+============================================================
+
+Trial 1:
+  Status: ok
+  Steps: 28
+  Attempts: 1
+  Time: 0.0007s
+  Solution verified: 0 conflicts
+
+Trial 2:
+  Status: ok
+  Steps: 10
+  Attempts: 1
+  Time: 0.0003s
+  Solution verified: 0 conflicts
+
+Trial 3:
+  Status: ok
+  Steps: 15
+  Attempts: 1
+  Time: 0.0004s
+  Solution verified: 0 conflicts
+
+Trial 4:
+  Status: ok
+  Steps: 24
+  Attempts: 1
+  Time: 0.0006s
+  Solution verified: 0 conflicts
+
+Trial 5:
+  Status: ok
+  Steps: 6
+  Attempts: 1
+  Time: 0.0002s
+  Solution verified: 0 conflicts
+
+============================================================
+Summary for n=8
+============================================================
+Successful trials: 5/5
+Average steps: 16.60
+Average time: 0.0004s
+Min steps: 6
+Max steps: 28
+
+
+============================================================
+n-Queens with Minimum Conflicts: n=16
+Running 5 trials
+============================================================
+
+Trial 1:
+  Status: ok
+  Steps: 82
+  Attempts: 1
+  Time: 0.0069s
+  Solution verified: 0 conflicts
+
+Trial 2:
+  Status: ok
+  Steps: 40
+  Attempts: 1
+  Time: 0.0035s
+  Solution verified: 0 conflicts
+
+Trial 3:
+  Status: ok
+  Steps: 13
+  Attempts: 1
+  Time: 0.0013s
+  Solution verified: 0 conflicts
+
+Trial 4:
+  Status: ok
+  Steps: 92
+  Attempts: 1
+  Time: 0.0074s
+  Solution verified: 0 conflicts
+
+Trial 5:
+  Status: ok
+  Steps: 98
+  Attempts: 1
+  Time: 0.0079s
+  Solution verified: 0 conflicts
+
+============================================================
+Summary for n=16
+============================================================
+Successful trials: 5/5
+Average steps: 65.00
+Average time: 0.0054s
+Min steps: 13
+Max steps: 98
+
+
+============================================================
+n-Queens with Minimum Conflicts: n=25
+Running 5 trials
+============================================================
+
+Trial 1:
+  Status: ok
+  Steps: 48
+  Attempts: 1
+  Time: 0.0091s
+  Solution verified: 0 conflicts
+
+Trial 2:
+  Status: ok
+  Steps: 59
+  Attempts: 1
+  Time: 0.0112s
+  Solution verified: 0 conflicts
+
+Trial 3:
+  Status: ok
+  Steps: 42
+  Attempts: 1
+  Time: 0.0080s
+  Solution verified: 0 conflicts
+
+Trial 4:
+  Status: ok
+  Steps: 56
+  Attempts: 1
+  Time: 0.0106s
+  Solution verified: 0 conflicts
+
+Trial 5:
+  Status: ok
+  Steps: 98
+  Attempts: 1
+  Time: 0.0184s
+  Solution verified: 0 conflicts
+
+============================================================
+Summary for n=25
+============================================================
+Successful trials: 5/5
+Average steps: 60.60
+Average time: 0.0115s
+Min steps: 42
+Max steps: 98
+
+
+============================================================
+Example solution for n=8:
+============================================================
+
+Found solution in 59 steps, 1 attempt(s), 0.0013s
+
+. . . Q . . . . 
+. Q . . . . . . 
+. . . . . . Q . 
+. . . . Q . . . 
+Q . . . . . . . 
+. . . . . . . Q 
+. . . . . Q . . 
+. . Q . . . . . 
+
+Conflicts: 0
+
+---- PSO on Rastrigin and Rosenbrock (pso_benchmark.py) ----
+
+======================================================================
+CS 4820/5820 Homework 2 - Part C1: PSO Benchmark Optimization
+======================================================================
+
+======================================================================
+PSO Benchmark: Rastrigin
+Dimensions: 10, Bounds: (-5.12, 5.12)
+======================================================================
+
+Configuration 1: {'swarm_size': 30, 'w': 0.7, 'c1': 1.5, 'c2': 1.5, 'max_iterations': 1000}
+----------------------------------------------------------------------
+  Trial 1: score=7.896804e+01, iters=3, time=0.0264s, status=converged
+  Trial 2: score=8.448247e+01, iters=4, time=0.0012s, status=converged
+  Trial 3: score=7.935381e+01, iters=3, time=0.0010s, status=converged
+
+  Summary:
+    Best score: 7.896804e+01
+    Avg score: 8.093477e+01 ± 2.513537e+00
+    Avg iterations: 3.3
+    Avg time: 0.0095s
+
+Configuration 2: {'swarm_size': 50, 'w': 0.5, 'c1': 2.0, 'c2': 2.0, 'max_iterations': 1000}
+----------------------------------------------------------------------
+  Trial 1: score=6.227282e+01, iters=3, time=0.0016s, status=converged
+  Trial 2: score=5.625774e+01, iters=4, time=0.0019s, status=converged
+  Trial 3: score=6.120542e+01, iters=5, time=0.0023s, status=converged
+
+  Summary:
+    Best score: 5.625774e+01
+    Avg score: 5.991199e+01 ± 2.620434e+00
+    Avg iterations: 4.0
+    Avg time: 0.0020s
+
+Configuration 3: {'swarm_size': 40, 'w': 0.9, 'c1': 1.2, 'c2': 1.2, 'max_iterations': 1500}
+----------------------------------------------------------------------
+  Trial 1: score=7.923603e+01, iters=3, time=0.0013s, status=converged
+  Trial 2: score=8.346109e+01, iters=4, time=0.0016s, status=converged
+  Trial 3: score=5.346584e+01, iters=3, time=0.0013s, status=converged
+
+  Summary:
+    Best score: 5.346584e+01
+    Avg score: 7.205432e+01 ± 1.325673e+01
+    Avg iterations: 3.3
+    Avg time: 0.0014s
+
+
+======================================================================
+PSO Benchmark: Rosenbrock
+Dimensions: 10, Bounds: (-5, 10)
+======================================================================
+
+Configuration 1: {'swarm_size': 30, 'w': 0.7, 'c1': 1.5, 'c2': 1.5, 'max_iterations': 1000}
+----------------------------------------------------------------------
+  Trial 1: score=1.818536e+03, iters=4, time=0.0015s, status=converged
+  Trial 2: score=2.162286e+03, iters=4, time=0.0014s, status=converged
+  Trial 3: score=2.027163e+03, iters=4, time=0.0014s, status=converged
+
+  Summary:
+    Best score: 1.818536e+03
+    Avg score: 2.002662e+03 ± 1.414008e+02
+    Avg iterations: 4.0
+    Avg time: 0.0015s
+
+Configuration 2: {'swarm_size': 50, 'w': 0.5, 'c1': 2.0, 'c2': 2.0, 'max_iterations': 1000}
+----------------------------------------------------------------------
+  Trial 1: score=7.838572e+02, iters=7, time=0.0037s, status=converged
+  Trial 2: score=5.683934e+02, iters=7, time=0.0037s, status=converged
+  Trial 3: score=5.845082e+02, iters=5, time=0.0029s, status=converged
+
+  Summary:
+    Best score: 5.683934e+02
+    Avg score: 6.455863e+02 ± 9.799342e+01
+    Avg iterations: 6.3
+    Avg time: 0.0034s
+
+Configuration 3: {'swarm_size': 40, 'w': 0.9, 'c1': 1.2, 'c2': 1.2, 'max_iterations': 1500}
+----------------------------------------------------------------------
+  Trial 1: score=2.116543e+03, iters=4, time=0.0019s, status=converged
+  Trial 2: score=1.109684e+04, iters=2, time=0.0011s, status=converged
+  Trial 3: score=4.837509e+03, iters=3, time=0.0015s, status=converged
+
+  Summary:
+    Best score: 2.116543e+03
+    Avg score: 6.016963e+03 ± 3.759855e+03
+    Avg iterations: 3.0
+    Avg time: 0.0015s
+
+
+======================================================================
+Example: Convergence curve for Rastrigin (single run)
+======================================================================
+
+Final result: 7.547066e+01 in 2 iterations (0.0007s)
+Best position: [ 0.77252659  0.22422116 -1.24093355  1.96428952 -3.07952037 -0.07117394
+ -2.90146437  0.00992622  2.96279946  2.86180622]
+
+Convergence history (every 50 iterations):
+  Iteration 0: 1.186430e+02
+
+---- PSO for Sudoku (pso_sudoku.py) ----
+
+======================================================================
+CS 4820/5820 Homework 2 - Part C2: PSO for Sudoku
+======================================================================
+
+Original Puzzle:
+5 3 0 | 0 7 0 | 0 0 0 
+6 0 0 | 1 9 5 | 0 0 0 
+0 9 8 | 0 0 0 | 0 6 0 
+---------------------
+8 0 0 | 0 6 0 | 0 0 3 
+4 0 0 | 8 0 3 | 0 0 1 
+7 0 0 | 0 2 0 | 0 0 6 
+---------------------
+0 6 0 | 0 0 0 | 2 8 0 
+0 0 0 | 4 1 9 | 0 0 5 
+0 0 0 | 0 8 0 | 0 7 9 
+
+Trial 1:
+  Swarm size: 150, Max iterations: 3000
+  Iteration 100: best score = 13
+  Iteration 200: best score = 13
+  Iteration 300: best score = 13
+  Iteration 400: best score = 13
+  Iteration 500: best score = 13
+  Iteration 600: best score = 13
+  Iteration 700: best score = 13
+  Iteration 800: best score = 13
+  Iteration 900: best score = 13
+  Iteration 1000: best score = 13
+  Iteration 1100: best score = 13
+  Iteration 1200: best score = 13
+  Iteration 1300: best score = 13
+  Iteration 1400: best score = 13
+  Iteration 1500: best score = 13
+  Iteration 1600: best score = 13
+  Iteration 1700: best score = 13
+  Iteration 1800: best score = 13
+  Iteration 1900: best score = 13
+  Iteration 2000: best score = 13
+  Iteration 2100: best score = 13
+  Iteration 2200: best score = 13
+  Iteration 2300: best score = 13
+  Iteration 2400: best score = 13
+  Iteration 2500: best score = 13
+  Iteration 2600: best score = 13
+  Iteration 2700: best score = 13
+  Iteration 2800: best score = 13
+  Iteration 2900: best score = 13
+  Iteration 3000: best score = 13
+  Final score: 13 violations
+  Iterations: 3000
+  Time: 30.6965s
+  Status: max_iterations
+
+Trial 2:
+  Swarm size: 150, Max iterations: 3000
+  Iteration 100: best score = 15
+  Iteration 200: best score = 15
+  Iteration 300: best score = 15
+  Iteration 400: best score = 15
+  Iteration 500: best score = 15
+  Iteration 600: best score = 15
+  Iteration 700: best score = 15
+  Iteration 800: best score = 15
+  Iteration 900: best score = 15
+  Iteration 1000: best score = 15
+  Iteration 1100: best score = 15
+  Iteration 1200: best score = 15
+  Iteration 1300: best score = 13
+  Iteration 1400: best score = 13
+  Iteration 1500: best score = 13
+  Iteration 1600: best score = 13
+  Iteration 1700: best score = 13
+  Iteration 1800: best score = 13
+  Iteration 1900: best score = 13
+  Iteration 2000: best score = 13
+  Iteration 2100: best score = 13
+  Iteration 2200: best score = 13
+  Iteration 2300: best score = 13
+  Iteration 2400: best score = 13
+  Iteration 2500: best score = 13
+  Iteration 2600: best score = 13
+  Iteration 2700: best score = 13
+  Iteration 2800: best score = 13
+  Iteration 2900: best score = 13
+  Iteration 3000: best score = 13
+  Final score: 13 violations
+  Iterations: 3000
+  Time: 31.2928s
+  Status: max_iterations
+
+Trial 3:
+  Swarm size: 150, Max iterations: 3000
+  Iteration 100: best score = 10
+  Iteration 200: best score = 10
+  Iteration 300: best score = 10
+  Iteration 400: best score = 10
+  Iteration 500: best score = 10
+  Iteration 600: best score = 10
+  Iteration 700: best score = 10
+  Iteration 800: best score = 10
+  Iteration 900: best score = 10
+  Iteration 1000: best score = 10
+  Iteration 1100: best score = 10
+  Iteration 1200: best score = 10
+  Iteration 1300: best score = 10
+  Iteration 1400: best score = 10
+  Iteration 1500: best score = 10
+  Iteration 1600: best score = 10
+  Iteration 1700: best score = 10
+  Iteration 1800: best score = 8
+  Iteration 1900: best score = 8
+  Iteration 2000: best score = 8
+  Iteration 2100: best score = 8
+  Iteration 2200: best score = 8
+  Iteration 2300: best score = 8
+  Iteration 2400: best score = 8
+  Iteration 2500: best score = 8
+  Iteration 2600: best score = 8
+  Iteration 2700: best score = 8
+  Iteration 2800: best score = 8
+  Iteration 2900: best score = 6
+  Iteration 3000: best score = 6
+  Final score: 6 violations
+  Iterations: 3000
+  Time: 31.3644s
+  Status: max_iterations
+
+======================================================================
+Summary of PSO for Sudoku
+======================================================================
+Trials run: 3
+Solved: 0/3
+Best score: 6 violations
+Avg score: 10.67 violations
+Avg time: 31.1179s
+
+Best result (Trial 3):
+Violations: 6
+
+Best board found (6 violations remaining):
+5 3 1 | 6 7 2 | 9 4 8 
+6 7 4 | 1 9 5 | 3 8 2 
+2 9 8 | 3 4 1 | 5 6 7 
+---------------------
+8 5 9 | 7 6 1 | 4 2 3 
+4 2 6 | 8 5 3 | 7 9 1 
+7 1 3 | 9 2 4 | 8 5 6 
+---------------------
+1 6 9 | 5 3 7 | 2 8 4 
+2 8 7 | 4 1 9 | 6 3 5 
+3 4 5 | 2 8 6 | 1 7 9 
+
+Note: PSO may not always solve Sudoku completely.
+For guaranteed solutions, use CSP methods (Part A).
+PSO demonstrates metaheuristic approach to constraint optimization.
+
+---- Full Experiments (run_experiments.py) ----
+
+==== CS 4820/5820 HW02 Full Run ====
+Timestamp: 2025-10-26 08:12:49
+Python: python
+
+---- Sudoku CSP (All Variants) (sudoku_csp.py) ----
+
+============================================================
+CS 4820/5820 Homework 2 - Part A: Sudoku CSP Solvers
+============================================================
+
+Starting Puzzle:
+5 3 . | . 7 . | . . . 
+6 . . | 1 9 5 | . . . 
+. 9 8 | . . . | . 6 . 
+---------------------
+8 . . | . 6 . | . . 3 
+4 . . | 8 . 3 | . . 1 
+7 . . | . 2 . | . . 6 
+---------------------
+. 6 . | . . . | 2 8 . 
+. . . | 4 1 9 | . . 5 
+. . . | . 8 . | . 7 9 
+
+Given cells: 30
+Empty cells: 51
+
+============================================================
+Basic Backtracking
+============================================================
+
+Status: SOLVED
+Time: 0.0575 seconds
+Runtime: 57.49 milliseconds
+
+Solved Puzzle:
+5 3 4 | 6 7 8 | 9 1 2 
+6 7 2 | 1 9 5 | 3 4 8 
+1 9 8 | 3 4 2 | 5 6 7 
+---------------------
+8 5 9 | 7 6 1 | 4 2 3 
+4 2 6 | 8 5 3 | 7 9 1 
+7 1 3 | 9 2 4 | 8 5 6 
+---------------------
+9 6 1 | 5 3 7 | 2 8 4 
+2 8 7 | 4 1 9 | 6 3 5 
+3 4 5 | 2 8 6 | 1 7 9 
+
+Verification:
+  All cells filled: True
+  Total cells: 81/81
+
+============================================================
+Backtracking + MRV + LCV
+============================================================
+
+Status: SOLVED
+Time: 0.0211 seconds
+Runtime: 21.13 milliseconds
+
+Solved Puzzle:
+5 3 4 | 6 7 8 | 9 1 2 
+6 7 2 | 1 9 5 | 3 4 8 
+1 9 8 | 3 4 2 | 5 6 7 
+---------------------
+8 5 9 | 7 6 1 | 4 2 3 
+4 2 6 | 8 5 3 | 7 9 1 
+7 1 3 | 9 2 4 | 8 5 6 
+---------------------
+9 6 1 | 5 3 7 | 2 8 4 
+2 8 7 | 4 1 9 | 6 3 5 
+3 4 5 | 2 8 6 | 1 7 9 
+
+Verification:
+  All cells filled: True
+  Total cells: 81/81
+
+============================================================
+Backtracking + Forward Checking
+============================================================
+
+Status: SOLVED
+Time: 0.0201 seconds
+Runtime: 20.08 milliseconds
+
+Solved Puzzle:
+5 3 4 | 6 7 8 | 9 1 2 
+6 7 2 | 1 9 5 | 3 4 8 
+1 9 8 | 3 4 2 | 5 6 7 
+---------------------
+8 5 9 | 7 6 1 | 4 2 3 
+4 2 6 | 8 5 3 | 7 9 1 
+7 1 3 | 9 2 4 | 8 5 6 
+---------------------
+9 6 1 | 5 3 7 | 2 8 4 
+2 8 7 | 4 1 9 | 6 3 5 
+3 4 5 | 2 8 6 | 1 7 9 
+
+Verification:
+  All cells filled: True
+  Total cells: 81/81
+
+============================================================
+Backtracking + AC-3
+============================================================
+
+Status: SOLVED
+Time: 0.0194 seconds
+Runtime: 19.39 milliseconds
+
+Solved Puzzle:
+5 3 4 | 6 7 8 | 9 1 2 
+6 7 2 | 1 9 5 | 3 4 8 
+1 9 8 | 3 4 2 | 5 6 7 
+---------------------
+8 5 9 | 7 6 1 | 4 2 3 
+4 2 6 | 8 5 3 | 7 9 1 
+7 1 3 | 9 2 4 | 8 5 6 
+---------------------
+9 6 1 | 5 3 7 | 2 8 4 
+2 8 7 | 4 1 9 | 6 3 5 
+3 4 5 | 2 8 6 | 1 7 9 
+
+Verification:
+  All cells filled: True
+  Total cells: 81/81
+
+============================================================
+All Sudoku CSP tests completed
+============================================================
+
+---- n-Queens Minimum Conflicts (nqueens_minconflicts.py) ----
+
+============================================================
+CS 4820/5820 Homework 2 - Part B: Minimum Conflicts
+============================================================
+
+============================================================
+n-Queens with Minimum Conflicts: n=8
+============================================================
+
+Starting board (random initial placement):
+Q . . . . . . . 
+. . . . . . Q . 
+. . . . . . . . 
+. . . . . . . . 
+. Q Q . . . . . 
+. . . . Q . . Q 
+. . . . . . . . 
+. . . Q . Q . . 
+
+Starting conflicts: 5
+
+Status: SOLVED
+Steps taken: 104
+Restart attempts: 1
+Time: 0.002457 seconds
+Runtime: 2.457 milliseconds
+
+Solved board:
+. . . Q . . . . 
+. . . . . . . Q 
+Q . . . . . . . 
+. . Q . . . . . 
+. . . . . Q . . 
+. Q . . . . . . 
+. . . . . . Q . 
+. . . . Q . . . 
+
+Final conflicts: 0
+Solution verified: True
+
+
+============================================================
+n-Queens with Minimum Conflicts: n=16
+============================================================
+
+Starting board (random initial placement):
+. Q . . . . . . . . . Q . . . . 
+. . . . . . . Q . . . . . . . . 
+. . . . . . . . . Q . . . Q . . 
+Q . . . . . . . . . . . . . Q . 
+. . . . . . . . . . . . Q . . . 
+. . . . . . . . . . . . . . . . 
+. . . . Q . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . Q . . . . . 
+. . . . . . Q . . . . . . . . . 
+. . Q Q . . . . . . . . . . . Q 
+. . . . . . . . . . . . . . . . 
+. . . . . Q . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . Q . . . . . . . 
+
+Starting conflicts: 13
+
+Status: SOLVED
+Steps taken: 41
+Restart attempts: 1
+Time: 0.003530 seconds
+Runtime: 3.530 milliseconds
+
+Solved board:
+. . . . . . . . . . . . . . Q . 
+. . . . . Q . . . . . . . . . . 
+. . . . . . . . . Q . . . . . . 
+Q . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . Q 
+. . . . . . . . . . . . . Q . . 
+. . . . . . Q . . . . . . . . . 
+. Q . . . . . . . . . . . . . . 
+. . . . . . . Q . . . . . . . . 
+. . . . . . . . . . . Q . . . . 
+. . . Q . . . . . . . . . . . . 
+. . . . . . . . . . . . Q . . . 
+. . . . Q . . . . . . . . . . . 
+. . . . . . . . Q . . . . . . . 
+. . . . . . . . . . Q . . . . . 
+. . Q . . . . . . . . . . . . . 
+
+Final conflicts: 0
+Solution verified: True
+
+
+============================================================
+n-Queens with Minimum Conflicts: n=25
+============================================================
+
+Starting board (random initial placement):
+  [Board too large to display - 25x25 with 25 queens]
+
+Starting conflicts: 28
+
+Status: SOLVED
+Steps taken: 115
+Restart attempts: 1
+Time: 0.022775 seconds
+Runtime: 22.775 milliseconds
+
+Solved board:
+  [Board too large to display - 25x25 with 25 queens]
+  First 10 queens: [3, 13, 6, 19, 23, 11, 0, 21, 10, 17]
+
+Final conflicts: 0
+Solution verified: True
+
+============================================================
+All n-Queens Minimum Conflicts tests completed
+============================================================
+
+---- PSO on Rastrigin and Rosenbrock (pso_benchmark.py) ----
+
+======================================================================
+CS 4820/5820 Homework 2 - Part C1: PSO Benchmark Optimization
+======================================================================
+
+======================================================================
+Rastrigin Function
+======================================================================
+Properties:
+  - Highly multimodal with many local minima
+  - Global minimum: f(0,0,...,0) = 0
+  - Domain: [-5.12, 5.12]^10
+
+
+======================================================================
+PSO Benchmark: Rastrigin
+Dimensions: 10, Bounds: (-5.12, 5.12)
+======================================================================
+
+Configuration 1: {'swarm_size': 30, 'w': 0.7, 'c1': 1.5, 'c2': 1.5, 'max_iterations': 1000}
+----------------------------------------------------------------------
+  Trial 1: score=7.297372e+01, iters=3, time=0.0260s, status=converged
+  Trial 2: score=7.643225e+01, iters=3, time=0.0010s, status=converged
+  Trial 3: score=5.892963e+01, iters=3, time=0.0009s, status=converged
+
+  Summary:
+    Best score: 5.892963e+01
+    Avg score: 6.944520e+01 ± 7.568497e+00
+    Avg iterations: 3.0
+    Avg time: 0.0093s
+
+Configuration 2: {'swarm_size': 50, 'w': 0.5, 'c1': 2.0, 'c2': 2.0, 'max_iterations': 1000}
+----------------------------------------------------------------------
+  Trial 1: score=7.416183e+01, iters=4, time=0.0019s, status=converged
+  Trial 2: score=4.707862e+01, iters=3, time=0.0015s, status=converged
+  Trial 3: score=6.927200e+01, iters=4, time=0.0018s, status=converged
+
+  Summary:
+    Best score: 4.707862e+01
+    Avg score: 6.350415e+01 ± 1.178491e+01
+    Avg iterations: 3.7
+    Avg time: 0.0018s
+
+Configuration 3: {'swarm_size': 40, 'w': 0.9, 'c1': 1.2, 'c2': 1.2, 'max_iterations': 1500}
+----------------------------------------------------------------------
+  Trial 1: score=7.938306e+01, iters=2, time=0.0009s, status=converged
+  Trial 2: score=6.083090e+01, iters=4, time=0.0015s, status=converged
+  Trial 3: score=7.126901e+01, iters=3, time=0.0012s, status=converged
+
+  Summary:
+    Best score: 6.083090e+01
+    Avg score: 7.049432e+01 ± 7.593671e+00
+    Avg iterations: 3.0
+    Avg time: 0.0012s
+
+
+======================================================================
+Rosenbrock Function
+======================================================================
+Properties:
+  - Narrow parabolic valley
+  - Global minimum: f(1,1,...,1) = 0
+  - Domain: [-5, 10]^10
+
+
+======================================================================
+PSO Benchmark: Rosenbrock
+Dimensions: 10, Bounds: (-5, 10)
+======================================================================
+
+Configuration 1: {'swarm_size': 30, 'w': 0.7, 'c1': 1.5, 'c2': 1.5, 'max_iterations': 1000}
+----------------------------------------------------------------------
+  Trial 1: score=2.044764e+04, iters=3, time=0.0012s, status=converged
+  Trial 2: score=7.829104e+03, iters=3, time=0.0011s, status=converged
+  Trial 3: score=1.577589e+03, iters=7, time=0.0025s, status=converged
+
+  Summary:
+    Best score: 1.577589e+03
+    Avg score: 9.951445e+03 ± 7.848481e+03
+    Avg iterations: 4.3
+    Avg time: 0.0016s
+
+Configuration 2: {'swarm_size': 50, 'w': 0.5, 'c1': 2.0, 'c2': 2.0, 'max_iterations': 1000}
+----------------------------------------------------------------------
+  Trial 1: score=9.222645e+02, iters=4, time=0.0023s, status=converged
+  Trial 2: score=1.158441e+03, iters=5, time=0.0027s, status=converged
+  Trial 3: score=3.346079e+02, iters=8, time=0.0040s, status=converged
+
+  Summary:
+    Best score: 3.346079e+02
+    Avg score: 8.051044e+02 ± 3.463813e+02
+    Avg iterations: 5.7
+    Avg time: 0.0030s
+
+Configuration 3: {'swarm_size': 40, 'w': 0.9, 'c1': 1.2, 'c2': 1.2, 'max_iterations': 1500}
+----------------------------------------------------------------------
+  Trial 1: score=3.168469e+03, iters=3, time=0.0015s, status=converged
+  Trial 2: score=6.256750e+03, iters=4, time=0.0018s, status=converged
+  Trial 3: score=9.841183e+03, iters=2, time=0.0011s, status=converged
+
+  Summary:
+    Best score: 3.168469e+03
+    Avg score: 6.422134e+03 ± 2.726633e+03
+    Avg iterations: 3.0
+    Avg time: 0.0015s
+
+
+======================================================================
+Detailed Example: Rastrigin Convergence
+======================================================================
+
+Running PSO with:
+  Swarm size: 30
+  Inertia weight (w): 0.7
+  Cognitive coeff (c1): 1.5
+  Social coeff (c2): 1.5
+  Max iterations: 500
+
+Status: converged
+Final best score: 8.875190e+01
+Iterations completed: 2
+Time: 0.0008 seconds
+Runtime: 0.76 milliseconds
+
+Best position found:
+  [-1.98568064  0.12935869  0.80397109 -2.88699439  1.92394232  0.97223683
+  0.51257579  1.12455602  0.66011467 -4.06787097]
+
+Convergence history (every 50 iterations):
+  Iteration   0: 1.189197e+02
+
+======================================================================
+All PSO benchmark tests completed
+======================================================================
+
+---- PSO for Sudoku (pso_sudoku.py) ----
+
+======================================================================
+CS 4820/5820 Homework 2 - Part C2: PSO for Sudoku
+======================================================================
+
+Starting Puzzle:
+5 3 0 | 0 7 0 | 0 0 0 
+6 0 0 | 1 9 5 | 0 0 0 
+0 9 8 | 0 0 0 | 0 6 0 
+---------------------
+8 0 0 | 0 6 0 | 0 0 3 
+4 0 0 | 8 0 3 | 0 0 1 
+7 0 0 | 0 2 0 | 0 0 6 
+---------------------
+0 6 0 | 0 0 0 | 2 8 0 
+0 0 0 | 4 1 9 | 0 0 5 
+0 0 0 | 0 8 0 | 0 7 9 
+
+Given cells: 30
+Empty cells: 51
+
+PSO Configuration:
+  Swarm size: 150 particles
+  Max iterations: 3000
+  Inertia weight (w): 0.7
+  Cognitive coeff (c1): 1.5
+  Social coeff (c2): 1.5
+
+
+Trial 1:
+  Swarm size: 150, Max iterations: 3000
+  Iteration 100: best score = 17
+  Iteration 200: best score = 17
+  Iteration 300: best score = 17
+  Iteration 400: best score = 17
+  Iteration 500: best score = 17
+  Iteration 600: best score = 17
+  Iteration 700: best score = 17
+  Iteration 800: best score = 17
+  Iteration 900: best score = 17
+  Iteration 1000: best score = 17
+  Iteration 1100: best score = 17
+  Iteration 1200: best score = 17
+  Iteration 1300: best score = 17
+  Iteration 1400: best score = 17
+  Iteration 1500: best score = 17
+  Iteration 1600: best score = 17
+  Iteration 1700: best score = 17
+  Iteration 1800: best score = 17
+  Iteration 1900: best score = 17
+  Iteration 2000: best score = 17
+  Iteration 2100: best score = 17
+  Iteration 2200: best score = 17
+  Iteration 2300: best score = 17
+  Iteration 2400: best score = 17
+  Iteration 2500: best score = 17
+  Iteration 2600: best score = 17
+  Iteration 2700: best score = 17
+  Iteration 2800: best score = 17
+  Iteration 2900: best score = 17
+  Iteration 3000: best score = 17
+  Final score: 17 violations
+  Iterations: 3000
+  Time: 30.3757s
+  Status: max_iterations
+
+Trial 2:
+  Swarm size: 150, Max iterations: 3000
+  Iteration 100: best score = 11
+  Iteration 200: best score = 11
+  Iteration 300: best score = 11
+  Iteration 400: best score = 11
+  Iteration 500: best score = 11
+  Iteration 600: best score = 11
+  Iteration 700: best score = 11
+  Iteration 800: best score = 11
+  Iteration 900: best score = 11
+  Iteration 1000: best score = 11
+  Iteration 1100: best score = 11
+  Iteration 1200: best score = 11
+  Iteration 1300: best score = 11
+  Iteration 1400: best score = 11
+  Iteration 1500: best score = 11
+  Iteration 1600: best score = 11
+  Iteration 1700: best score = 11
+  Iteration 1800: best score = 11
+  Iteration 1900: best score = 11
+  Iteration 2000: best score = 11
+  Iteration 2100: best score = 11
+  Iteration 2200: best score = 11
+  Iteration 2300: best score = 11
+  Iteration 2400: best score = 11
+  Iteration 2500: best score = 11
+  Iteration 2600: best score = 11
+  Iteration 2700: best score = 11
+  Iteration 2800: best score = 11
+  Iteration 2900: best score = 11
+  Iteration 3000: best score = 11
+  Final score: 11 violations
+  Iterations: 3000
+  Time: 30.2012s
+  Status: max_iterations
+
+Trial 3:
+  Swarm size: 150, Max iterations: 3000
+  Iteration 100: best score = 19
+  Iteration 200: best score = 16
+  Iteration 300: best score = 16
+  Iteration 400: best score = 16
+  Iteration 500: best score = 16
+  Iteration 600: best score = 16
+  Iteration 700: best score = 16
+  Iteration 800: best score = 16
+  Iteration 900: best score = 16
+  Iteration 1000: best score = 16
+  Iteration 1100: best score = 16
+  Iteration 1200: best score = 16
+  Iteration 1300: best score = 16
+  Iteration 1400: best score = 16
+  Iteration 1500: best score = 16
+  Iteration 1600: best score = 16
+  Iteration 1700: best score = 16
+  Iteration 1800: best score = 16
+  Iteration 1900: best score = 16
+  Iteration 2000: best score = 16
+  Iteration 2100: best score = 16
+  Iteration 2200: best score = 16
+  Iteration 2300: best score = 16
+  Iteration 2400: best score = 16
+  Iteration 2500: best score = 16
+  Iteration 2600: best score = 16
+  Iteration 2700: best score = 16
+  Iteration 2800: best score = 16
+  Iteration 2900: best score = 16
+  Iteration 3000: best score = 16
+  Final score: 16 violations
+  Iterations: 3000
+  Time: 31.4535s
+  Status: max_iterations
+
+======================================================================
+Summary of PSO for Sudoku
+======================================================================
+
+Trials run: 3
+Solved: 0/3
+Best score: 11 violations
+Worst score: 17 violations
+Avg score: 14.67 violations
+Avg time: 30.6768s
+Total runtime: 92.0304s
+
+======================================================================
+Best Result (Trial 2)
+======================================================================
+Status: max_iterations
+Final violations: 11
+Iterations: 3000
+Time: 30.2012s
+
+Best board found (11 violations remaining):
+5 3 4 | 6 7 2 | 1 9 8 
+6 8 2 | 1 9 5 | 3 4 7 
+7 9 8 | 3 4 1 | 5 6 2 
+---------------------
+8 1 7 | 5 6 4 | 9 2 3 
+4 2 6 | 8 9 3 | 7 5 1 
+7 5 3 | 9 2 8 | 4 1 6 
+---------------------
+9 6 1 | 5 3 7 | 2 8 4 
+2 7 8 | 4 1 9 | 6 3 5 
+3 4 5 | 2 8 6 | 1 7 9 
+
+Violation breakdown:
+  Column violations: 5
+  Box violations: 6
+  Total: 11
+
+======================================================================
+Analysis
+======================================================================
+PSO demonstrates metaheuristic approach to constraint optimization.
+Unlike CSP methods (Part A) which guarantee solutions, PSO provides
+approximate optimization. CSP methods solve this puzzle in <0.02s
+with certainty, while PSO takes ~30.7s and may not fully solve.
+
+PSO is better suited for continuous optimization and problems where
+approximate solutions are acceptable.
+======================================================================
+
+---- Full Experiments (run_experiments.py) ----
+
+==== CS 4820/5820 HW02 Full Run ====
+Timestamp: 2025-10-26 08:19:02
+Python: python
+
+---- Sudoku CSP (All Variants) (sudoku_csp.py) ----
+
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+ C S   4 8 2 0 / 5 8 2 0   H o m e w o r k   2   -   P a r t   A :   S u d o k u   C S P   S o l v e r s  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+  
+ S t a r t i n g   P u z z l e :  
+ 5   3   .   |   .   7   .   |   .   .   .    
+ 6   .   .   |   1   9   5   |   .   .   .    
+ .   9   8   |   .   .   .   |   .   6   .    
+ - - - - - - - - - - - - - - - - - - - - -  
+ 8   .   .   |   .   6   .   |   .   .   3    
+ 4   .   .   |   8   .   3   |   .   .   1    
+ 7   .   .   |   .   2   .   |   .   .   6    
+ - - - - - - - - - - - - - - - - - - - - -  
+ .   6   .   |   .   .   .   |   2   8   .    
+ .   .   .   |   4   1   9   |   .   .   5    
+ .   .   .   |   .   8   .   |   .   7   9    
+  
+ G i v e n   c e l l s :   3 0  
+ E m p t y   c e l l s :   5 1  
+  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+ B a s i c   B a c k t r a c k i n g  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+  
+ S t a t u s :   S O L V E D  
+ T i m e :   0 . 0 5 8 6   s e c o n d s  
+ R u n t i m e :   5 8 . 6 2   m i l l i s e c o n d s  
+  
+ S o l v e d   P u z z l e :  
+ 5   3   4   |   6   7   8   |   9   1   2    
+ 6   7   2   |   1   9   5   |   3   4   8    
+ 1   9   8   |   3   4   2   |   5   6   7    
+ - - - - - - - - - - - - - - - - - - - - -  
+ 8   5   9   |   7   6   1   |   4   2   3    
+ 4   2   6   |   8   5   3   |   7   9   1    
+ 7   1   3   |   9   2   4   |   8   5   6    
+ - - - - - - - - - - - - - - - - - - - - -  
+ 9   6   1   |   5   3   7   |   2   8   4    
+ 2   8   7   |   4   1   9   |   6   3   5    
+ 3   4   5   |   2   8   6   |   1   7   9    
+  
+ V e r i f i c a t i o n :  
+     A l l   c e l l s   f i l l e d :   T r u e  
+     T o t a l   c e l l s :   8 1 / 8 1  
+  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+ B a c k t r a c k i n g   +   M R V   +   L C V  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+  
+ S t a t u s :   S O L V E D  
+ T i m e :   0 . 0 2 2 1   s e c o n d s  
+ R u n t i m e :   2 2 . 1 1   m i l l i s e c o n d s  
+  
+ S o l v e d   P u z z l e :  
+ 5   3   4   |   6   7   8   |   9   1   2    
+ 6   7   2   |   1   9   5   |   3   4   8    
+ 1   9   8   |   3   4   2   |   5   6   7    
+ - - - - - - - - - - - - - - - - - - - - -  
+ 8   5   9   |   7   6   1   |   4   2   3    
+ 4   2   6   |   8   5   3   |   7   9   1    
+ 7   1   3   |   9   2   4   |   8   5   6    
+ - - - - - - - - - - - - - - - - - - - - -  
+ 9   6   1   |   5   3   7   |   2   8   4    
+ 2   8   7   |   4   1   9   |   6   3   5    
+ 3   4   5   |   2   8   6   |   1   7   9    
+  
+ V e r i f i c a t i o n :  
+     A l l   c e l l s   f i l l e d :   T r u e  
+     T o t a l   c e l l s :   8 1 / 8 1  
+  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+ B a c k t r a c k i n g   +   F o r w a r d   C h e c k i n g  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+  
+ S t a t u s :   S O L V E D  
+ T i m e :   0 . 0 2 0 3   s e c o n d s  
+ R u n t i m e :   2 0 . 2 7   m i l l i s e c o n d s  
+  
+ S o l v e d   P u z z l e :  
+ 5   3   4   |   6   7   8   |   9   1   2    
+ 6   7   2   |   1   9   5   |   3   4   8    
+ 1   9   8   |   3   4   2   |   5   6   7    
+ - - - - - - - - - - - - - - - - - - - - -  
+ 8   5   9   |   7   6   1   |   4   2   3    
+ 4   2   6   |   8   5   3   |   7   9   1    
+ 7   1   3   |   9   2   4   |   8   5   6    
+ - - - - - - - - - - - - - - - - - - - - -  
+ 9   6   1   |   5   3   7   |   2   8   4    
+ 2   8   7   |   4   1   9   |   6   3   5    
+ 3   4   5   |   2   8   6   |   1   7   9    
+  
+ V e r i f i c a t i o n :  
+     A l l   c e l l s   f i l l e d :   T r u e  
+     T o t a l   c e l l s :   8 1 / 8 1  
+  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+ B a c k t r a c k i n g   +   A C - 3  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+  
+ S t a t u s :   S O L V E D  
+ T i m e :   0 . 0 1 9 2   s e c o n d s  
+ R u n t i m e :   1 9 . 1 8   m i l l i s e c o n d s  
+  
+ S o l v e d   P u z z l e :  
+ 5   3   4   |   6   7   8   |   9   1   2    
+ 6   7   2   |   1   9   5   |   3   4   8    
+ 1   9   8   |   3   4   2   |   5   6   7    
+ - - - - - - - - - - - - - - - - - - - - -  
+ 8   5   9   |   7   6   1   |   4   2   3    
+ 4   2   6   |   8   5   3   |   7   9   1    
+ 7   1   3   |   9   2   4   |   8   5   6    
+ - - - - - - - - - - - - - - - - - - - - -  
+ 9   6   1   |   5   3   7   |   2   8   4    
+ 2   8   7   |   4   1   9   |   6   3   5    
+ 3   4   5   |   2   8   6   |   1   7   9    
+  
+ V e r i f i c a t i o n :  
+     A l l   c e l l s   f i l l e d :   T r u e  
+     T o t a l   c e l l s :   8 1 / 8 1  
+  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+ A l l   S u d o k u   C S P   t e s t s   c o m p l e t e d  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+ 
+---- n-Queens Minimum Conflicts (nqueens_minconflicts.py) ----
+
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+ C S   4 8 2 0 / 5 8 2 0   H o m e w o r k   2   -   P a r t   B :   M i n i m u m   C o n f l i c t s  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+ n - Q u e e n s   w i t h   M i n i m u m   C o n f l i c t s :   n = 8  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+  
+ S t a r t i n g   b o a r d   ( r a n d o m   i n i t i a l   p l a c e m e n t ) :  
+ Q   .   .   .   .   .   Q   .    
+ .   .   Q   .   .   .   .   .    
+ .   .   .   Q   .   .   .   .    
+ .   .   .   .   .   .   .   .    
+ .   .   .   .   Q   .   .   .    
+ .   .   .   .   .   .   .   .    
+ .   Q   .   .   .   Q   .   Q    
+ .   .   .   .   .   .   .   .    
+  
+ S t a r t i n g   c o n f l i c t s :   8  
+  
+ S t a t u s :   S O L V E D  
+ S t e p s   t a k e n :   1 0 0 0 1 3 9  
+ R e s t a r t   a t t e m p t s :   2  
+ T i m e :   2 2 . 3 7 3 3 0 3   s e c o n d s  
+ R u n t i m e :   2 2 3 7 3 . 3 0 3   m i l l i s e c o n d s  
+  
+ S o l v e d   b o a r d :  
+ .   .   .   .   .   Q   .   .    
+ .   Q   .   .   .   .   .   .    
+ .   .   .   .   .   .   Q   .    
+ Q   .   .   .   .   .   .   .    
+ .   .   .   Q   .   .   .   .    
+ .   .   .   .   .   .   .   Q    
+ .   .   .   .   Q   .   .   .    
+ .   .   Q   .   .   .   .   .    
+  
+ F i n a l   c o n f l i c t s :   0  
+ S o l u t i o n   v e r i f i e d :   T r u e  
+  
+  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+ n - Q u e e n s   w i t h   M i n i m u m   C o n f l i c t s :   n = 1 6  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+  
+ S t a r t i n g   b o a r d   ( r a n d o m   i n i t i a l   p l a c e m e n t ) :  
+ .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Q    
+ .   .   .   Q   Q   .   .   .   .   .   .   .   .   .   .   .    
+ .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .    
+ .   .   .   .   .   .   .   Q   .   .   .   .   .   .   Q   .    
+ .   .   .   .   .   .   .   .   .   .   Q   .   .   .   .   .    
+ .   .   .   .   .   .   .   .   .   .   .   .   Q   .   .   .    
+ .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .    
+ .   Q   .   .   .   .   .   .   .   .   .   .   .   .   .   .    
+ .   .   .   .   .   Q   .   .   Q   Q   .   .   .   .   .   .    
+ .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .    
+ .   .   .   .   .   .   Q   .   .   .   .   .   .   .   .   .    
+ Q   .   .   .   .   .   .   .   .   .   .   .   .   Q   .   .    
+ .   .   Q   .   .   .   .   .   .   .   .   .   .   .   .   .    
+ .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .    
+ .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .    
+ .   .   .   .   .   .   .   .   .   .   .   Q   .   .   .   .    
+  
+ S t a r t i n g   c o n f l i c t s :   1 3  
+  
+ S t a t u s :   S O L V E D  
+ S t e p s   t a k e n :   1 7 3  
+ R e s t a r t   a t t e m p t s :   1  
+ T i m e :   0 . 0 1 3 7 5 4   s e c o n d s  
+ R u n t i m e :   1 3 . 7 5 4   m i l l i s e c o n d s  
+  
+ S o l v e d   b o a r d :  
+ .   .   .   .   .   .   .   .   .   Q   .   .   .   .   .   .    
+ .   .   .   .   .   .   .   Q   .   .   .   .   .   .   .   .    
+ .   Q   .   .   .   .   .   .   .   .   .   .   .   .   .   .    
+ .   .   .   .   .   .   .   .   .   .   .   .   .   Q   .   .    
+ .   .   Q   .   .   .   .   .   .   .   .   .   .   .   .   .    
+ .   .   .   .   .   Q   .   .   .   .   .   .   .   .   .   .    
+ .   .   .   .   .   .   .   .   .   .   .   Q   .   .   .   .    
+ .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   Q    
+ .   .   .   .   Q   .   .   .   .   .   .   .   .   .   .   .    
+ .   .   .   .   .   .   .   .   .   .   Q   .   .   .   .   .    
+ .   .   .   Q   .   .   .   .   .   .   .   .   .   .   .   .    
+ .   .   .   .   .   .   .   .   .   .   .   .   .   .   Q   .    
+ .   .   .   .   .   .   Q   .   .   .   .   .   .   .   .   .    
+ .   .   .   .   .   .   .   .   Q   .   .   .   .   .   .   .    
+ Q   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .    
+ .   .   .   .   .   .   .   .   .   .   .   .   Q   .   .   .    
+  
+ F i n a l   c o n f l i c t s :   0  
+ S o l u t i o n   v e r i f i e d :   T r u e  
+  
+  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+ n - Q u e e n s   w i t h   M i n i m u m   C o n f l i c t s :   n = 2 5  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+  
+ S t a r t i n g   b o a r d   ( r a n d o m   i n i t i a l   p l a c e m e n t ) :  
+     [ B o a r d   t o o   l a r g e   t o   d i s p l a y   -   2 5 x 2 5   w i t h   2 5   q u e e n s ]  
+  
+ S t a r t i n g   c o n f l i c t s :   3 5  
+  
+ S t a t u s :   S O L V E D  
+ S t e p s   t a k e n :   1 0 4  
+ R e s t a r t   a t t e m p t s :   1  
+ T i m e :   0 . 0 1 9 4 7 9   s e c o n d s  
+ R u n t i m e :   1 9 . 4 7 9   m i l l i s e c o n d s  
+  
+ S o l v e d   b o a r d :  
+     [ B o a r d   t o o   l a r g e   t o   d i s p l a y   -   2 5 x 2 5   w i t h   2 5   q u e e n s ]  
+     F i r s t   1 0   q u e e n s :   [ 1 9 ,   1 0 ,   6 ,   2 0 ,   1 4 ,   1 1 ,   2 1 ,   8 ,   2 4 ,   0 ]  
+  
+ F i n a l   c o n f l i c t s :   0  
+ S o l u t i o n   v e r i f i e d :   T r u e  
+  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+ A l l   n - Q u e e n s   M i n i m u m   C o n f l i c t s   t e s t s   c o m p l e t e d  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+ 
+---- PSO on Rastrigin and Rosenbrock (pso_benchmark.py) ----
+
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+ C S   4 8 2 0 / 5 8 2 0   H o m e w o r k   2   -   P a r t   C 1 :   P S O   B e n c h m a r k   O p t i m i z a t i o n  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+ R a s t r i g i n   F u n c t i o n  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+ P r o p e r t i e s :  
+     -   H i g h l y   m u l t i m o d a l   w i t h   m a n y   l o c a l   m i n i m a  
+     -   G l o b a l   m i n i m u m :   f ( 0 , 0 , . . . , 0 )   =   0  
+     -   D o m a i n :   [ - 5 . 1 2 ,   5 . 1 2 ] ^ 1 0  
+  
+  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+ P S O   B e n c h m a r k :   R a s t r i g i n  
+ D i m e n s i o n s :   1 0 ,   B o u n d s :   ( - 5 . 1 2 ,   5 . 1 2 )  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+  
+ C o n f i g u r a t i o n   1 :   { ' s w a r m _ s i z e ' :   3 0 ,   ' w ' :   0 . 7 ,   ' c 1 ' :   1 . 5 ,   ' c 2 ' :   1 . 5 ,   ' m a x _ i t e r a t i o n s ' :   1 0 0 0 }  
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+     T r i a l   1 :   s c o r e = 5 . 7 9 0 6 2 0 e + 0 1 ,   i t e r s = 4 ,   t i m e = 0 . 0 1 4 9 s ,   s t a t u s = c o n v e r g e d  
+     T r i a l   2 :   s c o r e = 6 . 0 5 4 4 1 1 e + 0 1 ,   i t e r s = 3 ,   t i m e = 0 . 0 0 1 0 s ,   s t a t u s = c o n v e r g e d  
+     T r i a l   3 :   s c o r e = 4 . 8 7 0 2 9 8 e + 0 1 ,   i t e r s = 2 ,   t i m e = 0 . 0 0 0 7 s ,   s t a t u s = c o n v e r g e d  
+  
+     S u m m a r y :  
+         B e s t   s c o r e :   4 . 8 7 0 2 9 8 e + 0 1  
+         A v g   s c o r e :   5 . 5 7 1 7 7 6 e + 0 1   �   5 . 0 7 5 7 6 1 e + 0 0  
+         A v g   i t e r a t i o n s :   3 . 0  
+         A v g   t i m e :   0 . 0 0 5 5 s  
+  
+ C o n f i g u r a t i o n   2 :   { ' s w a r m _ s i z e ' :   5 0 ,   ' w ' :   0 . 5 ,   ' c 1 ' :   2 . 0 ,   ' c 2 ' :   2 . 0 ,   ' m a x _ i t e r a t i o n s ' :   1 0 0 0 }  
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+     T r i a l   1 :   s c o r e = 7 . 7 9 4 7 1 3 e + 0 1 ,   i t e r s = 3 ,   t i m e = 0 . 0 0 1 6 s ,   s t a t u s = c o n v e r g e d  
+     T r i a l   2 :   s c o r e = 7 . 1 7 9 9 2 8 e + 0 1 ,   i t e r s = 4 ,   t i m e = 0 . 0 0 1 9 s ,   s t a t u s = c o n v e r g e d  
+     T r i a l   3 :   s c o r e = 6 . 2 5 4 4 3 5 e + 0 1 ,   i t e r s = 3 ,   t i m e = 0 . 0 0 1 5 s ,   s t a t u s = c o n v e r g e d  
+  
+     S u m m a r y :  
+         B e s t   s c o r e :   6 . 2 5 4 4 3 5 e + 0 1  
+         A v g   s c o r e :   7 . 0 7 6 3 5 8 e + 0 1   �   6 . 3 3 0 6 5 9 e + 0 0  
+         A v g   i t e r a t i o n s :   3 . 3  
+         A v g   t i m e :   0 . 0 0 1 6 s  
+  
+ C o n f i g u r a t i o n   3 :   { ' s w a r m _ s i z e ' :   4 0 ,   ' w ' :   0 . 9 ,   ' c 1 ' :   1 . 2 ,   ' c 2 ' :   1 . 2 ,   ' m a x _ i t e r a t i o n s ' :   1 5 0 0 }  
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+     T r i a l   1 :   s c o r e = 8 . 0 1 1 6 2 0 e + 0 1 ,   i t e r s = 3 ,   t i m e = 0 . 0 0 1 2 s ,   s t a t u s = c o n v e r g e d  
+     T r i a l   2 :   s c o r e = 7 . 6 4 7 4 9 7 e + 0 1 ,   i t e r s = 3 ,   t i m e = 0 . 0 0 1 2 s ,   s t a t u s = c o n v e r g e d  
+     T r i a l   3 :   s c o r e = 7 . 8 9 5 6 3 5 e + 0 1 ,   i t e r s = 4 ,   t i m e = 0 . 0 0 1 5 s ,   s t a t u s = c o n v e r g e d  
+  
+     S u m m a r y :  
+         B e s t   s c o r e :   7 . 6 4 7 4 9 7 e + 0 1  
+         A v g   s c o r e :   7 . 8 5 1 5 8 4 e + 0 1   �   1 . 5 1 8 8 0 7 e + 0 0  
+         A v g   i t e r a t i o n s :   3 . 3  
+         A v g   t i m e :   0 . 0 0 1 3 s  
+  
+  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+ R o s e n b r o c k   F u n c t i o n  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+ P r o p e r t i e s :  
+     -   N a r r o w   p a r a b o l i c   v a l l e y  
+     -   G l o b a l   m i n i m u m :   f ( 1 , 1 , . . . , 1 )   =   0  
+     -   D o m a i n :   [ - 5 ,   1 0 ] ^ 1 0  
+  
+  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+ P S O   B e n c h m a r k :   R o s e n b r o c k  
+ D i m e n s i o n s :   1 0 ,   B o u n d s :   ( - 5 ,   1 0 )  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+  
+ C o n f i g u r a t i o n   1 :   { ' s w a r m _ s i z e ' :   3 0 ,   ' w ' :   0 . 7 ,   ' c 1 ' :   1 . 5 ,   ' c 2 ' :   1 . 5 ,   ' m a x _ i t e r a t i o n s ' :   1 0 0 0 }  
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+     T r i a l   1 :   s c o r e = 6 . 2 3 6 2 3 7 e + 0 2 ,   i t e r s = 8 ,   t i m e = 0 . 0 0 2 6 s ,   s t a t u s = c o n v e r g e d  
+     T r i a l   2 :   s c o r e = 2 . 6 4 1 9 4 2 e + 0 3 ,   i t e r s = 4 ,   t i m e = 0 . 0 0 1 4 s ,   s t a t u s = c o n v e r g e d  
+     T r i a l   3 :   s c o r e = 9 . 8 6 5 9 2 3 e + 0 3 ,   i t e r s = 4 ,   t i m e = 0 . 0 0 1 4 s ,   s t a t u s = c o n v e r g e d  
+  
+     S u m m a r y :  
+         B e s t   s c o r e :   6 . 2 3 6 2 3 7 e + 0 2  
+         A v g   s c o r e :   4 . 3 7 7 1 6 3 e + 0 3   �   3 . 9 6 7 6 4 1 e + 0 3  
+         A v g   i t e r a t i o n s :   5 . 3  
+         A v g   t i m e :   0 . 0 0 1 8 s  
+  
+ C o n f i g u r a t i o n   2 :   { ' s w a r m _ s i z e ' :   5 0 ,   ' w ' :   0 . 5 ,   ' c 1 ' :   2 . 0 ,   ' c 2 ' :   2 . 0 ,   ' m a x _ i t e r a t i o n s ' :   1 0 0 0 }  
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+     T r i a l   1 :   s c o r e = 6 . 3 4 6 4 7 4 e + 0 2 ,   i t e r s = 6 ,   t i m e = 0 . 0 0 3 1 s ,   s t a t u s = c o n v e r g e d  
+     T r i a l   2 :   s c o r e = 3 . 2 9 7 5 7 0 e + 0 2 ,   i t e r s = 4 ,   t i m e = 0 . 0 0 2 2 s ,   s t a t u s = c o n v e r g e d  
+     T r i a l   3 :   s c o r e = 3 . 9 9 8 6 4 3 e + 0 2 ,   i t e r s = 8 ,   t i m e = 0 . 0 0 4 3 s ,   s t a t u s = c o n v e r g e d  
+  
+     S u m m a r y :  
+         B e s t   s c o r e :   3 . 2 9 7 5 7 0 e + 0 2  
+         A v g   s c o r e :   4 . 5 4 7 5 6 3 e + 0 2   �   1 . 3 0 3 8 2 5 e + 0 2  
+         A v g   i t e r a t i o n s :   6 . 0  
+         A v g   t i m e :   0 . 0 0 3 2 s  
+  
+ C o n f i g u r a t i o n   3 :   { ' s w a r m _ s i z e ' :   4 0 ,   ' w ' :   0 . 9 ,   ' c 1 ' :   1 . 2 ,   ' c 2 ' :   1 . 2 ,   ' m a x _ i t e r a t i o n s ' :   1 5 0 0 }  
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
+     T r i a l   1 :   s c o r e = 3 . 1 1 7 1 8 9 e + 0 3 ,   i t e r s = 7 ,   t i m e = 0 . 0 0 2 9 s ,   s t a t u s = c o n v e r g e d  
+     T r i a l   2 :   s c o r e = 2 . 1 5 5 2 2 1 e + 0 4 ,   i t e r s = 3 ,   t i m e = 0 . 0 0 1 4 s ,   s t a t u s = c o n v e r g e d  
+     T r i a l   3 :   s c o r e = 1 . 0 2 4 1 3 8 e + 0 4 ,   i t e r s = 3 ,   t i m e = 0 . 0 0 1 4 s ,   s t a t u s = c o n v e r g e d  
+  
+     S u m m a r y :  
+         B e s t   s c o r e :   3 . 1 1 7 1 8 9 e + 0 3  
+         A v g   s c o r e :   1 . 1 6 3 6 9 3 e + 0 4   �   7 . 5 9 0 4 8 5 e + 0 3  
+         A v g   i t e r a t i o n s :   4 . 3  
+         A v g   t i m e :   0 . 0 0 1 9 s  
+  
+  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+ D e t a i l e d   E x a m p l e :   R a s t r i g i n   C o n v e r g e n c e  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+  
+ R u n n i n g   P S O   w i t h :  
+     S w a r m   s i z e :   3 0  
+     I n e r t i a   w e i g h t   ( w ) :   0 . 7  
+     C o g n i t i v e   c o e f f   ( c 1 ) :   1 . 5  
+     S o c i a l   c o e f f   ( c 2 ) :   1 . 5  
+     M a x   i t e r a t i o n s :   5 0 0  
+  
+ S t a t u s :   c o n v e r g e d  
+ F i n a l   b e s t   s c o r e :   7 . 9 6 9 8 8 3 e + 0 1  
+ I t e r a t i o n s   c o m p l e t e d :   3  
+ T i m e :   0 . 0 0 1 0   s e c o n d s  
+ R u n t i m e :   0 . 9 6   m i l l i s e c o n d s  
+  
+ B e s t   p o s i t i o n   f o u n d :  
+     [ - 0 . 9 1 1 7 1 7 3 3     1 . 1 7 1 0 5 4 5 2     0 . 2 0 4 8 6 4 2 7     1 . 2 4 5 5 1 2 7       3 . 0 7 2             - 0 . 0 4 4 5 0 8 2 6  
+   - 0 . 9 3 2 0 5 2 7 1   - 0 . 9 5 9 1 3 2 8 3     0 . 3 5 4 7 8 6 9 5     2 . 3 6 3 9 3 3 6 6 ]  
+  
+ C o n v e r g e n c e   h i s t o r y   ( e v e r y   5 0   i t e r a t i o n s ) :  
+     I t e r a t i o n       0 :   1 . 4 3 7 8 7 4 e + 0 2  
+  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+ A l l   P S O   b e n c h m a r k   t e s t s   c o m p l e t e d  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+ 
+---- PSO for Sudoku (pso_sudoku.py) ----
+
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+ C S   4 8 2 0 / 5 8 2 0   H o m e w o r k   2   -   P a r t   C 2 :   P S O   f o r   S u d o k u  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+  
+ S t a r t i n g   P u z z l e :  
+ 5   3   0   |   0   7   0   |   0   0   0    
+ 6   0   0   |   1   9   5   |   0   0   0    
+ 0   9   8   |   0   0   0   |   0   6   0    
+ - - - - - - - - - - - - - - - - - - - - -  
+ 8   0   0   |   0   6   0   |   0   0   3    
+ 4   0   0   |   8   0   3   |   0   0   1    
+ 7   0   0   |   0   2   0   |   0   0   6    
+ - - - - - - - - - - - - - - - - - - - - -  
+ 0   6   0   |   0   0   0   |   2   8   0    
+ 0   0   0   |   4   1   9   |   0   0   5    
+ 0   0   0   |   0   8   0   |   0   7   9    
+  
+ G i v e n   c e l l s :   3 0  
+ E m p t y   c e l l s :   5 1  
+  
+ P S O   C o n f i g u r a t i o n :  
+     S w a r m   s i z e :   1 5 0   p a r t i c l e s  
+     M a x   i t e r a t i o n s :   3 0 0 0  
+     I n e r t i a   w e i g h t   ( w ) :   0 . 7  
+     C o g n i t i v e   c o e f f   ( c 1 ) :   1 . 5  
+     S o c i a l   c o e f f   ( c 2 ) :   1 . 5  
+  
+  
+ T r i a l   1 :  
+     S w a r m   s i z e :   1 5 0 ,   M a x   i t e r a t i o n s :   3 0 0 0  
+     I t e r a t i o n   1 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   2 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   3 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   4 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   5 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   6 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   7 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   8 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   9 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   1 0 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   1 1 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   1 2 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   1 3 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   1 4 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   1 5 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   1 6 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   1 7 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   1 8 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   1 9 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   2 0 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   2 1 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   2 2 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   2 3 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   2 4 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   2 5 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   2 6 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   2 7 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   2 8 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   2 9 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   3 0 0 0 :   b e s t   s c o r e   =   1 2  
+     F i n a l   s c o r e :   1 2   v i o l a t i o n s  
+     I t e r a t i o n s :   3 0 0 0  
+     T i m e :   3 0 . 7 7 0 6 s  
+     S t a t u s :   m a x _ i t e r a t i o n s  
+  
+ T r i a l   2 :  
+     S w a r m   s i z e :   1 5 0 ,   M a x   i t e r a t i o n s :   3 0 0 0  
+     I t e r a t i o n   1 0 0 :   b e s t   s c o r e   =   1 1  
+     I t e r a t i o n   2 0 0 :   b e s t   s c o r e   =   1 1  
+     I t e r a t i o n   3 0 0 :   b e s t   s c o r e   =   1 1  
+     I t e r a t i o n   4 0 0 :   b e s t   s c o r e   =   1 1  
+     I t e r a t i o n   5 0 0 :   b e s t   s c o r e   =   1 1  
+     I t e r a t i o n   6 0 0 :   b e s t   s c o r e   =   1 1  
+     I t e r a t i o n   7 0 0 :   b e s t   s c o r e   =   1 1  
+     I t e r a t i o n   8 0 0 :   b e s t   s c o r e   =   1 1  
+     I t e r a t i o n   9 0 0 :   b e s t   s c o r e   =   9  
+     I t e r a t i o n   1 0 0 0 :   b e s t   s c o r e   =   9  
+     I t e r a t i o n   1 1 0 0 :   b e s t   s c o r e   =   9  
+     I t e r a t i o n   1 2 0 0 :   b e s t   s c o r e   =   9  
+     I t e r a t i o n   1 3 0 0 :   b e s t   s c o r e   =   9  
+     I t e r a t i o n   1 4 0 0 :   b e s t   s c o r e   =   9  
+     I t e r a t i o n   1 5 0 0 :   b e s t   s c o r e   =   9  
+     I t e r a t i o n   1 6 0 0 :   b e s t   s c o r e   =   9  
+     I t e r a t i o n   1 7 0 0 :   b e s t   s c o r e   =   9  
+     I t e r a t i o n   1 8 0 0 :   b e s t   s c o r e   =   9  
+     I t e r a t i o n   1 9 0 0 :   b e s t   s c o r e   =   9  
+     I t e r a t i o n   2 0 0 0 :   b e s t   s c o r e   =   9  
+     I t e r a t i o n   2 1 0 0 :   b e s t   s c o r e   =   9  
+     I t e r a t i o n   2 2 0 0 :   b e s t   s c o r e   =   9  
+     I t e r a t i o n   2 3 0 0 :   b e s t   s c o r e   =   9  
+     I t e r a t i o n   2 4 0 0 :   b e s t   s c o r e   =   9  
+     I t e r a t i o n   2 5 0 0 :   b e s t   s c o r e   =   9  
+     I t e r a t i o n   2 6 0 0 :   b e s t   s c o r e   =   9  
+     I t e r a t i o n   2 7 0 0 :   b e s t   s c o r e   =   9  
+     I t e r a t i o n   2 8 0 0 :   b e s t   s c o r e   =   9  
+     I t e r a t i o n   2 9 0 0 :   b e s t   s c o r e   =   9  
+     I t e r a t i o n   3 0 0 0 :   b e s t   s c o r e   =   9  
+     F i n a l   s c o r e :   9   v i o l a t i o n s  
+     I t e r a t i o n s :   3 0 0 0  
+     T i m e :   3 1 . 4 7 6 8 s  
+     S t a t u s :   m a x _ i t e r a t i o n s  
+  
+ T r i a l   3 :  
+     S w a r m   s i z e :   1 5 0 ,   M a x   i t e r a t i o n s :   3 0 0 0  
+     I t e r a t i o n   1 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   2 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   3 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   4 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   5 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   6 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   7 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   8 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   9 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   1 0 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   1 1 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   1 2 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   1 3 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   1 4 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   1 5 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   1 6 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   1 7 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   1 8 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   1 9 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   2 0 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   2 1 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   2 2 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   2 3 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   2 4 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   2 5 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   2 6 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   2 7 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   2 8 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   2 9 0 0 :   b e s t   s c o r e   =   1 2  
+     I t e r a t i o n   3 0 0 0 :   b e s t   s c o r e   =   1 2  
+     F i n a l   s c o r e :   1 2   v i o l a t i o n s  
+     I t e r a t i o n s :   3 0 0 0  
+     T i m e :   3 2 . 3 9 4 7 s  
+     S t a t u s :   m a x _ i t e r a t i o n s  
+  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+ S u m m a r y   o f   P S O   f o r   S u d o k u  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+  
+ T r i a l s   r u n :   3  
+ S o l v e d :   0 / 3  
+ B e s t   s c o r e :   9   v i o l a t i o n s  
+ W o r s t   s c o r e :   1 2   v i o l a t i o n s  
+ A v g   s c o r e :   1 1 . 0 0   v i o l a t i o n s  
+ A v g   t i m e :   3 1 . 5 4 7 3 s  
+ T o t a l   r u n t i m e :   9 4 . 6 4 2 0 s  
+  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+ B e s t   R e s u l t   ( T r i a l   2 )  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+ S t a t u s :   m a x _ i t e r a t i o n s  
+ F i n a l   v i o l a t i o n s :   9  
+ I t e r a t i o n s :   3 0 0 0  
+ T i m e :   3 1 . 4 7 6 8 s  
+  
+ B e s t   b o a r d   f o u n d   ( 9   v i o l a t i o n s   r e m a i n i n g ) :  
+ 5   3   2   |   6   7   8   |   9   1   4    
+ 6   4   7   |   1   9   5   |   8   3   2    
+ 1   9   8   |   3   4   2   |   5   6   7    
+ - - - - - - - - - - - - - - - - - - - - -  
+ 8   1   5   |   7   6   9   |   4   2   3    
+ 4   2   6   |   8   5   3   |   7   9   1    
+ 7   3   9   |   4   2   1   |   8   5   6    
+ - - - - - - - - - - - - - - - - - - - - -  
+ 9   6   4   |   5   3   7   |   2   8   1    
+ 2   7   3   |   4   1   9   |   6   8   5    
+ 4   5   1   |   2   8   6   |   3   7   9    
+  
+ V i o l a t i o n   b r e a k d o w n :  
+     C o l u m n   v i o l a t i o n s :   7  
+     B o x   v i o l a t i o n s :   2  
+     T o t a l :   9  
+  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+ A n a l y s i s  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+ P S O   d e m o n s t r a t e s   m e t a h e u r i s t i c   a p p r o a c h   t o   c o n s t r a i n t   o p t i m i z a t i o n .  
+ U n l i k e   C S P   m e t h o d s   ( P a r t   A )   w h i c h   g u a r a n t e e   s o l u t i o n s ,   P S O   p r o v i d e s  
+ a p p r o x i m a t e   o p t i m i z a t i o n .   C S P   m e t h o d s   s o l v e   t h i s   p u z z l e   i n   < 0 . 0 2 s  
+ w i t h   c e r t a i n t y ,   w h i l e   P S O   t a k e s   ~ 3 1 . 5 s   a n d   m a y   n o t   f u l l y   s o l v e .  
+  
+ P S O   i s   b e t t e r   s u i t e d   f o r   c o n t i n u o u s   o p t i m i z a t i o n   a n d   p r o b l e m s   w h e r e  
+ a p p r o x i m a t e   s o l u t i o n s   a r e   a c c e p t a b l e .  
+ = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+ 
+---- Full Experiments (run_experiments.py) ----
+
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =  
+ 

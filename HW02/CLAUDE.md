@@ -278,3 +278,30 @@ Good comment examples from HW01 style:
 # Makes each arc X→Y consistent by ensuring every value in X's domain
 # has at least one compatible value in Y's domain
 ```
+
+### Unicode Character Restrictions
+
+**IMPORTANT**: Avoid using Unicode special characters that may cause encoding issues on Windows console (cp1252):
+
+**Characters to AVOID:**
+- Arrow symbols: → ← ↑ ↓ (use `->`, `<-`, or `=` instead)
+- Check marks: ✓ ✗ (use `PASS`, `FAIL`, `OK`, `ERROR` instead)
+- Special bullets: • ● ○ (use `-` or `*` instead)
+- Mathematical symbols: ≤ ≥ ≠ (use `<=`, `>=`, `!=` instead)
+
+**Why this matters:**
+- Windows console uses cp1252 encoding by default
+- Unicode characters outside this range cause `UnicodeEncodeError`
+- Crashes prevent experiments from completing
+- ASCII alternatives work universally across all systems
+
+**Examples of safe replacements:**
+```python
+# BAD (causes UnicodeEncodeError):
+status = "✓" if solution else "✗"
+print("Higher inertia (w) → more exploration")
+
+# GOOD (works everywhere):
+status = "PASS" if solution else "FAIL"
+print("Higher inertia (w) = more exploration")
+```

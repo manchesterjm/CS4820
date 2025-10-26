@@ -55,7 +55,7 @@ def run_part_a_experiments():
             csp = SudokuCSP(puzzle)
             solution, backtracks, elapsed = getattr(csp, method)()
 
-            status = "✓" if solution else "✗"
+            status = "PASS" if solution else "FAIL"
             print("{:<30} {:<10} {:>15} {:>12.6f} {}".format(
                 name, diff, given, elapsed, status
             ))
@@ -217,8 +217,8 @@ def run_part_c1_experiments():
     print("\nInterpretation:")
     print("- Rastrigin: Highly multimodal, tests ability to escape local minima")
     print("- Rosenbrock: Narrow valley, tests convergence precision")
-    print("- Higher inertia (w) → more exploration, may escape local minima")
-    print("- Higher c1/c2 → stronger attraction to bests, faster convergence")
+    print("- Higher inertia (w) = more exploration, may escape local minima")
+    print("- Higher c1/c2 = stronger attraction to bests, faster convergence")
 
 
 def run_part_c2_experiments():

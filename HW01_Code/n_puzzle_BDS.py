@@ -287,7 +287,7 @@ def run_trials_auto():
     - This helps ensure we get required number of successful runs
     """
     # Configuration: (board_size, scramble_steps)
-    configs = [(3, 30), (4, 10)]
+    configs = [(3, 30), (4, 30)]
     
     for m, steps in configs:
         successes = 0

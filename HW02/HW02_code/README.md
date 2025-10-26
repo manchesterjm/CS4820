@@ -48,7 +48,23 @@ HW02_code/
 
 ## Quick Start
 
-### Option 1: Run Full Experiments (Recommended)
+### Option 1: Run All Programs with PowerShell Script (Windows)
+
+The easiest way to run everything and save output for screenshots:
+
+```powershell
+.\run_all.ps1
+```
+
+This PowerShell script will:
+- Run all four main programs (Parts A, B, C1, C2)
+- Display output on screen in real-time
+- Save all output to `HW02_runlog.txt` for screenshots
+- Optionally run full experiments and test suite
+
+The script uses `Tee-Object` to simultaneously display and save output, making it easy to capture screenshots for the report.
+
+### Option 2: Run Full Experiments (Recommended)
 
 Run all experiments and generate results for the report:
 
@@ -63,9 +79,9 @@ This will:
 - Apply PSO to Sudoku (Part C2)
 - Output formatted tables ready for inclusion in report
 
-**Runtime:** Approximately 2-5 minutes depending on system
+**Runtime:** Approximately 5-8 minutes depending on system
 
-### Option 2: Run Test Suite
+### Option 3: Run Test Suite
 
 Verify all implementations work correctly:
 
@@ -75,7 +91,7 @@ python test_all.py
 
 This runs automated tests on all components and reports pass/fail status.
 
-### Option 3: Run Individual Programs
+### Option 4: Run Individual Programs
 
 You can run each part independently:
 

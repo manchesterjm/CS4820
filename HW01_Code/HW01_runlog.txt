@@ -1,5 +1,5 @@
 ﻿==== CS 4820/5820 HW01 Full Run ====
-Timestamp: 2025-10-09 09:16:46
+Timestamp: 2025-10-12 09:28:57
 Python: C:\Users\manch\OneDrive\Desktop\CS4820\HW01_Code\.venv\Scripts\python.exe
 
 ---- BFS (n_puzzle_BFS.py) ----
@@ -13,202 +13,188 @@ trial 1:
 
 BFS on 3x3
 start:
-8 1 3
-2 0 5
-4 7 6
-moves: 10
-expanded: 747
-time_s: 0.0015
+0 5 2
+1 4 3
+7 8 6
+moves: 6
+expanded: 61
+time_s: 0.0001
 
 trial 2:
 
 BFS on 3x3
 start:
-1 2 0
-4 5 3
-7 8 6
-moves: 2
-expanded: 3
+1 2 3
+7 4 6
+0 5 8
+moves: 4
+expanded: 20
 time_s: 0.0
 
 trial 3:
 
 BFS on 3x3
 start:
-7 1 3
-8 2 6
-0 5 4
-moves: 14
-expanded: 2953
-time_s: 0.0046
+4 1 2
+7 8 3
+0 6 5
+moves: 10
+expanded: 462
+time_s: 0.0009
 
 --- summary ---
 solved: 3/3
-avg_moves: 8.67
-avg_expanded: 1234.33
-avg_time_s: 0.002
+avg_moves: 6.67
+avg_expanded: 181.0
+avg_time_s: 0.0003
 
 ================================
-Running 3 trial(s) on 4x4 with steps=12
+Running 3 trial(s) on 4x4 with steps=40
 ================================
 
 trial 1:
 
 BFS on 4x4
 start:
-1 2 3 4
-5 6 7 8
-0 9 10 11
-13 14 15 12
-moves: 4
-expanded: 55
-time_s: 0.0001
+1 10 2 4
+5 7 6 0
+9 12 3 8
+13 14 11 15
+moves: 16
+expanded: 259725
+time_s: 0.6119
 
 trial 2:
 
 BFS on 4x4
 start:
-1 3 0 4
-5 2 7 8
-9 6 11 12
-13 10 14 15
-moves: 6
-expanded: 189
-time_s: 0.0004
+1 2 7 3
+5 6 4 8
+9 14 10 12
+13 0 11 15
+moves: 12
+expanded: 14109
+time_s: 0.0355
 
 trial 3:
 
 BFS on 4x4
 start:
-0 2 3 4
-1 6 7 8
-5 9 10 12
-13 14 11 15
-moves: 6
-expanded: 114
-time_s: 0.0002
+2 6 3 4
+5 0 10 8
+11 1 7 12
+9 13 14 15
+moves: 16
+expanded: 254874
+time_s: 0.5845
 
 --- summary ---
 solved: 3/3
-avg_moves: 5.33
-avg_expanded: 119.33
-avg_time_s: 0.0002
+avg_moves: 14.67
+avg_expanded: 176236.0
+avg_time_s: 0.4106
 
----- DFS (n_puzzle_DFS.py) ----
+---- DFS (n_puzzle_Depth_Limited_DFS.py) ----
 
 
-====================================
-Target: 3 successful trial(s) on 3x3 (steps=60)
-====================================
+==================================================
+Target: 3 successful trial(s) on 3x3
+Scramble steps: 60, Depth limit: 60
+==================================================
 
 attempt 1:
 
-DFS on 3x3
+Depth-Limited DFS on 3x3 (depth_limit=60)
 start:
-5 2 0
-1 7 8
-4 3 6
-moves: 56106
-expanded: 65837
-time_s: 0.1363
+1 3 4
+7 6 2
+0 8 5
+moves: 56
+expanded: 86046
+time_s: 0.1343
 status: ok
 
 attempt 2:
 
-DFS on 3x3
+Depth-Limited DFS on 3x3 (depth_limit=60)
 start:
-4 1 2
-7 5 3
-0 8 6
-moves: 64326
-expanded: 84888
-time_s: 0.1646
+0 6 1
+4 2 3
+7 5 8
+moves: 60
+expanded: 151697
+time_s: 0.2394
 status: ok
 
 attempt 3:
 
-DFS on 3x3
+Depth-Limited DFS on 3x3 (depth_limit=60)
 start:
-1 3 8
-4 5 6
-7 2 0
-moves: 16928
-expanded: 17467
-time_s: 0.0358
+5 8 7
+1 3 4
+0 6 2
+moves: 60
+expanded: 177476
+time_s: 0.2894
 status: ok
 
 --- summary ---
 attempts: 3
 successful: 3/3
-avg_moves: 45786.67
-avg_expanded: 56064.0
-avg_time_s: 0.1123
+avg_moves: 58.67
+avg_expanded: 138406.33
+avg_time_s: 0.221
 
-====================================
-Target: 3 successful trial(s) on 4x4 (steps=3)
-NOTE: DFS is impractical for 15-puzzle; using minimal scramble
-      Even with light scrambling, DFS may timeout frequently
-====================================
+==================================================
+Target: 3 successful trial(s) on 4x4
+Scramble steps: 30, Depth limit: 30
+==================================================
 
 attempt 1:
 
-DFS on 4x4
+Depth-Limited DFS on 4x4 (depth_limit=30)
 start:
-1 2 3 4
-5 6 7 8
-9 10 11 0
+1 2 0 8
+5 6 4 7
+9 10 11 3
 13 14 15 12
-moves: None
-expanded: 10000000
-time_s: 33.872
-status: cap
-retrying due to cap
+moves: 30
+expanded: 26838838
+time_s: 63.8323
+status: ok
 
 attempt 2:
 
-DFS on 4x4
+Depth-Limited DFS on 4x4 (depth_limit=30)
 start:
 1 2 3 4
-5 6 7 8
-9 10 11 12
-13 14 0 15
-moves: 1
-expanded: 1
-time_s: 0.0
+5 6 8 0
+9 11 7 12
+13 10 14 15
+moves: 30
+expanded: 2553347
+time_s: 4.5594
 status: ok
 
 attempt 3:
 
-DFS on 4x4
+Depth-Limited DFS on 4x4 (depth_limit=30)
 start:
-1 2 3 4
-5 6 7 8
-9 10 11 12
-13 14 0 15
-moves: 1
-expanded: 1
-time_s: 0.0
-status: ok
-
-attempt 4:
-
-DFS on 4x4
-start:
-1 2 3 4
-5 6 7 8
-9 10 11 12
-13 14 0 15
-moves: 1
-expanded: 1
-time_s: 0.0
+5 1 2 4
+9 6 3 8
+10 14 7 11
+13 0 15 12
+moves: 28
+expanded: 6981737
+time_s: 14.3533
 status: ok
 
 --- summary ---
-attempts: 4
+attempts: 3
 successful: 3/3
-avg_moves: 1.0
-avg_expanded: 1.0
-avg_time_s: 0.0
+avg_moves: 29.33
+avg_expanded: 12124640.67
+avg_time_s: 27.5817
 
 ---- IDS (n_puzzle_IDS.py) ----
 
@@ -221,61 +207,61 @@ attempt 1:
 
 IDS on 3x3
 start:
-4 2 5
-7 0 1
-8 6 3
-moves: 26
-expanded: 12892
-time_s: 0.0276
-status: ok limit: 14
+1 3 5
+4 2 6
+0 7 8
+moves: 8
+expanded: 340
+time_s: 0.0009
+status: ok limit: 8
 
 attempt 2:
 
 IDS on 3x3
 start:
-1 3 6
-7 0 2
-5 4 8
-moves: 10
-expanded: 1096
-time_s: 0.0035
-status: ok limit: 10
+2 4 3
+6 8 5
+1 7 0
+moves: 26
+expanded: 8234
+time_s: 0.018
+status: ok limit: 14
 
 attempt 3:
 
 IDS on 3x3
 start:
-1 2 3
-8 7 5
-0 4 6
-moves: 8
-expanded: 254
-time_s: 0.0005
-status: ok limit: 8
+0 4 2
+6 1 3
+7 5 8
+moves: 12
+expanded: 976
+time_s: 0.0021
+status: ok limit: 10
 
 --- summary ---
 attempts: 3
 successful: 3/3
-avg_moves: 14.67
-avg_expanded: 4747.33
-avg_time_s: 0.0106
+avg_moves: 15.33
+avg_expanded: 3183.33
+avg_time_s: 0.007
 
 ====================================
-Target: 3 successful trial(s) on 4x4 (steps=8)
+Target: 3 successful trial(s) on 4x4 (steps=30)
 ====================================
 
 attempt 1:
 
 IDS on 4x4
 start:
-1 2 3 4
-5 6 7 8
-0 9 10 12
-13 14 11 15
-moves: 4
-expanded: 38
-time_s: 0.0001
-status: ok limit: 4
+0 1 2 4
+5 6 3 8
+9 10 7 11
+13 14 15 12
+moves: 6
+expanded: 153
+time_s: 0.0004
+status: ok limit: 6
 
 attempt 2:
 
@@ -294,21 +280,21 @@ attempt 3:
 
 IDS on 4x4
 start:
-1 2 3 4
-5 6 7 8
-9 10 12 15
-13 14 11 0
-moves: 4
-expanded: 19
-time_s: 0.0001
-status: ok limit: 4
+1 6 2 3
+5 0 8 4
+9 10 7 15
+13 14 12 11
+moves: 18
+expanded: 15571
+time_s: 0.0442
+status: ok limit: 12
 
 --- summary ---
 attempts: 3
 successful: 3/3
-avg_moves: 3.33
-avg_expanded: 20.67
-avg_time_s: 0.0001
+avg_moves: 8.67
+avg_expanded: 5243.0
+avg_time_s: 0.0149
 
 ---- BDS (n_puzzle_BDS.py) ----
 
@@ -321,94 +307,94 @@ attempt 1:
 
 BDS on 3x3
 start:
-1 4 2
-8 7 3
-6 5 0
-moves: 14
-expanded: 161
-time_s: 0.0004
+0 1 2
+4 5 3
+7 8 6
+moves: 4
+expanded: 5
+time_s: 0.0
 status: ok
 
 attempt 2:
 
 BDS on 3x3
 start:
-2 4 3
-7 1 6
-5 8 0
+1 6 3
+4 7 8
+0 2 5
+moves: 16
+expanded: 278
+time_s: 0.0005
+status: ok
+
+attempt 3:
+
+BDS on 3x3
+start:
+1 6 2
+7 0 3
+5 4 8
 moves: 10
-expanded: 57
-time_s: 0.0002
-status: ok
-
-attempt 3:
-
-BDS on 3x3
-start:
-1 2 3
-7 0 4
-6 5 8
-moves: 12
-expanded: 120
-time_s: 0.0003
-status: ok
-
---- summary ---
-attempts: 3
-successful: 3/3
-avg_moves: 12.0
-avg_expanded: 112.67
-avg_time_s: 0.0003
-
-====================================
-Target: 3 successful trial(s) on 4x4 (steps=10)
-====================================
-
-attempt 1:
-
-BDS on 4x4
-start:
-1 2 0 3
-5 6 7 4
-9 10 11 8
-13 14 15 12
-moves: 4
-expanded: 7
-time_s: 0.0
-status: ok
-
-attempt 2:
-
-BDS on 4x4
-start:
-1 2 0 3
-5 6 7 4
-9 10 11 8
-13 14 15 12
-moves: 4
-expanded: 7
-time_s: 0.0
-status: ok
-
-attempt 3:
-
-BDS on 4x4
-start:
-1 2 3 4
-6 0 7 8
-5 9 11 12
-13 10 14 15
-moves: 6
-expanded: 19
+expanded: 64
 time_s: 0.0001
 status: ok
 
 --- summary ---
 attempts: 3
 successful: 3/3
-avg_moves: 4.67
-avg_expanded: 11.0
-avg_time_s: 0.0
+avg_moves: 10.0
+avg_expanded: 115.67
+avg_time_s: 0.0002
+
+====================================
+Target: 3 successful trial(s) on 4x4 (steps=30)
+====================================
+
+attempt 1:
+
+BDS on 4x4
+start:
+0 2 3 4
+1 5 6 7
+9 10 11 8
+13 14 15 12
+moves: 6
+expanded: 11
+time_s: 0.0001
+status: ok
+
+attempt 2:
+
+BDS on 4x4
+start:
+0 1 2 3
+5 6 7 4
+9 10 11 8
+13 14 15 12
+moves: 6
+expanded: 11
+time_s: 0.0
+status: ok
+
+attempt 3:
+
+BDS on 4x4
+start:
+1 2 0 4
+5 6 3 11
+9 10 15 7
+13 14 12 8
+moves: 10
+expanded: 81
+time_s: 0.0002
+status: ok
+
+--- summary ---
+attempts: 3
+successful: 3/3
+avg_moves: 7.33
+avg_expanded: 34.33
+avg_time_s: 0.0001
 
 ---- N-Queens SA (n_queens_SA.py) ----
 
@@ -422,12 +408,12 @@ attempt 1:
 
 SA on n=4
 board:
-. Q . .
-. . . Q
-Q . . .
 . . Q .
+Q . . .
+. . . Q
+. Q . .
 conflicts: 0
-expanded: 68
+expanded: 51
 time_s: 0.0001
 status: ok
 
@@ -440,8 +426,8 @@ Q . . .
 . . . Q
 . Q . .
 conflicts: 0
-expanded: 101
-time_s: 0.0002
+expanded: 45
+time_s: 0.0001
 status: ok
 
 attempt 3:
@@ -453,14 +439,14 @@ Q . . .
 . . . Q
 . Q . .
 conflicts: 0
-expanded: 42
-time_s: 0.0001
+expanded: 12
+time_s: 0.0
 status: ok
 
 --- summary ---
 attempts: 3
 successful: 3/3
-avg_expanded: 70.33
+avg_expanded: 36.0
 avg_time_s: 0.0001
 
 ====================================
@@ -472,58 +458,58 @@ attempt 1:
 
 SA on n=8
 board:
-. . . . Q . . .
 . . . . . . Q .
-. Q . . . . . .
-. . . . . Q . .
 . . Q . . . . .
-Q . . . . . . .
 . . . . . . . Q
+. Q . . . . . .
+. . . . Q . . .
+Q . . . . . . .
+. . . . . Q . .
 . . . Q . . . .
 conflicts: 0
-expanded: 791
-time_s: 0.003
+expanded: 709
+time_s: 0.0027
 status: ok
 
 attempt 2:
 
 SA on n=8
 board:
-. . . . . Q . .
 . . Q . . . . .
-Q . . . . . . .
+. . . . Q . . .
 . . . . . . . Q
 . . . Q . . . .
-. Q . . . . . .
+Q . . . . . . .
 . . . . . . Q .
-. . . . Q . . .
+. Q . . . . . .
+. . . . . Q . .
 conflicts: 0
-expanded: 1451
-time_s: 0.0055
+expanded: 749
+time_s: 0.0028
 status: ok
 
 attempt 3:
 
 SA on n=8
 board:
-. . . Q . . . .
 . . . . . . Q .
-Q . . . . . . .
-. . . . . . . Q
-. . . . Q . . .
+. . . Q . . . .
 . Q . . . . . .
+. . . . . . . Q
 . . . . . Q . .
+Q . . . . . . .
 . . Q . . . . .
+. . . . Q . . .
 conflicts: 0
-expanded: 571
-time_s: 0.0023
+expanded: 1891
+time_s: 0.007
 status: ok
 
 --- summary ---
 attempts: 3
 successful: 3/3
-avg_expanded: 937.67
-avg_time_s: 0.0036
+avg_expanded: 1116.33
+avg_time_s: 0.0041
 
 ---- N-Queens GA (n_queens_GA.py) ----
 
@@ -536,32 +522,32 @@ Configuration A: pop=40, cx=0.9, mut=0.1, gens=200
 ========================================
 
 GA on n=4 attempt 1
-. . Q .
-Q . . .
-. . . Q
 . Q . .
+. . . Q
+Q . . .
+. . Q .
+conflicts: 0
+gens: 8
+evals: 360
+time_s: 0.0012
+status: ok
+
+GA on n=4 attempt 2
+. Q . .
+. . . Q
+Q . . .
+. . Q .
 conflicts: 0
 gens: 7
 evals: 320
 time_s: 0.001
 status: ok
 
-GA on n=4 attempt 2
-. . Q .
-Q . . .
-. . . Q
-. Q . .
-conflicts: 0
-gens: 4
-evals: 200
-time_s: 0.0006
-status: ok
-
 GA on n=4 attempt 3
-. . Q .
-Q . . .
-. . . Q
 . Q . .
+. . . Q
+Q . . .
+. . Q .
 conflicts: 0
 gens: 1
 evals: 80
@@ -572,9 +558,9 @@ status: ok
 config: {'pop': 40, 'cx': 0.9, 'mut': 0.1, 'gens': 200}
 attempts: 3
 successful: 3/3
-avg_gens: 4.0
-avg_evals: 200.0
-avg_time_s: 0.0006
+avg_gens: 5.33
+avg_evals: 253.33
+avg_time_s: 0.0008
 
 ========================================
 Configuration B: pop=80, cx=0.9, mut=0.05, gens=300
@@ -588,7 +574,52 @@ Q . . .
 conflicts: 0
 gens: 1
 evals: 160
+time_s: 0.0005
+status: ok
+
+GA on n=4 attempt 2
+. . Q .
+Q . . .
+. . . Q
+. Q . .
+conflicts: 0
+gens: 1
+evals: 160
 time_s: 0.0004
+status: ok
+
+GA on n=4 attempt 3
+. . Q .
+Q . . .
+. . . Q
+. Q . .
+conflicts: 0
+gens: 2
+evals: 240
+time_s: 0.0009
+status: ok
+
+--- summary ---
+config: {'pop': 80, 'cx': 0.9, 'mut': 0.05, 'gens': 300}
+attempts: 3
+successful: 3/3
+avg_gens: 1.33
+avg_evals: 186.67
+avg_time_s: 0.0006
+
+========================================
+Configuration C: pop=60, cx=0.8, mut=0.15, gens=300
+========================================
+
+GA on n=4 attempt 1
+. . Q .
+Q . . .
+. . . Q
+. Q . .
+conflicts: 0
+gens: 1
+evals: 120
+time_s: 0.0003
 status: ok
 
 GA on n=4 attempt 2
@@ -597,9 +628,9 @@ GA on n=4 attempt 2
 Q . . .
 . . Q .
 conflicts: 0
-gens: 1
-evals: 160
-time_s: 0.0005
+gens: 0
+evals: 60
+time_s: 0.0001
 status: ok
 
 GA on n=4 attempt 3
@@ -609,104 +640,59 @@ Q . . .
 . . Q .
 conflicts: 0
 gens: 0
-evals: 80
+evals: 60
 time_s: 0.0001
-status: ok
-
---- summary ---
-config: {'pop': 80, 'cx': 0.9, 'mut': 0.05, 'gens': 300}
-attempts: 3
-successful: 3/3
-avg_gens: 0.67
-avg_evals: 133.33
-avg_time_s: 0.0003
-
-========================================
-Configuration C: pop=60, cx=0.8, mut=0.15, gens=300
-========================================
-
-GA on n=4 attempt 1
-. Q . .
-. . . Q
-Q . . .
-. . Q .
-conflicts: 0
-gens: 1
-evals: 120
-time_s: 0.0003
-status: ok
-
-GA on n=4 attempt 2
-. . Q .
-Q . . .
-. . . Q
-. Q . .
-conflicts: 0
-gens: 3
-evals: 240
-time_s: 0.0008
-status: ok
-
-GA on n=4 attempt 3
-. . Q .
-Q . . .
-. . . Q
-. Q . .
-conflicts: 0
-gens: 4
-evals: 300
-time_s: 0.001
 status: ok
 
 --- summary ---
 config: {'pop': 60, 'cx': 0.8, 'mut': 0.15, 'gens': 300}
 attempts: 3
 successful: 3/3
-avg_gens: 2.67
-avg_evals: 220.0
-avg_time_s: 0.0007
+avg_gens: 0.33
+avg_evals: 80.0
+avg_time_s: 0.0001
 
 ========================================
 BEST CONFIGURATION SELECTED
 ========================================
-Config: pop=80, cx=0.9, mut=0.05, gens=300
+Config: pop=60, cx=0.8, mut=0.15, gens=300
 Performance on n=4:
-  avg_gens: 0.67
-  avg_evals: 133.33
-  avg_time_s: 0.0003
+  avg_gens: 0.33
+  avg_evals: 80.0
+  avg_time_s: 0.0001
 
 ========================================
 PHASE 2: Running best config on n=8
 ========================================
 
 GA on n=8 attempt 1
-. . . . . . Q .
-. . . . Q . . .
 . . Q . . . . .
-Q . . . . . . .
 . . . . . Q . .
-. . . . . . . Q
-. Q . . . . . .
 . . . Q . . . .
+Q . . . . . . .
+. . . . . . . Q
+. . . . Q . . .
+. . . . . . Q .
+. Q . . . . . .
 conflicts: 0
-gens: 15
-evals: 1280
-time_s: 0.0084
+gens: 214
+evals: 12900
+time_s: 0.0846
 status: ok
 
 GA on n=8 attempt 2
-. . Q . . . . .
 . . . . . . Q .
-. Q . . . . . .
+. . Q . . . . .
+Q . . . . . . .
+. . . . . Q . .
 . . . . . . . Q
 . . . . Q . . .
-Q . . . . . . .
+. Q . . . . . .
 . . . Q . . . .
-. . . . . Q . .
 conflicts: 0
-gens: 163
-evals: 13120
-time_s: 0.089
+gens: 108
+evals: 6540
+time_s: 0.042
 status: ok
 
 GA on n=8 attempt 3
@@ -719,18 +705,18 @@ Q . . . . . . .
 . . . . . . Q .
 . . . . Q . . .
 conflicts: 0
-gens: 42
-evals: 3440
-time_s: 0.0226
+gens: 190
+evals: 11460
+time_s: 0.0758
 status: ok
 
 --- summary ---
-config: {'pop': 80, 'cx': 0.9, 'mut': 0.05, 'gens': 300}
+config: {'pop': 60, 'cx': 0.8, 'mut': 0.15, 'gens': 300}
 attempts: 3
 successful: 3/3
-avg_gens: 73.33
-avg_evals: 5946.67
-avg_time_s: 0.04
+avg_gens: 170.67
+avg_evals: 10300.0
+avg_time_s: 0.0674
 
 ========================================
 EXPERIMENT COMPLETE
@@ -752,61 +738,61 @@ trial 1 on 3x3 (steps=40)
 ============================
 
 start:
-4 5 1
-7 8 3
-6 2 0
+4 2 3
+7 1 8
+5 6 0
 
 A* with h_misplaced
-moves: 20
-expanded: 3116
-time_s: 0.0132
+moves: 14
+expanded: 247
+time_s: 0.0013
 
 A* with h_manhattan
-moves: 20
-expanded: 433
-time_s: 0.002
+moves: 14
+expanded: 91
+time_s: 0.0004
 
 ============================
 trial 2 on 3x3 (steps=40)
 ============================
 
 start:
-3 6 5
-1 2 7
-0 4 8
+2 6 3
+1 0 8
+4 7 5
 
 A* with h_misplaced
-moves: 18
-expanded: 1254
-time_s: 0.0047
+moves: 10
+expanded: 38
+time_s: 0.0002
 
 A* with h_manhattan
-moves: 18
-expanded: 197
-time_s: 0.0008
+moves: 10
+expanded: 12
+time_s: 0.0001
 
 ============================
 trial 3 on 3x3 (steps=40)
 ============================
 
 start:
-4 8 1
-2 0 3
-7 6 5
+5 1 3
+7 4 2
+8 6 0
 
 A* with h_misplaced
-moves: 12
-expanded: 99
-time_s: 0.0004
+moves: 16
+expanded: 613
+time_s: 0.0025
 
 A* with h_manhattan
-moves: 12
-expanded: 18
-time_s: 0.0002
+moves: 16
+expanded: 172
+time_s: 0.0011
 
 --- summary (averages over same-start trials) ---
-h_misplaced avg_moves: 16.67 avg_expanded: 1489.67 avg_time_s: 0.0061
-h_manhattan avg_moves: 16.67 avg_expanded: 216.0 avg_time_s: 0.001
+h_misplaced avg_moves: 13.33 avg_expanded: 299.33 avg_time_s: 0.0013
+h_manhattan avg_moves: 13.33 avg_expanded: 91.67 avg_time_s: 0.0005
 
 notes:
 h_misplaced:

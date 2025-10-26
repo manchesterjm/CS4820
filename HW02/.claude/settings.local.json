@@ -6,7 +6,11 @@
       "Bash(python test_all.py:*)",
       "Bash(pip install:*)",
       "Read(//c/Users/manch/OneDrive/Desktop/CS4820/**)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nAdd CS 4820/5820 Homework 2 - Constraint Satisfaction & Metaheuristic Optimization\n\nComplete implementation of HW02 covering:\n- Part A: Sudoku CSP with Backtracking, MRV, LCV, Forward Checking, AC-3\n- Part B: n-Queens with Minimum Conflicts (n=8,16,25)\n- Part C1: PSO for benchmark optimization (Rastrigin, Rosenbrock)\n- Part C2: PSO applied to Sudoku optimization\n\nFeatures:\n- All algorithms implemented from scratch without specialized libraries\n- Extensive comments with references to Russell & Norvig and lecture slides\n- Comprehensive test suite with 100% pass rate\n- PowerShell script for batch execution\n- README with AI disclosure and run instructions\n- LaTeX template for AAAI format report\n- 5-minute timeout safeguards on all algorithms\n\nTest Results:\n- All Sudoku CSP variants: PASS\n- All n-Queens tests: PASS\n- PSO benchmarks: PASS\n- PSO Sudoku: PASS\n\nGenerated with Claude Code (Sonnet 4.5)\nVersion: claude-sonnet-4-5-20250929\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git push:*)",
+      "Bash(git commit:*)",
+      "Bash(python run_experiments.py:*)"
     ],
     "deny": [],
     "ask": []

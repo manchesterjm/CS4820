@@ -227,7 +227,7 @@ def run_trials_auto():
     """
     trials = 3  # Number of runs per puzzle size
     # Configuration: (board_size, scramble_steps)
-    configs = [(3, 40), (4, 12)]
+    configs = [(3, 40), (4, 40)]
     
     for m, steps in configs:
         total_moves = 0
