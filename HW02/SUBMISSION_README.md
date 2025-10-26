@@ -15,15 +15,16 @@ This submission package contains all required materials for Homework 2: Constrai
 ### 1. Writeup (PDF)
 - **File:** `Manchester_Josh_CS4820_HW02_Writeup.pdf`
 - **Format:** AAAI 2024 conference format
-- **Pages:** 7 pages including references
+- **Pages:** 8-9 pages including references and convergence plots
 - **Contents:**
   - Abstract and Introduction
   - Part A: Sudoku CSP with 4 algorithm variants
   - Part B: n-Queens with Minimum Conflicts
-  - Part C1: PSO for benchmark optimization
+  - Part C1: PSO for benchmark optimization **with convergence plots**
   - Part C2: PSO applied to Sudoku
   - Conclusion and AI Use Disclosure
   - Code Output Examples (6 figures)
+  - **Convergence Plots (2 figures - Rastrigin & Rosenbrock)**
   - References section
 
 ### 2. Source Code
@@ -63,6 +64,12 @@ All Python implementations in `HW02_code/` directory:
 - **`run_all.ps1`** - PowerShell batch execution script
   - Runs all 4 main programs
   - Saves output to `HW02_runlog.txt`
+
+- **`generate_convergence_plots.py`** - Convergence plot generator
+  - Runs PSO with all 3 configurations
+  - Tracks iteration-by-iteration convergence
+  - Generates publication-quality plots (matplotlib)
+  - Outputs: `rastrigin_convergence.pdf`, `rosenbrock_convergence.pdf`
 
 ### 3. Documentation
 - **`README.md`** - Complete implementation guide
