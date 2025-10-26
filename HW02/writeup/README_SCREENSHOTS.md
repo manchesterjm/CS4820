@@ -23,7 +23,14 @@ Upload only these 3 files to Overleaf:
 
 ### 2. Compile on Overleaf
 
-The document should compile automatically. It uses standard packages:
+**IMPORTANT for Bibliography:** Overleaf needs to compile multiple times to generate the references page:
+1. First compile: Generates the document and finds citations
+2. Second compile: Processes bibliography
+3. Third compile: Inserts references into document
+
+Click "Recompile" 2-3 times on Overleaf to ensure the References section appears at the end!
+
+The document uses standard packages:
 - `aaai24` - Conference style
 - `times`, `helvet`, `courier` - Fonts
 - `algorithm`, `algorithmic` - Algorithm formatting

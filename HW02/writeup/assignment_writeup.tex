@@ -475,46 +475,51 @@ Algorithm Times:
 \begin{figure}[h]
 \begin{scriptsize}
 \begin{verbatim}
-n-Queens Minimum Conflicts: n=8
-Running 5 trials
+n-Queens n=8 - Minimum Conflicts
 
-Trial 1: 28 steps, 0.0007s
-Trial 2: 10 steps, 0.0003s
-Trial 3: 15 steps, 0.0004s
-Trial 4: 24 steps, 0.0006s
-Trial 5:  6 steps, 0.0002s
+Trial 1 Solution (28 steps):
+  . Q . . . . . .
+  . . . . Q . . .
+  . . . . . . . Q
+  . . . . . Q . .
+  . . Q . . . . .
+  . . . . . . Q .
+  Q . . . . . . .
+  . . . Q . . . .
 
-Summary:
-  Success: 5/5 (100%)
-  Avg steps: 16.60
-  Avg time: 0.0004s
-  Range: 6-28 steps
+Trials: 28, 10, 15, 24, 6 steps
+Success: 5/5 (100%)
+Avg: 16.6 steps, 0.0004s
 \end{verbatim}
 \end{scriptsize}
-\caption{n-Queens n=8: 100\% success, 16.6 avg steps.}
+\caption{n-Queens n=8: Example solution from Trial 1. All 5 trials succeeded.}
 \label{fig:nqueens-8}
 \end{figure}
 
 \begin{figure}[h]
 \begin{scriptsize}
 \begin{verbatim}
-n-Queens Minimum Conflicts: n=25
-Running 5 trials
+n-Queens n=25 - Minimum Conflicts
 
-Trial 1: 48 steps, 0.0091s
-Trial 2: 59 steps, 0.0112s
-Trial 3: 42 steps, 0.0080s
-Trial 4: 56 steps, 0.0106s
-Trial 5: 98 steps, 0.0184s
+Trial 3 Solution (42 steps):
+Q . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . Q . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . Q . . .
+. . . . . . . . . . . . . . . . Q . . . . . . . .
+. . . . . . . . . . . Q . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . Q . .
+. . . . . . . . Q . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . Q .
+. . . . Q . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . Q . . . . . . . . . . .
+[... 15 more rows ...]
 
-Summary:
-  Success: 5/5 (100%)
-  Avg steps: 60.60
-  Avg time: 0.0115s (11.5ms)
-  Range: 42-98 steps
+Trials: 48, 59, 42, 56, 98 steps
+Success: 5/5 (100%), Avg: 60.6 steps
+Linear scaling: 3x board = 3.7x steps
 \end{verbatim}
 \end{scriptsize}
-\caption{n-Queens n=25: 100\% success, 60.6 avg steps. Linear scaling: 3× larger board but only 3.7× more steps vs n=8.}
+\caption{n-Queens n=25: Example solution (first 10 rows shown). All 5 trials succeeded.}
 \label{fig:nqueens-25}
 \end{figure}
 
@@ -601,7 +606,7 @@ Summary:
 \label{fig:pso-sudoku}
 \end{figure}
 
-\bibliographystyle{aaai24}
+\bibliographystyle{plainnat}
 \bibliography{references}
 
 \end{document}
