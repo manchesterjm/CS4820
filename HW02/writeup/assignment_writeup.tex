@@ -395,9 +395,51 @@ Standard PSO designed for continuous spaces. Adaptations for discrete Sudoku:
 
 For Sudoku specifically, stick with CSP methods - they are way better in both solution quality and speed.
 
+\section{Conclusion}
+
+This work demonstrates effectiveness of systematic search enhancements for CSPs and applicability (with limitations) of metaheuristics to combinatorial problems.
+
+\textbf{Key Findings:}
+\begin{itemize}
+\item \textbf{Heuristics matter:} MRV+LCV provide 2.7-7.1× speedup over basic backtracking on Sudoku
+\item \textbf{Constraint propagation powerful:} AC-3 achieves near-constant time regardless of puzzle difficulty
+\item \textbf{Local search scales:} Minimum Conflicts solves n-Queens in empirical $O(n)$ time, far better than exponential backtracking
+\item \textbf{Parameter tuning important:} PSO performance varies significantly with inertia, cognitive/social coefficients, and swarm size
+\item \textbf{Right tool for job:} Systematic methods (CSP) excel on well-structured constraint problems; metaheuristics better for continuous optimization
+\end{itemize}
+
+\textbf{Implementation Quality:}
+All algorithms implemented from scratch without specialized libraries, with extensive documentation, timeout protection, and comprehensive testing achieving 100\% test pass rate.
+
+\textbf{Future Work:}
+\begin{itemize}
+\item Investigate other metaheuristics (Differential Evolution, Ant Colony Optimization) for comparison with PSO
+\item Extend CSP methods to expert-level Sudoku puzzles with minimal clues
+\item Scale Minimum Conflicts to $n > 100$ for n-Queens
+\item Develop hybrid approaches combining CSP systematic search with metaheuristic guidance
+\end{itemize}
+
+\section{AI Use Disclosure}
+
+I used AI tools (Claude Code - Sonnet 4.5) to help me complete this assignment. Here is how I used them:
+
+\textbf{Understanding the algorithms:} I used AI to help me understand how each CSP technique and metaheuristic algorithm actually works, since this was my first time implementing these algorithms from scratch.
+
+\textbf{Developing the code:} I learned about the algorithms from class slides (Lectures 5, 6, 7) and the textbook (Artificial Intelligence: A Modern Approach by Russell and Norvig). I commented on where I found them in my code when applicable, then wrote my own implementations. When I got stuck or had bugs, I asked AI for help troubleshooting.
+
+\textbf{Adding features:} AI helped me add things like the 5-minute timeout protection, test puzzles of varying difficulty, running multiple trials automatically, and formatting the output for easy screenshots.
+
+\textbf{The PowerShell script:} Claude wrote the run\_all.ps1 script that runs all my programs and saves the output to a log file using Tee-Object.
+
+\textbf{Running experiments:} Claude helped me create run\_experiments.py which systematically tests all algorithm variants and generates the tables and statistics used in this report.
+
+\textbf{Writing the report:} Claude helped me analyze my experimental results, create the AAAI24 LaTeX formatted tables, and structure the writeup with proper sections and mathematical notation.
+
+I want to be clear that I reviewed everything the AI gave me before I used it. I made sure I understood what the code was doing and that it actually worked correctly. Since I am not an expert on these algorithms, I made sure to write (and edited by Claude) good comments so that in the future I can look back and understand what I did. The AI did not just do the whole assignment for me - I had to understand it, test it, and make decisions about what to include. The timeout limits are a good example - I had to implement safeguards so the algorithms would not run forever and waste computation.
+
 \section{Code Output Examples}
 
-Here are screenshots showing how the algorithms performed. All output captured from running the programs in `HW02\_code/` directory.
+The following figures show representative output from running each program. All output captured from the `HW02\_code/` directory.
 
 \subsection{Part A: Sudoku CSP Results}
 
@@ -559,48 +601,6 @@ Summary:
 \caption{PSO for Sudoku: None of the 3 trials solved the puzzle completely. Best result was 6 violations (Trial 3). Shows PSO struggles with discrete constraint satisfaction vs continuous optimization.}
 \label{fig:pso-sudoku}
 \end{figure}
-
-\section{Conclusion}
-
-This work demonstrates effectiveness of systematic search enhancements for CSPs and applicability (with limitations) of metaheuristics to combinatorial problems.
-
-\textbf{Key Findings:}
-\begin{itemize}
-\item \textbf{Heuristics matter:} MRV+LCV provide 2.7-7.1× speedup over basic backtracking on Sudoku
-\item \textbf{Constraint propagation powerful:} AC-3 achieves near-constant time regardless of puzzle difficulty
-\item \textbf{Local search scales:} Minimum Conflicts solves n-Queens in empirical $O(n)$ time, far better than exponential backtracking
-\item \textbf{Parameter tuning important:} PSO performance varies significantly with inertia, cognitive/social coefficients, and swarm size
-\item \textbf{Right tool for job:} Systematic methods (CSP) excel on well-structured constraint problems; metaheuristics better for continuous optimization
-\end{itemize}
-
-\textbf{Implementation Quality:}
-All algorithms implemented from scratch without specialized libraries, with extensive documentation, timeout protection, and comprehensive testing achieving 100\% test pass rate.
-
-\textbf{Future Work:}
-\begin{itemize}
-\item Investigate other metaheuristics (Differential Evolution, Ant Colony Optimization) for comparison with PSO
-\item Extend CSP methods to expert-level Sudoku puzzles with minimal clues
-\item Scale Minimum Conflicts to $n > 100$ for n-Queens
-\item Develop hybrid approaches combining CSP systematic search with metaheuristic guidance
-\end{itemize}
-
-\section{AI Use Disclosure}
-
-I used AI tools (Claude Code - Sonnet 4.5) to help me complete this assignment. Here is how I used them:
-
-\textbf{Understanding the algorithms:} I used AI to help me understand how each CSP technique and metaheuristic algorithm actually works, since this was my first time implementing these algorithms from scratch.
-
-\textbf{Developing the code:} I learned about the algorithms from class slides (Lectures 5, 6, 7) and the textbook (Artificial Intelligence: A Modern Approach by Russell and Norvig). I commented on where I found them in my code when applicable, then wrote my own implementations. When I got stuck or had bugs, I asked AI for help troubleshooting.
-
-\textbf{Adding features:} AI helped me add things like the 5-minute timeout protection, test puzzles of varying difficulty, running multiple trials automatically, and formatting the output for easy screenshots.
-
-\textbf{The PowerShell script:} Claude wrote the run\_all.ps1 script that runs all my programs and saves the output to a log file using Tee-Object.
-
-\textbf{Running experiments:} Claude helped me create run\_experiments.py which systematically tests all algorithm variants and generates the tables and statistics used in this report.
-
-\textbf{Writing the report:} Claude helped me analyze my experimental results, create the AAAI24 LaTeX formatted tables, and structure the writeup with proper sections and mathematical notation.
-
-I want to be clear that I reviewed everything the AI gave me before I used it. I made sure I understood what the code was doing and that it actually worked correctly. Since I am not an expert on these algorithms, I made sure to write (and edited by Claude) good comments so that in the future I can look back and understand what I did. The AI did not just do the whole assignment for me - I had to understand it, test it, and make decisions about what to include. The timeout limits are a good example - I had to implement safeguards so the algorithms would not run forever and waste computation.
 
 \bibliographystyle{aaai24}
 \bibliography{references}
