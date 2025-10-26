@@ -75,9 +75,10 @@ Use BibTeX format:
 
 ## Files to Upload to Overleaf
 
-For each assignment:
+For each assignment (4 files total):
 - `assignment_writeup.tex` (main document)
 - `aaai24.sty` (AAAI style file - use unmodified version)
+- `aaai24.bst` (AAAI bibliography style - REQUIRED for citations!)
 - `references.bib` (bibliography database)
 
 ## Common References
