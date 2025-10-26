@@ -1,0 +1,43 @@
+
+Homework 2 Released – Constraint Satisfaction & Metaheuristic Optimization
+
+    Due Nov 2 by 11:59pm Points 12.5 Submitting a file upload Available Oct 19 at 12am - Nov 2 at 11:59pm
+
+Hi everyone,
+
+Homework 2 is now available on Canvas. This assignment is worth 12.5 points and covers key topics from lectures 5 – 7: Constraint Satisfaction Problems, Local Search (Minimum Conflicts), and Metaheuristic Optimization (PSO, DE, ACO).
+
+hw2 - Fall 2025.pdf
+
+Download hw2 - Fall 2025.pdf
+🔹 Overview
+
+Part A – Sudoku as a CSP (4 pts)
+Formulate Sudoku (9×9) as a Constraint Satisfaction Problem.
+Implement Backtracking + MRV/LCV heuristics, add Forward Checking, and finally integrate AC-3 constraint propagation.
+Compare runtime, nodes expanded, and backtracks across all variants.
+
+Part B – Minimum Conflicts (3 pts)
+Implement the Minimum Conflicts heuristic for the n-Queens problem (n = 8, 16, 25).
+Run several trials, report average steps / runtime, and discuss why this approach scales efficiently for large n.
+
+Part C – Metaheuristic Optimization (5.5 pts)
+1️⃣ Benchmark Optimization (3 pts): Apply PSO, DE, or ACO to the Rastrigin and Rosenbrock functions.
+Run at least 3 trials, explore multiple parameter settings, plot convergence curves, and discuss their effects.
+2️⃣ Sudoku via Metaheuristics (2.5 pts): Use your chosen algorithm to minimize constraint violations in a Sudoku puzzle; report final fitness and runtime from 3 runs.
+🔹 Submission Details
+
+    Submit one AAAI-formatted PDF report and all source code.
+
+    Include tables, figures, and convergence plots as shown in the assignment.
+
+    Due Date: Nov 2nd. 
+
+    Late work not accepted.
+
+    Individual work only.
+
+ 
+
+Please start early — the optimization section may require some tuning to get good results.
+Good luck, and I’m looking forward to your analyses!

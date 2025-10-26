@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Read(//c/Users/manch/OneDrive/Desktop/CS4820/HW01_Code/**)",
+      "Bash(python test_all.py:*)",
+      "Bash(pip install:*)",
+      "Read(//c/Users/manch/OneDrive/Desktop/CS4820/**)",
+      "Bash(git add:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

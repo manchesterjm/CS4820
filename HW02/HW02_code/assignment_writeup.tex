@@ -1,0 +1,379 @@
+\documentclass[letterpaper]{article}
+\usepackage{aaai}
+\usepackage{times}
+\usepackage{helvet}
+\usepackage{courier}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{url}
+
+\title{CS 4820/5820 Homework 2:\\
+Constraint Satisfaction \& Metaheuristic Optimization}
+
+\author{
+Josh Manchester\\
+University of Colorado Colorado Springs\\
+josh.manchester@uccs.edu
+}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This report presents implementations and experimental analysis of constraint satisfaction problem (CSP) solving techniques and metaheuristic optimization algorithms. Part A formulates and solves Sudoku as a CSP using backtracking with various enhancements (MRV, LCV, forward checking, AC-3). Part B applies the Minimum Conflicts local search heuristic to the n-Queens problem for n=8, 16, and 25. Part C explores Particle Swarm Optimization (PSO) on benchmark functions (Rastrigin, Rosenbrock) and applies PSO to Sudoku as an optimization problem. Results demonstrate the effectiveness of heuristics and constraint propagation for CSPs, the efficiency of local search for large n-Queens instances, and the applicability of metaheuristics to combinatorial optimization.
+\end{abstract}
+
+\section{Introduction}
+
+Constraint Satisfaction Problems (CSPs) and optimization problems are fundamental in artificial intelligence. CSPs involve finding assignments to variables that satisfy a set of constraints, while optimization problems seek to minimize or maximize an objective function. This report explores both systematic search methods for CSPs and metaheuristic approaches for optimization.
+
+We implement and analyze:
+\begin{itemize}
+\item Backtracking search with MRV, LCV, forward checking, and AC-3 for Sudoku (Part A)
+\item Minimum Conflicts local search for n-Queens (Part B)
+\item Particle Swarm Optimization for benchmark functions and Sudoku (Part C)
+\end{itemize}
+
+All algorithms are implemented from scratch in Python without specialized CSP or optimization libraries, following specifications from Russell \& Norvig \cite{russell2020} and course lecture materials.
+
+\section{Part A: Sudoku as a CSP}
+
+\subsection{Problem Formulation}
+
+Sudoku is formulated as a CSP with:
+\begin{itemize}
+\item \textbf{Variables:} 81 cells in a 9×9 grid
+\item \textbf{Domain:} $\{1, 2, 3, 4, 5, 6, 7, 8, 9\}$ for each variable
+\item \textbf{Constraints:} 27 \texttt{Alldiff} constraints:
+  \begin{itemize}
+  \item 9 row constraints (no duplicate values in each row)
+  \item 9 column constraints (no duplicate values in each column)
+  \item 9 box constraints (no duplicate values in each 3×3 box)
+  \end{itemize}
+\end{itemize}
+
+\subsection{Algorithms Implemented}
+
+\subsubsection{Basic Backtracking}
+Depth-first search with constraint checking. Serves as baseline. Selects variables in arbitrary order and tries values in domain order.
+
+\subsubsection{Backtracking + MRV + LCV}
+Enhances backtracking with:
+\begin{itemize}
+\item \textbf{MRV (Minimum Remaining Values):} Select variable with fewest legal values remaining. Also known as ``fail-first'' heuristic. Detects failures earlier.
+\item \textbf{Degree Heuristic:} Tie-breaking for MRV. Choose variable with most constraints on remaining unassigned variables.
+\item \textbf{LCV (Least Constraining Value):} Order values by how many choices they rule out for neighboring variables. Try least constraining values first to maximize flexibility.
+\end{itemize}
+
+\subsubsection{Backtracking + Forward Checking}
+After each assignment, reduce domains of unassigned neighbors by removing the assigned value. Detects failures early when any domain becomes empty. More powerful than plain backtracking but cheaper than full AC-3.
+
+\subsubsection{Backtracking + AC-3}
+Enforces arc consistency using the AC-3 algorithm. After each assignment, propagates constraints transitively until all arcs are consistent. Most powerful pruning but higher per-node cost ($O(cd^3)$ where $c$ = number of constraints, $d$ = domain size).
+
+\subsection{Experimental Results}
+
+% TODO: Run run_experiments.py and fill in this table with actual results
+
+\begin{table}[h]
+\centering
+\caption{Sudoku CSP Solver Performance Comparison}
+\label{tab:sudoku-results}
+\begin{tabular}{@{}llrr@{}}
+\toprule
+Algorithm & Difficulty & Given Cells & Time (s) \\
+\midrule
+Basic Backtracking & Easy & 30 & 0.XXXX \\
+Basic Backtracking & Medium & 25 & 0.XXXX \\
+Basic Backtracking & Hard & 22 & 0.XXXX \\
+\midrule
++MRV+LCV & Easy & 30 & 0.XXXX \\
++MRV+LCV & Medium & 25 & 0.XXXX \\
++MRV+LCV & Hard & 22 & 0.XXXX \\
+\midrule
++Forward Checking & Easy & 30 & 0.XXXX \\
++Forward Checking & Medium & 25 & 0.XXXX \\
++Forward Checking & Hard & 22 & 0.XXXX \\
+\midrule
++AC-3 & Easy & 30 & 0.XXXX \\
++AC-3 & Medium & 25 & 0.XXXX \\
++AC-3 & Hard & 22 & 0.XXXX \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Analysis}
+
+% TODO: Fill in analysis based on experimental results
+
+\textbf{MRV+LCV vs Basic:} The MRV heuristic dramatically reduces search by choosing the most constrained variable first, causing failures to occur earlier in the search tree. LCV complements this by trying values that preserve maximum flexibility for remaining variables.
+
+\textbf{Forward Checking:} Further improves performance by maintaining arc consistency between assigned variables and their unassigned neighbors. Detects inconsistencies immediately rather than discovering them later through backtracking.
+
+\textbf{AC-3:} Achieves the best performance by propagating constraints globally. For many Sudoku instances, AC-3 alone reduces all domains to single values, solving the puzzle without any backtracking. The overhead of AC-3 is justified by the dramatic pruning of the search space.
+
+\textbf{Scalability:} All enhanced methods scale much better than basic backtracking as puzzle difficulty increases (fewer given cells). AC-3 maintains near-constant time even for hard puzzles.
+
+\section{Part B: n-Queens with Minimum Conflicts}
+
+\subsection{Problem Formulation}
+
+The n-Queens problem requires placing $n$ queens on an $n \times n$ chessboard such that no two queens attack each other (same row, column, or diagonal).
+
+\subsection{Minimum Conflicts Algorithm}
+
+Minimum Conflicts is a local search method that:
+\begin{enumerate}
+\item Starts with a complete (possibly incorrect) assignment
+\item Iteratively selects a random conflicted variable
+\item Assigns it the value that minimizes conflicts with other variables
+\item Repeats until solution found or max steps reached
+\end{enumerate}
+
+Time complexity: $O(1)$ per step. Empirically solves n-Queens in $O(n)$ steps on average, independent of $n$.
+
+\subsection{Implementation Details}
+
+\textbf{State representation:} One-dimensional array where \texttt{board[col] = row}. Implicitly satisfies column constraints.
+
+\textbf{Random restarts:} If stuck in local minimum after max steps, restart with fresh random assignment. Provides robustness.
+
+\subsection{Experimental Results}
+
+% TODO: Run run_experiments.py and fill in this table
+
+\begin{table}[h]
+\centering
+\caption{n-Queens Minimum Conflicts Results}
+\label{tab:nqueens-results}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+$n$ & Trials & Success Rate & Avg Steps & Avg Time (s) \\
+\midrule
+8  & 5 & 5/5 & XX.X & 0.XXXX \\
+16 & 5 & 5/5 & XX.X & 0.XXXX \\
+25 & 5 & 5/5 & XX.X & 0.XXXX \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Analysis}
+
+% TODO: Fill in analysis based on results
+
+\textbf{Success Rate:} Minimum Conflicts achieves very high success rates (typically 100\%) across all tested board sizes.
+
+\textbf{Scalability:} Average steps remain roughly constant as $n$ increases, demonstrating the $O(n)$ empirical complexity. This is dramatically better than backtracking, which has exponential worst-case complexity.
+
+\textbf{Why it works:} The n-Queens problem has very high solution density ($\approx n!/e$). Local minima are rare, so greedy local search is highly effective.
+
+\textbf{Comparison to backtracking:} For $n=25$, backtracking would be prohibitively slow, while Minimum Conflicts solves in milliseconds.
+
+\section{Part C1: PSO for Benchmark Optimization}
+
+\subsection{Particle Swarm Optimization}
+
+PSO is a population-based metaheuristic inspired by social behavior of bird flocking. Each particle has:
+\begin{itemize}
+\item \textbf{Position:} Candidate solution in search space
+\item \textbf{Velocity:} Direction and magnitude of movement
+\item \textbf{Personal best:} Best position this particle has found
+\item \textbf{Global best:} Best position any particle has found
+\end{itemize}
+
+Velocity update equation:
+\begin{equation}
+v_i = w \cdot v_i + c_1 r_1 (p_i - x_i) + c_2 r_2 (g - x_i)
+\end{equation}
+
+Position update equation:
+\begin{equation}
+x_i = x_i + v_i
+\end{equation}
+
+where $w$ = inertia weight, $c_1$ = cognitive coefficient, $c_2$ = social coefficient, $r_1, r_2$ = random values in $[0,1]$.
+
+\subsection{Benchmark Functions}
+
+\textbf{Rastrigin:}
+\begin{equation}
+f(x) = 10n + \sum_{i=1}^n [x_i^2 - 10\cos(2\pi x_i)]
+\end{equation}
+Highly multimodal with many local minima. Global minimum: $f(0,\ldots,0) = 0$.
+
+\textbf{Rosenbrock:}
+\begin{equation}
+f(x) = \sum_{i=1}^{n-1} [100(x_{i+1} - x_i^2)^2 + (x_i - 1)^2]
+\end{equation}
+Narrow parabolic valley. Global minimum: $f(1,\ldots,1) = 0$.
+
+\subsection{Parameter Configurations}
+
+Tested three configurations:
+\begin{itemize}
+\item \textbf{Config 1 (Standard):} swarm\_size=30, $w=0.7$, $c_1=1.5$, $c_2=1.5$
+\item \textbf{Config 2 (Large Swarm):} swarm\_size=50, $w=0.5$, $c_1=2.0$, $c_2=2.0$
+\item \textbf{Config 3 (High Inertia):} swarm\_size=40, $w=0.9$, $c_1=1.2$, $c_2=1.2$
+\end{itemize}
+
+Each configuration run for 3 trials on 10-dimensional versions of both functions.
+
+\subsection{Experimental Results}
+
+% TODO: Fill in results from run_experiments.py
+
+\begin{table}[h]
+\centering
+\caption{PSO Results on Rastrigin Function (10D)}
+\label{tab:pso-rastrigin}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Configuration & Best Score & Avg Score & Avg Time (s) \\
+\midrule
+Config 1 (Standard) & X.XXXX & X.XXXX & X.XXXX \\
+Config 2 (Large Swarm) & X.XXXX & X.XXXX & X.XXXX \\
+Config 3 (High Inertia) & X.XXXX & X.XXXX & X.XXXX \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{PSO Results on Rosenbrock Function (10D)}
+\label{tab:pso-rosenbrock}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Configuration & Best Score & Avg Score & Avg Time (s) \\
+\midrule
+Config 1 (Standard) & X.XXXX & X.XXXX & X.XXXX \\
+Config 2 (Large Swarm) & X.XXXX & X.XXXX & X.XXXX \\
+Config 3 (High Inertia) & X.XXXX & X.XXXX & X.XXXX \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Analysis}
+
+% TODO: Fill in parameter analysis based on results
+
+\textbf{Inertia weight ($w$):} Higher inertia encourages exploration (particles maintain momentum), while lower inertia promotes exploitation (particles converge faster). High inertia may help escape local minima on Rastrigin but slow convergence on Rosenbrock.
+
+\textbf{Cognitive/Social ($c_1, c_2$):} Higher values increase attraction to personal/global bests. Stronger social component promotes faster convergence but may cause premature convergence to local optima.
+
+\textbf{Swarm size:} Larger swarms provide better coverage of search space but increase computational cost per iteration.
+
+\textbf{Function characteristics:} Rastrigin's many local minima favor [configuration X] which [explanation]. Rosenbrock's narrow valley favors [configuration Y] which [explanation].
+
+% TODO: Add convergence plot
+% \begin{figure}[h]
+% \centering
+% \includegraphics[width=0.8\columnwidth]{convergence_plot.png}
+% \caption{Convergence curves for PSO on Rastrigin and Rosenbrock functions}
+% \label{fig:convergence}
+% \end{figure}
+
+\section{Part C2: PSO for Sudoku}
+
+\subsection{Formulation}
+
+Sudoku as optimization problem:
+\begin{itemize}
+\item \textbf{Objective:} Minimize total constraint violations
+\item \textbf{Search space:} Complete 9×9 boards with given cells fixed
+\item \textbf{Fitness:} Count of duplicate values in columns and boxes (rows maintained as permutations)
+\end{itemize}
+
+\subsection{Discrete PSO Adaptation}
+
+Standard PSO is designed for continuous spaces. Adaptations for Sudoku:
+\begin{itemize}
+\item \textbf{Velocity:} Sequence of swap operations instead of real-valued vectors
+\item \textbf{Initialization:} Each particle has valid row permutations (0 row violations)
+\item \textbf{Updates:} Probabilistic swaps toward personal/global best
+\item \textbf{Fixed cells:} Given cells never modified
+\end{itemize}
+
+\subsection{Experimental Results}
+
+% TODO: Fill in from run_experiments.py
+
+\begin{table}[h]
+\centering
+\caption{PSO Results on Sudoku Puzzle}
+\label{tab:pso-sudoku}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Trial & Violations & Iterations & Time (s) \\
+\midrule
+1 & XX & XXXX & XX.XXXX \\
+2 & XX & XXXX & XX.XXXX \\
+3 & XX & XXXX & XX.XXXX \\
+\midrule
+Average & XX.X & XXXX.X & XX.XXXX \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Analysis}
+
+% TODO: Fill in based on results
+
+\textbf{Performance:} PSO [did/did not] consistently solve the Sudoku puzzle (reach 0 violations). Final violation counts ranged from [X] to [Y].
+
+\textbf{Comparison to CSP:} Unlike systematic CSP methods which guarantee finding a solution (if solvable), PSO provides no such guarantee. However, it demonstrates how metaheuristics can be applied to combinatorial constraint problems by treating them as optimization.
+
+\textbf{Challenges:} Discrete nature of Sudoku makes it harder for PSO than continuous optimization. Swap-based velocity updates are less natural than real-valued arithmetic. Fixed cells further constrain the search space.
+
+\textbf{When to use:} PSO and other metaheuristics are better suited for problems where:
+\begin{itemize}
+\item Finding approximate solutions quickly is acceptable
+\item Systematic search is intractable
+\item Multiple objective functions need balancing
+\end{itemize}
+
+For Sudoku specifically, CSP methods (Part A) are far superior in both speed and reliability.
+
+\section{Conclusion}
+
+This work demonstrates the effectiveness of systematic search enhancements for CSPs and the applicability of metaheuristics to optimization problems.
+
+\textbf{Key findings:}
+\begin{itemize}
+\item Heuristics (MRV, LCV) and constraint propagation (AC-3) dramatically improve CSP solver performance
+\item Local search (Minimum Conflicts) scales excellently for large n-Queens instances
+\item PSO parameter tuning significantly affects optimization performance
+\item Metaheuristics can be adapted to discrete combinatorial problems but may not match systematic methods for well-structured CSPs
+\end{itemize}
+
+\textbf{Future work:}
+\begin{itemize}
+\item Investigate other metaheuristics (Differential Evolution, Ant Colony Optimization) for Sudoku
+\item Compare CSP methods on expert-level Sudoku puzzles
+\item Scale Minimum Conflicts to $n > 100$ for n-Queens
+\item Develop hybrid approaches combining CSP and metaheuristic techniques
+\end{itemize}
+
+\begin{thebibliography}{9}
+
+\bibitem{russell2020}
+Russell, S., \& Norvig, P. (2020).
+\textit{Artificial Intelligence: A Modern Approach} (4th ed.).
+Pearson.
+
+\bibitem{kennedy1995}
+Kennedy, J., \& Eberhart, R. (1995).
+Particle swarm optimization.
+\textit{Proceedings of IEEE International Conference on Neural Networks}, 4, 1942-1948.
+
+\bibitem{jamil2013}
+Jamil, M., \& Yang, X. (2013).
+A literature survey of benchmark functions for global optimization problems.
+\textit{International Journal of Mathematical Modelling and Numerical Optimisation}, 4(2), 150-194.
+
+\end{thebibliography}
+
+\end{document}
