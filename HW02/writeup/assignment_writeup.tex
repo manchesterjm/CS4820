@@ -395,6 +395,66 @@ Standard PSO designed for continuous spaces. Adaptations for discrete Sudoku:
 
 For Sudoku specifically, stick with CSP methods - they are way better in both solution quality and speed.
 
+\section{Code Output Examples}
+
+Here are screenshots showing how the algorithms performed. All output captured from running the programs in `HW02\_code/` directory.
+
+\subsection{Part A: Sudoku CSP Results}
+
+\begin{figure}[h]
+\centering
+% TODO: Add screenshot of sudoku_csp.py output showing all 4 algorithm variants
+% Should show starting puzzle, algorithm name, time, and solved puzzle
+\caption{Sudoku CSP: All four algorithm variants (Basic, +MRV+LCV, +Forward Checking, +AC-3) solving the same puzzle. Shows AC-3 is fastest.}
+\label{fig:sudoku-csp}
+\end{figure}
+
+\subsection{Part B: n-Queens Results}
+
+\begin{figure}[h]
+\centering
+% TODO: Add screenshot of nqueens_minconflicts.py output for n=8
+% Should show starting board, conflicts, ending solved board, steps, time
+\caption{n-Queens n=8: Starting configuration with conflicts, solved board with 0 conflicts in under 50 steps}
+\label{fig:nqueens-8}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+% TODO: Add screenshot of nqueens_minconflicts.py output for n=25
+% Should show metrics: steps taken, time, verification
+\caption{n-Queens n=25: Solved in approximately 90 steps and 22 milliseconds, demonstrating O(n) scaling}
+\label{fig:nqueens-25}
+\end{figure}
+
+\subsection{Part C1: PSO Benchmark Results}
+
+\begin{figure}[h]
+\centering
+% TODO: Add screenshot of pso_benchmark.py showing Rastrigin results
+% Should show all 3 configurations with scores and convergence info
+\caption{PSO on Rastrigin Function: Three parameter configurations tested, Config 2 (Large Swarm) achieved best results}
+\label{fig:pso-rastrigin}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+% TODO: Add screenshot of pso_benchmark.py showing Rosenbrock results
+% Should show convergence history
+\caption{PSO on Rosenbrock Function: Convergence history showing improvement over iterations}
+\label{fig:pso-rosenbrock}
+\end{figure}
+
+\subsection{Part C2: PSO for Sudoku}
+
+\begin{figure}[h]
+\centering
+% TODO: Add screenshot of pso_sudoku.py output
+% Should show starting puzzle, iteration progress, final violations
+\caption{PSO for Sudoku: Shows iteration progress and final violation count. Trial 1 achieved 3 violations (best), demonstrating partial optimization.}
+\label{fig:pso-sudoku}
+\end{figure}
+
 \section{Conclusion}
 
 This work demonstrates effectiveness of systematic search enhancements for CSPs and applicability (with limitations) of metaheuristics to combinatorial problems.
