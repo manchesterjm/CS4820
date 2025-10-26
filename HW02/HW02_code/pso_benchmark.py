@@ -425,6 +425,15 @@ if __name__ == "__main__":
 
     # Test on Rastrigin function
     # 10-dimensional problem with many local minima
+    print("\n" + "="*70)
+    print("Rastrigin Function")
+    print("="*70)
+    print("Properties:")
+    print("  - Highly multimodal with many local minima")
+    print("  - Global minimum: f(0,0,...,0) = 0")
+    print("  - Domain: [-5.12, 5.12]^10")
+    print()
+
     run_pso_benchmark(
         func_name="Rastrigin",
         func=rastrigin,
@@ -435,6 +444,15 @@ if __name__ == "__main__":
 
     # Test on Rosenbrock function
     # 10-dimensional problem with narrow valley
+    print("\n" + "="*70)
+    print("Rosenbrock Function")
+    print("="*70)
+    print("Properties:")
+    print("  - Narrow parabolic valley")
+    print("  - Global minimum: f(1,1,...,1) = 0")
+    print("  - Domain: [-5, 10]^10")
+    print()
+
     run_pso_benchmark(
         func_name="Rosenbrock",
         func=rosenbrock,
@@ -445,8 +463,15 @@ if __name__ == "__main__":
 
     # Example: Show convergence curve for single run
     print("\n" + "="*70)
-    print("Example: Convergence curve for Rastrigin (single run)")
-    print("="*70 + "\n")
+    print("Detailed Example: Rastrigin Convergence")
+    print("="*70)
+    print("\nRunning PSO with:")
+    print("  Swarm size: 30")
+    print("  Inertia weight (w): 0.7")
+    print("  Cognitive coeff (c1): 1.5")
+    print("  Social coeff (c2): 1.5")
+    print("  Max iterations: 500")
+    print()
 
     pso = PSO(
         objective_func=rastrigin,
@@ -461,8 +486,21 @@ if __name__ == "__main__":
 
     best_pos, best_score, iters, elapsed, status = pso.optimize()
 
-    print(f"Final result: {best_score:.6e} in {iters} iterations ({elapsed:.4f}s)")
-    print(f"Best position: {best_pos}")
+    print(f"Status: {status}")
+    print(f"Final best score: {best_score:.6e}")
+    print(f"Iterations completed: {iters}")
+    print(f"Time: {elapsed:.4f} seconds")
+    print(f"Runtime: {elapsed*1000:.2f} milliseconds")
+    print(f"\nBest position found:")
+    print(f"  {best_pos}")
     print(f"\nConvergence history (every 50 iterations):")
     for i in range(0, len(pso.convergence_history), 50):
-        print(f"  Iteration {i}: {pso.convergence_history[i]:.6e}")
+        improvement = ""
+        if i > 0:
+            delta = pso.convergence_history[i-50] - pso.convergence_history[i]
+            improvement = f" (improved by {delta:.6e})"
+        print(f"  Iteration {i:3d}: {pso.convergence_history[i]:12.6e}{improvement}")
+
+    print("\n" + "="*70)
+    print("All PSO benchmark tests completed")
+    print("="*70)

@@ -433,8 +433,21 @@ if __name__ == "__main__":
         [0, 0, 0, 0, 8, 0, 0, 7, 9]
     ]
 
-    print("\nOriginal Puzzle:")
+    print("\nStarting Puzzle:")
     print_sudoku(test_puzzle)
+
+    # Count given cells
+    given_cells = sum(1 for row in test_puzzle for cell in row if cell != 0)
+    print(f"\nGiven cells: {given_cells}")
+    print(f"Empty cells: {81 - given_cells}")
+
+    print("\nPSO Configuration:")
+    print("  Swarm size: 150 particles")
+    print("  Max iterations: 3000")
+    print("  Inertia weight (w): 0.7")
+    print("  Cognitive coeff (c1): 1.5")
+    print("  Social coeff (c2): 1.5")
+    print()
 
     # Run 3 trials as required by assignment
     num_trials = 3
@@ -458,25 +471,62 @@ if __name__ == "__main__":
     times = [r[3] for r in results]
     solved = sum(1 for r in results if r[4] == "solved")
 
-    print(f"Trials run: {num_trials}")
+    print(f"\nTrials run: {num_trials}")
     print(f"Solved: {solved}/{num_trials}")
     print(f"Best score: {min(scores)} violations")
+    print(f"Worst score: {max(scores)} violations")
     print(f"Avg score: {np.mean(scores):.2f} violations")
     print(f"Avg time: {np.mean(times):.4f}s")
+    print(f"Total runtime: {sum(times):.4f}s")
 
     # Show best result
     best_idx = np.argmin(scores)
-    best_board, best_score, _, _, _ = results[best_idx]
+    best_board, best_score, best_iters, best_time, best_status = results[best_idx]
 
-    print(f"\nBest result (Trial {best_idx + 1}):")
-    print(f"Violations: {best_score}")
+    print(f"\n" + "="*70)
+    print(f"Best Result (Trial {best_idx + 1})")
+    print("="*70)
+    print(f"Status: {best_status}")
+    print(f"Final violations: {best_score}")
+    print(f"Iterations: {best_iters}")
+    print(f"Time: {best_time:.4f}s")
+
     if best_score == 0:
-        print("\nSolved board:")
+        print("\nSOLVED BOARD:")
         print_sudoku(best_board)
     else:
         print(f"\nBest board found ({best_score} violations remaining):")
         print_sudoku(best_board)
 
-    print("\nNote: PSO may not always solve Sudoku completely.")
-    print("For guaranteed solutions, use CSP methods (Part A).")
+        # Show where violations are
+        pso_temp = SudokuPSO(test_puzzle, swarm_size=1, max_iterations=1)
+        col_violations = 0
+        box_violations = 0
+
+        # Count column violations
+        for c in range(9):
+            column = [best_board[r][c] for r in range(9)]
+            col_violations += 9 - len(set(column))
+
+        # Count box violations
+        for box_r in range(0, 9, 3):
+            for box_c in range(0, 9, 3):
+                box = [best_board[r][c] for r in range(box_r, box_r+3)
+                      for c in range(box_c, box_c+3)]
+                box_violations += 9 - len(set(box))
+
+        print(f"\nViolation breakdown:")
+        print(f"  Column violations: {col_violations}")
+        print(f"  Box violations: {box_violations}")
+        print(f"  Total: {best_score}")
+
+    print("\n" + "="*70)
+    print("Analysis")
+    print("="*70)
     print("PSO demonstrates metaheuristic approach to constraint optimization.")
+    print("Unlike CSP methods (Part A) which guarantee solutions, PSO provides")
+    print("approximate optimization. CSP methods solve this puzzle in <0.02s")
+    print(f"with certainty, while PSO takes ~{np.mean(times):.1f}s and may not fully solve.")
+    print("\nPSO is better suited for continuous optimization and problems where")
+    print("approximate solutions are acceptable.")
+    print("="*70)

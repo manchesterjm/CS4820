@@ -854,9 +854,16 @@ if __name__ == "__main__":
         [0, 0, 0, 0, 8, 0, 0, 7, 9]
     ]
 
-    print("Original Puzzle:")
+    print("="*60)
+    print("CS 4820/5820 Homework 2 - Part A: Sudoku CSP Solvers")
+    print("="*60)
+    print("\nStarting Puzzle:")
     print_sudoku(easy_puzzle)
-    print()
+
+    # Count given cells
+    given_cells = sum(1 for row in easy_puzzle for cell in row if cell != 0)
+    print(f"\nGiven cells: {given_cells}")
+    print(f"Empty cells: {81 - given_cells}")
 
     methods = [
         ("Basic Backtracking", "solve_basic"),
@@ -866,17 +873,32 @@ if __name__ == "__main__":
     ]
 
     for name, method in methods:
-        print(f"\n{'='*50}")
+        print(f"\n{'='*60}")
         print(f"{name}")
-        print('='*50)
+        print('='*60)
 
         csp = SudokuCSP(easy_puzzle)
         solution, backtracks, elapsed = getattr(csp, method)()
 
         if solution:
-            print(f"Solved in {elapsed:.4f} seconds")
-            print("\nSolution:")
-            print_sudoku(assignment_to_grid(solution))
-        else:
-            print(f"No solution found (timeout or unsolvable)")
+            print(f"\nStatus: SOLVED")
             print(f"Time: {elapsed:.4f} seconds")
+            print(f"Runtime: {elapsed*1000:.2f} milliseconds")
+
+            print("\nSolved Puzzle:")
+            print_sudoku(assignment_to_grid(solution))
+
+            # Verify solution
+            grid = assignment_to_grid(solution)
+            all_filled = all(grid[r][c] != 0 for r in range(9) for c in range(9))
+            print(f"\nVerification:")
+            print(f"  All cells filled: {all_filled}")
+            print(f"  Total cells: 81/81")
+        else:
+            print(f"\nStatus: FAILED")
+            print(f"Time: {elapsed:.4f} seconds")
+            print("No solution found (timeout or unsolvable)")
+
+    print("\n" + "="*60)
+    print("All Sudoku CSP tests completed")
+    print("="*60)

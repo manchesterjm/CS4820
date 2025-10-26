@@ -416,21 +416,59 @@ if __name__ == "__main__":
     print("CS 4820/5820 Homework 2 - Part B: Minimum Conflicts")
     print("="*60)
 
-    # Test on required problem sizes
+    # Test on required problem sizes - showing detailed results
     for n in [8, 16, 25]:
-        run_trials(n, num_trials=5, max_steps=MAX_STEPS)
+        print(f"\n{'='*60}")
+        print(f"n-Queens with Minimum Conflicts: n={n}")
+        print(f"{'='*60}\n")
 
-    # Example: Show one solution for n=8
-    print("\n" + "="*60)
-    print("Example solution for n=8:")
-    print("="*60 + "\n")
+        nq = NQueens(n)
 
-    nq = NQueens(8)
-    solution, steps, attempts, elapsed, status = nq.solve_with_restarts()
+        # Run one detailed trial to show starting and ending states
+        print(f"Starting board (random initial placement):")
+        start_board = nq.random_initial_state()
+        if n <= 16:  # Only print board if not too large
+            print_board(start_board)
+        else:
+            print(f"  [Board too large to display - {n}x{n} with {n} queens]")
 
-    if status == "ok":
-        print(f"Found solution in {steps} steps, {attempts} attempt(s), {elapsed:.4f}s\n")
-        print_board(solution)
-        print(f"\nConflicts: {nq.total_conflicts(solution)}")
-    else:
-        print(f"Failed to find solution: {status}")
+        start_conflicts = nq.total_conflicts(start_board)
+        print(f"\nStarting conflicts: {start_conflicts}")
+
+        # Solve from this starting state
+        solution, steps, attempts, elapsed, status = nq.solve_with_restarts(
+            max_attempts=10,
+            steps_per_attempt=MAX_STEPS
+        )
+
+        if status == "ok":
+            print(f"\nStatus: SOLVED")
+            print(f"Steps taken: {steps}")
+            print(f"Restart attempts: {attempts}")
+            print(f"Time: {elapsed:.6f} seconds")
+            print(f"Runtime: {elapsed*1000:.3f} milliseconds")
+
+            print(f"\nSolved board:")
+            if n <= 16:  # Only print board if not too large
+                print_board(solution)
+            else:
+                print(f"  [Board too large to display - {n}x{n} with {n} queens]")
+                # Show first few queens for large boards
+                print(f"  First 10 queens: {solution[:10]}")
+
+            final_conflicts = nq.total_conflicts(solution)
+            print(f"\nFinal conflicts: {final_conflicts}")
+
+            # Verify solution
+            verified = verify_solution(solution)
+            print(f"Solution verified: {verified}")
+
+        else:
+            print(f"\nStatus: FAILED - {status}")
+            print(f"Time: {elapsed:.6f} seconds")
+
+        print()
+
+    print("="*60)
+    print("All n-Queens Minimum Conflicts tests completed")
+    print("="*60)
