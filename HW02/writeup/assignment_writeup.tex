@@ -444,131 +444,9 @@ The following figures show representative output from running each program. All 
 \subsection{Part A: Sudoku CSP Results}
 
 \begin{figure}[h]
-\begin{small}
+\begin{scriptsize}
 \begin{verbatim}
-Original Puzzle:
-5 3 . | . 7 . | . . .     Basic Backtracking: 0.0575s
-6 . . | 1 9 5 | . . .     +MRV+LCV:          0.0213s
-. 9 8 | . . . | . 6 .     +Forward Checking:  0.0201s
----------------------     +AC-3:              0.0192s
-8 . . | . 6 . | . . 3
-4 . . | 8 . 3 | . . 1     All variants found same solution:
-7 . . | . 2 . | . . 6
----------------------     5 3 4 | 6 7 8 | 9 1 2
-. 6 . | . . . | 2 8 .     6 7 2 | 1 9 5 | 3 4 8
-. . . | 4 1 9 | . . 5     1 9 8 | 3 4 2 | 5 6 7
-. . . | . 8 . | . 7 9     ---------------------
-                          8 5 9 | 7 6 1 | 4 2 3
-Given cells: 30           4 2 6 | 8 5 3 | 7 9 1
-Empty cells: 51           7 1 3 | 9 2 4 | 8 5 6
-                          ---------------------
-                          9 6 1 | 5 3 7 | 2 8 4
-                          2 8 7 | 4 1 9 | 6 3 5
-                          3 4 5 | 2 8 6 | 1 7 9
-\end{verbatim}
-\end{small}
-\caption{Sudoku CSP: All four algorithm variants solve the same puzzle. AC-3 is fastest at 0.0192s, while basic backtracking takes 0.0575s (3× slower).}
-\label{fig:sudoku-csp}
-\end{figure}
-
-\subsection{Part B: n-Queens Results}
-
-\begin{figure}[h]
-\begin{small}
-\begin{verbatim}
-n-Queens with Minimum Conflicts: n=8
-Running 5 trials
-
-Trial 1: Steps: 28,  Time: 0.0007s,  Status: ok,  0 conflicts
-Trial 2: Steps: 10,  Time: 0.0003s,  Status: ok,  0 conflicts
-Trial 3: Steps: 15,  Time: 0.0004s,  Status: ok,  0 conflicts
-Trial 4: Steps: 24,  Time: 0.0006s,  Status: ok,  0 conflicts
-Trial 5: Steps: 6,   Time: 0.0002s,  Status: ok,  0 conflicts
-
-Summary for n=8:
-  Successful trials: 5/5 (100%)
-  Average steps: 16.60
-  Average time: 0.0004s
-  Min steps: 6,  Max steps: 28
-\end{verbatim}
-\end{small}
-\caption{n-Queens n=8: All 5 trials succeeded. Average 16.6 steps in 0.4 milliseconds.}
-\label{fig:nqueens-8}
-\end{figure}
-
-\begin{figure}[h]
-\begin{small}
-\begin{verbatim}
-n-Queens with Minimum Conflicts: n=25
-Running 5 trials
-
-Trial 1: Steps: 48,  Time: 0.0091s,  Status: ok,  0 conflicts
-Trial 2: Steps: 59,  Time: 0.0112s,  Status: ok,  0 conflicts
-Trial 3: Steps: 42,  Time: 0.0080s,  Status: ok,  0 conflicts
-Trial 4: Steps: 56,  Time: 0.0106s,  Status: ok,  0 conflicts
-Trial 5: Steps: 98,  Time: 0.0184s,  Status: ok,  0 conflicts
-
-Summary for n=25:
-  Successful trials: 5/5 (100%)
-  Average steps: 60.60
-  Average time: 0.0115s (11.5 milliseconds)
-  Min steps: 42,  Max steps: 98
-\end{verbatim}
-\end{small}
-\caption{n-Queens n=25: All 5 trials succeeded. Average 60.6 steps in 11.5ms. Despite 3× larger board than n=8, only 3.7× more steps - demonstrating linear scaling.}
-\label{fig:nqueens-25}
-\end{figure}
-
-\subsection{Part C1: PSO Benchmark Results}
-
-\begin{figure}[h]
-\begin{small}
-\begin{verbatim}
-PSO Benchmark: Rastrigin Function (10D)
-Global minimum: f(0,...,0) = 0
-
-Config 1 (Standard: swarm=30, w=0.7, c1=1.5, c2=1.5):
-  Best score: 78.97,  Avg score: 80.93 ± 2.51
-
-Config 2 (Large Swarm: swarm=50, w=0.5, c1=2.0, c2=2.0):
-  Best score: 56.26,  Avg score: 59.91 ± 2.62  <-- BEST
-
-Config 3 (High Inertia: swarm=40, w=0.9, c1=1.2, c2=1.2):
-  Best score: 53.47,  Avg score: 72.05 ± 13.26
-\end{verbatim}
-\end{small}
-\caption{PSO on Rastrigin Function: Config 2 (Large Swarm) achieved best average score of 59.91. Config 3 had high variance (±13.26) showing instability with high inertia.}
-\label{fig:pso-rastrigin}
-\end{figure}
-
-\begin{figure}[h]
-\begin{small}
-\begin{verbatim}
-PSO Benchmark: Rosenbrock Function (10D)
-Global minimum: f(1,...,1) = 0
-
-Config 1 (Standard: swarm=30, w=0.7, c1=1.5, c2=1.5):
-  Best score: 1818.54,  Avg score: 2002.66 ± 141.40
-
-Config 2 (Large Swarm: swarm=50, w=0.5, c1=2.0, c2=2.0):
-  Best score: 568.39,  Avg score: 645.59 ± 97.99  <-- BEST
-
-Config 3 (High Inertia: swarm=40, w=0.9, c1=1.2, c2=1.2):
-  Best score: 2116.54,  Avg score: 6016.96 ± 3759.86
-\end{verbatim}
-\end{small}
-\caption{PSO on Rosenbrock Function: Config 2 (Large Swarm) achieved best average of 645.59. Config 3 performed poorly due to excessive exploration from high inertia, resulting in very high variance.}
-\label{fig:pso-rosenbrock}
-\end{figure}
-
-\subsection{Part C2: PSO for Sudoku}
-
-\begin{figure}[h]
-\begin{small}
-\begin{verbatim}
-PSO for Sudoku (swarm_size=150, max_iterations=3000)
-
-Starting Puzzle (30 given cells):
+Original Puzzle (30 given cells):
 5 3 . | . 7 . | . . .
 6 . . | 1 9 5 | . . .
 . 9 8 | . . . | . 6 .
@@ -581,24 +459,145 @@ Starting Puzzle (30 given cells):
 . . . | 4 1 9 | . . 5
 . . . | . 8 . | . 7 9
 
-Trial 1: 13 violations, 3000 iterations, 30.70s
-  (Stuck at 13 from iteration 100)
+Algorithm Times:
+  Basic Backtrack: 0.0575s
+  +MRV+LCV:        0.0213s
+  +Forward Check:  0.0201s
+  +AC-3:           0.0192s (fastest)
+\end{verbatim}
+\end{scriptsize}
+\caption{Sudoku CSP: AC-3 fastest at 0.0192s, basic backtracking 3× slower.}
+\label{fig:sudoku-csp}
+\end{figure}
 
-Trial 2: 13 violations, 3000 iterations, 31.29s
-  (Started at 15, improved to 13 at iteration 1300)
+\subsection{Part B: n-Queens Results}
 
-Trial 3: 6 violations, 3000 iterations, 31.36s
-  (Started at 10, improved to 8 at iteration 1800,
-   then to 6 at iteration 2900)
+\begin{figure}[h]
+\begin{scriptsize}
+\begin{verbatim}
+n-Queens Minimum Conflicts: n=8
+Running 5 trials
+
+Trial 1: 28 steps, 0.0007s
+Trial 2: 10 steps, 0.0003s
+Trial 3: 15 steps, 0.0004s
+Trial 4: 24 steps, 0.0006s
+Trial 5:  6 steps, 0.0002s
 
 Summary:
-  Solved: 0/3 trials (did not reach 0 violations)
-  Best: 6 violations (Trial 3)
-  Average: 10.67 violations
-  Average time: 31.12 seconds
+  Success: 5/5 (100%)
+  Avg steps: 16.60
+  Avg time: 0.0004s
+  Range: 6-28 steps
 \end{verbatim}
-\end{small}
-\caption{PSO for Sudoku: None of the 3 trials solved the puzzle completely. Best result was 6 violations (Trial 3). Shows PSO struggles with discrete constraint satisfaction vs continuous optimization.}
+\end{scriptsize}
+\caption{n-Queens n=8: 100\% success, 16.6 avg steps.}
+\label{fig:nqueens-8}
+\end{figure}
+
+\begin{figure}[h]
+\begin{scriptsize}
+\begin{verbatim}
+n-Queens Minimum Conflicts: n=25
+Running 5 trials
+
+Trial 1: 48 steps, 0.0091s
+Trial 2: 59 steps, 0.0112s
+Trial 3: 42 steps, 0.0080s
+Trial 4: 56 steps, 0.0106s
+Trial 5: 98 steps, 0.0184s
+
+Summary:
+  Success: 5/5 (100%)
+  Avg steps: 60.60
+  Avg time: 0.0115s (11.5ms)
+  Range: 42-98 steps
+\end{verbatim}
+\end{scriptsize}
+\caption{n-Queens n=25: 100\% success, 60.6 avg steps. Linear scaling: 3× larger board but only 3.7× more steps vs n=8.}
+\label{fig:nqueens-25}
+\end{figure}
+
+\subsection{Part C1: PSO Benchmark Results}
+
+\begin{figure}[h]
+\begin{scriptsize}
+\begin{verbatim}
+PSO: Rastrigin (10D)
+Global min: f(0,...,0) = 0
+
+Config 1 (swarm=30, w=0.7):
+  Best: 78.97
+  Avg:  80.93 ± 2.51
+
+Config 2 (swarm=50, w=0.5):
+  Best: 56.26
+  Avg:  59.91 ± 2.62  <-- BEST
+
+Config 3 (swarm=40, w=0.9):
+  Best: 53.47
+  Avg:  72.05 ± 13.26
+\end{verbatim}
+\end{scriptsize}
+\caption{PSO on Rastrigin: Config 2 best (59.91 avg). Config 3 high variance shows instability.}
+\label{fig:pso-rastrigin}
+\end{figure}
+
+\begin{figure}[h]
+\begin{scriptsize}
+\begin{verbatim}
+PSO: Rosenbrock (10D)
+Global min: f(1,...,1) = 0
+
+Config 1 (swarm=30, w=0.7):
+  Best: 1818.54
+  Avg:  2002.66 ± 141.40
+
+Config 2 (swarm=50, w=0.5):
+  Best: 568.39
+  Avg:  645.59 ± 97.99  <-- BEST
+
+Config 3 (swarm=40, w=0.9):
+  Best: 2116.54
+  Avg:  6016.96 ± 3759.86
+\end{verbatim}
+\end{scriptsize}
+\caption{PSO on Rosenbrock: Config 2 best (645.59 avg). Config 3 high inertia causes poor performance.}
+\label{fig:pso-rosenbrock}
+\end{figure}
+
+\subsection{Part C2: PSO for Sudoku}
+
+\begin{figure}[h]
+\begin{scriptsize}
+\begin{verbatim}
+PSO Sudoku (swarm=150, iter=3000)
+
+Starting Puzzle:
+5 3 . | . 7 . | . . .
+6 . . | 1 9 5 | . . .
+. 9 8 | . . . | . 6 .
+---------------------
+8 . . | . 6 . | . . 3
+4 . . | 8 . 3 | . . 1
+7 . . | . 2 . | . . 6
+---------------------
+. 6 . | . . . | 2 8 .
+. . . | 4 1 9 | . . 5
+. . . | . 8 . | . 7 9
+
+Trial 1: 13 violations, 30.70s
+Trial 2: 13 violations, 31.29s
+Trial 3:  6 violations, 31.36s
+
+Summary:
+  Solved: 0/3 (0%)
+  Best: 6 violations
+  Avg: 10.67 violations
+  Avg time: 31.12s
+\end{verbatim}
+\end{scriptsize}
+\caption{PSO Sudoku: 0/3 solved, best 6 violations. Shows PSO struggles with discrete CSPs.}
 \label{fig:pso-sudoku}
 \end{figure}
 
