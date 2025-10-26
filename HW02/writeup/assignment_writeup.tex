@@ -330,6 +330,30 @@ Config 3 (High Inertia) & 2109.24 & 4331.58 & 0.0049 \\
 
 \textbf{None reached global optimum:} It is worth noting that none of the configurations got particularly close to the global minimum (0 for both functions). PSO struggles with these tough benchmark functions, especially in higher dimensions. You would need way more iterations or different parameter settings to get closer to zero.
 
+\subsection{Convergence Analysis}
+
+Figure~\ref{fig:rastrigin-convergence} and Figure~\ref{fig:rosenbrock-convergence} show convergence curves for all three configurations. The plots reveal several key insights:
+
+\textbf{Rapid initial convergence:} All configurations show steep improvement in the first few iterations as particles quickly explore the search space and identify promising regions.
+
+\textbf{Configuration 2 superiority:} The larger swarm (50 particles) with lower inertia and higher cognitive/social coefficients consistently finds better solutions on both functions, validating the experimental results in Tables~\ref{tab:pso-rastrigin} and~\ref{tab:pso-rosenbrock}.
+
+\textbf{Premature convergence:} All configurations converge within 10 iterations due to aggressive tolerance settings ($10^{-6}$), demonstrating the importance of balancing exploration and exploitation in PSO parameter tuning.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\columnwidth]{rastrigin_convergence.pdf}
+\caption{PSO convergence on Rastrigin function (10D). Config 2 (swarm=50, w=0.5) achieves best performance.}
+\label{fig:rastrigin-convergence}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\columnwidth]{rosenbrock_convergence.pdf}
+\caption{PSO convergence on Rosenbrock function (10D). Config 2 outperforms other configurations.}
+\label{fig:rosenbrock-convergence}
+\end{figure}
+
 \section{Part C2: PSO for Sudoku}
 
 \subsection{Formulation}
