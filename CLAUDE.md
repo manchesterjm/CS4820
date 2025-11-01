@@ -15,6 +15,7 @@ This repository contains all coursework for **CS 4820/5820 (Artificial Intellige
 ```
 CS4820/
 ├── CLAUDE.md                    # This file - guidelines for all CS4820 work
+├── CS4820_STYLE_GUIDE.md       # Comprehensive Python style guide for AI coursework
 ├── .pylint_summary.md          # Pylint code quality tracking
 ├── HW01/                       # Homework 1: Search algorithms
 │   └── HW01_Code/              # Implementation code
@@ -24,6 +25,22 @@ CS4820/
 │   └── HW03_code/
 └── Term Paper/                 # Term paper materials
 ```
+
+## Coding Standards
+
+**IMPORTANT**: All code must follow the comprehensive style guide in **CS4820_STYLE_GUIDE.md**.
+
+The style guide covers:
+- Python style (PEP 8 adapted for AI coursework)
+- Academic coding standards (algorithm citations, complexity analysis)
+- Documentation requirements (docstrings, references, complexity)
+- Function design (single return, argument limits, naming)
+- Testing standards (independence, reproducibility)
+- Algorithm implementation guidelines
+- Experimental code structure
+- AI disclosure requirements
+
+Quick reference below, but see **CS4820_STYLE_GUIDE.md** for complete details.
 
 ## General Assignment Guidelines
 
