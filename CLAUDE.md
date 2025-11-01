@@ -18,18 +18,41 @@ CS4820/
 ├── CS4820_STYLE_GUIDE.md       # Comprehensive Python style guide for AI coursework
 ├── CS4820_WRITING_GUIDE.md     # Josh Manchester's personal academic writing style guide
 ├── .pylint_summary.md          # Pylint code quality tracking
+├── README.md                   # Repository overview and quick start
+│
 ├── HW01/                       # Homework 1: Search algorithms (COMPLETED)
-│   └── HW01_Code/              # Implementation code
+│   └── HW01_Code/              # Implementation code (Pylint: 9.53/10)
+│
 ├── HW02/                       # Homework 2: CSP and optimization (COMPLETED)
 │   ├── HW02_code/              # Implementation code (Pylint: 9.32/10)
 │   ├── writeup/                # LaTeX writeup with AAAI24 format
 │   └── Manchester_Josh_CS4820_HW02_Submission/  # Final submission package
+│
 ├── HW03/                       # Future homework (if any)
 │   └── HW03_code/
+│
 └── Term Paper/                 # Term paper materials (Exoplanet detection with ML)
-    ├── Josh_Proposal_Part_Take_2_AAAI24.tex     # RNN component proposal
-    ├── Josh_Proposal_Part_AAAI24_v2_relatedwork.tex  # Related work section
-    └── AuthorKit24-4/          # AAAI conference template
+    ├── midterm_report_RNN.tex              # MIDTERM REPORT (main deliverable)
+    ├── resourceFile.bib                    # Bibliography (6 papers + references)
+    ├── MIDTERM_REPORT_SUMMARY.md           # Complete midterm documentation
+    ├── PAPER_INVENTORY.md                  # All 6 papers tracked and documented
+    ├── RECOMMENDED_PAPERS_MIDTERM.md       # Paper selection guide
+    │
+    ├── term paper sources/                 # All paper PDFs (6 papers)
+    │   ├── s41467-020-15293-x.pdf         # Speiser 2020 (clustering)
+    │   ├── s41598-024-62182-0.pdf         # Vu 2024 (LSTM time series)
+    │   ├── 2410.19402v1.pdf               # Ding 2024 (LSTM astronomy)
+    │   ├── aa41068-21.pdf                 # Vida 2021 (RNN flares)
+    │   ├── stv2604.pdf                    # Kugler 2016 (ESN autoencoder)
+    │   └── DuDaiTriUpa2016.pdf            # Du 2016 (RMTPP timing)
+    │
+    ├── Josh_Proposal_Part_Take_2_AAAI24.tex       # Original RNN proposal
+    ├── Josh_Proposal_Part_AAAI24_v2_relatedwork.tex  # Original related work
+    ├── merged_proposal_AAAI24_merged.tex  # Original team proposal (reference)
+    ├── midterm_paper_requirements.txt     # Assignment requirements
+    └── AuthorKit24-4/                     # AAAI conference template
+        ├── aaai24.sty                     # AAAI style file
+        └── aaai24.bst                     # AAAI bibliography style
 ```
 
 ## Documentation Standards
@@ -411,6 +434,238 @@ testing, and decision-making were central to the process.
 For assignment-specific requirements, constraints, or implementation details,
 check if there's a `CLAUDE.md` file in the specific homework directory
 (e.g., `HW02/CLAUDE.md`). Those files supplement these general guidelines.
+
+## Term Paper Documentation
+
+### Overview
+
+The term paper is a research project on **Machine Learning for Exoplanet Transit Detection** using TESS/Kepler light curve data.
+
+- **Team Project**: Josh Manchester (RNN), Tristan Moffett (CNN), Brianne Leatherman (Transformer)
+- **Josh's Component**: BiLSTM + K-means clustering for transit classification
+- **Status**: Midterm report complete (November 1, 2025)
+
+### Quick Start: Resume Term Paper Work
+
+**IMPORTANT**: To resume term paper work without re-explaining everything, start by reading:
+
+1. **`Term Paper/MIDTERM_REPORT_SUMMARY.md`** - Complete status, what was created, and next steps
+2. **`Term Paper/PAPER_INVENTORY.md`** - All 6 papers (3 original + 3 new) with citations and connections
+3. **`Term Paper/midterm_report_RNN.tex`** - Main LaTeX document (12+ pages, ready to compile)
+
+These three files contain ALL context needed to continue work.
+
+### File Organization and Purpose
+
+**Location**: `C:\Users\manch\OneDrive\Desktop\CS4820\Term Paper\`
+
+#### Primary Deliverables
+
+1. **`midterm_report_RNN.tex`** (MAIN DOCUMENT)
+   - 12+ page AAAI-formatted midterm report
+   - Josh's RNN component only (not team proposal)
+   - Complete sections: Abstract, Introduction, Related Work (6 papers), Methodology, Experiments, Results, Conclusion
+   - Present tense (not future/proposal tense)
+   - Actual results: AUC 0.6947, 655 windows, TIC 307210830 success
+   - 6 tables with experimental metrics
+   - AI disclosure section
+
+2. **`resourceFile.bib`** (BIBLIOGRAPHY)
+   - All 6 scientific papers cited
+   - L 98-59 exoplanet system reference (Kossakowski 2019)
+   - Proper AAAI/BibTeX formatting
+   - Ready for compilation with midterm report
+
+#### Documentation Files (Read These First!)
+
+3. **`MIDTERM_REPORT_SUMMARY.md`** ⭐ START HERE
+   - Complete summary of midterm report creation
+   - What was created and why
+   - All 6 papers listed with roles
+   - Key results highlighted
+   - Tables included (6 total)
+   - Writing style notes
+   - Compilation instructions
+   - Presentation slide structure
+   - Submission checklist
+   - **Purpose**: Resume work without re-reading everything
+
+4. **`PAPER_INVENTORY.md`** ⭐ PAPER REFERENCE
+   - Complete tracking of all 6 papers
+   - Original 3 from proposal: Vida (2021), Kugler (2016), Du (2016)
+   - New 3 for midterm: Speiser (2020), Vu (2024), Ding (2024)
+   - Full citations in AAAI format
+   - Key points from each paper
+   - How each paper connects to Josh's RNN work
+   - Download verification checklist
+   - **Purpose**: Quick reference for which paper does what
+
+5. **`RECOMMENDED_PAPERS_MIDTERM.md`**
+   - Paper selection guide and rationale
+   - H5 index verification (all >100)
+   - Download links (including ArXiv alternatives)
+   - How to connect each paper to RNN methodology
+   - Backup paper options if needed
+   - **Purpose**: Understand why these specific papers were chosen
+
+#### Source Materials
+
+6. **`term paper sources/`** (FOLDER)
+   - All 6 paper PDFs downloaded and verified
+   - Naming matches BibTeX keys where possible
+   - **Original 3**:
+     - `aa41068-21.pdf` - Vida et al. (2021) - RNN for Kepler/TESS flares
+     - `stv2604.pdf` - Kugler et al. (2016) - ESN autoencoder for Kepler
+     - `DuDaiTriUpa2016.pdf` - Du et al. (2016) - RMTPP timing model
+   - **New 3**:
+     - `s41467-020-15293-x.pdf` - Speiser et al. (2020) - Clustering + ML (Nature Comm.)
+     - `s41598-024-62182-0.pdf` - Vu et al. (2024) - LSTM time series (Sci. Reports)
+     - `2410.19402v1.pdf` - Ding et al. (2024) - LSTM astronomy (MNRAS, ArXiv)
+
+#### Reference Documents (For Context)
+
+7. **`Josh_Proposal_Part_Take_2_AAAI24.tex`**
+   - Original RNN component proposal
+   - **Do NOT edit** - kept for reference only
+   - Shows transformation: proposal → midterm report
+
+8. **`Josh_Proposal_Part_AAAI24_v2_relatedwork.tex`**
+   - Original related work section (3 papers)
+   - **Do NOT edit** - kept for reference only
+   - Expanded to 6 papers in midterm report
+
+9. **`merged_proposal_AAAI24_merged.tex`**
+   - Original team proposal (RNN + CNN + Transformer)
+   - **Do NOT edit** - kept for reference only
+   - Midterm focuses on RNN component only
+
+10. **`midterm_paper_requirements.txt`**
+    - Assignment requirements from syllabus
+    - Midterm report guidelines
+    - Used to guide transformation from proposal to midterm
+
+11. **`AuthorKit24-4/`** (FOLDER)
+    - AAAI conference LaTeX template
+    - `aaai24.sty` - Required style file
+    - `aaai24.bst` - Required bibliography style
+    - **Must be in same directory** as midterm_report_RNN.tex for compilation
+
+### Key Information Summary
+
+#### Papers (6 Total)
+
+**Original Proposal Papers (3):**
+1. Vida et al. (2021) - RNN flares in Kepler/TESS [A&A]
+2. Kugler et al. (2016) - ESN-autoencoder for Kepler [MNRAS]
+3. Du et al. (2016) - RMTPP timing model [KDD]
+
+**NEW Midterm Papers (3):**
+4. Speiser et al. (2020) - Clustering + ML for large datasets [Nature Communications, H5: ~200+]
+5. Vu et al. (2024) - LSTM for time series patterns [Scientific Reports, H5: ~150+]
+6. Ding et al. (2024) - LSTM for astronomical photometry [MNRAS, H5: ~100-120]
+
+#### Implementation Status
+
+**Project Location**: `c:/CS_4280_Project` (actual implementation - team project repository)
+
+**Josh's RNN Results** (as of midterm):
+- BiLSTM architecture: 3 layers, 256 hidden units bidirectional, 2.1M parameters
+- K-means clustering: k=5 clusters on BLS features
+- Dataset: 655 windows (150 positive, 505 negative, 23% positive class)
+- Performance: AUC 0.6947 (epoch 49), F1 0.34, Accuracy 52%
+- Real-world test: 7 TESS targets, TIC 307210830 (L 98-59) correctly ranked #1 (prob 0.7623)
+- Class weighting: pos_weight=3.367 to handle imbalance
+
+#### Compilation Instructions
+
+```bash
+cd "C:\Users\manch\OneDrive\Desktop\CS4820\Term Paper"
+
+# Standard LaTeX compilation with BibTeX
+pdflatex midterm_report_RNN.tex
+bibtex midterm_report_RNN
+pdflatex midterm_report_RNN.tex
+pdflatex midterm_report_RNN.tex
+
+# Or use latexmk (if installed)
+latexmk -pdf midterm_report_RNN.tex
+```
+
+**Required files in same directory**:
+- `midterm_report_RNN.tex`
+- `resourceFile.bib`
+- `aaai24.sty` (in AuthorKit24-4 or copied to Term Paper directory)
+- `aaai24.bst` (in AuthorKit24-4 or copied to Term Paper directory)
+
+#### Writing Style
+
+All term paper writing follows **CS4820_WRITING_GUIDE.md** which captures Josh's distinctive style:
+- Question-driven section openings
+- Parenthetical definitions (e.g., "LSTM (long short-term memory)")
+- "According to X" citation pattern
+- Numerical reporting with units
+- Active voice with pedagogical explanations
+
+#### Changes from Proposal to Midterm
+
+**Removed**:
+- CNN sections (Tristan's work)
+- Transformer sections (Brianne's work)
+- Team datasets table
+- "Experimental Plan & Milestones" (proposal-specific)
+- "Risks & Mitigations" (proposal-specific)
+- Future tense language ("I will implement...")
+
+**Added**:
+- Complete Methodology section (actual implementation)
+- Experiments and Results section with 5 tables
+- 3 NEW papers in Related Work
+- Real TESS testing results (Table 6)
+- Conclusion with progress summary
+- Present tense language ("I implemented", "The model achieves...")
+
+**Transformed**:
+- Proposal → Midterm progress report
+- Future plans → Completed work presented as "preliminary findings"
+- Team project → Individual RNN component
+- Speculative → Evidence-based with real results
+
+### Next Steps for Final Report
+
+Per midterm report Conclusion section:
+1. **Dataset Expansion**: Increase from 655 to 5000-10000 windows
+2. **Attention Mechanisms**: Add attention layers to BiLSTM
+3. **Ensemble Methods**: Combine with CNN and Transformer components
+4. **Hyperparameter Tuning**: Grid search on learning rate, dropout, pos_weight
+5. **Robustness Testing**: Test on more TESS targets, analyze failure modes
+6. **Comparison Study**: Compare RNN vs CNN vs Transformer performance
+
+### Important Notes
+
+1. **Do NOT edit original proposal files** - they are kept for reference only
+2. **Main deliverable is `midterm_report_RNN.tex`** - this is what gets compiled and submitted
+3. **All 6 papers must be cited** in Related Work section
+4. **Writing must follow CS4820_WRITING_GUIDE.md** for consistency
+5. **Results are from actual implementation** in `c:/CS_4280_Project` repository
+6. **Midterm focuses on RNN component only** - not the full team project
+
+### Troubleshooting
+
+**If LaTeX won't compile**:
+1. Check that `aaai24.sty` and `aaai24.bst` are in the same directory as the .tex file
+2. Run BibTeX separately: `bibtex midterm_report_RNN`
+3. Check for missing packages (AAAI format requires specific packages)
+4. Look for Unicode characters that might cause issues
+
+**If you need to find a specific paper**:
+- Check `PAPER_INVENTORY.md` for full list with filenames
+- All PDFs are in `term paper sources/` folder
+- BibTeX keys are in `resourceFile.bib`
+
+**If you need to understand the methodology**:
+- Read Tables 2-3 in `midterm_report_RNN.tex` (architecture and hyperparameters)
+- Check `c:/CS_4280_Project/README.md` for actual implementation details
+- See Methodology section in midterm report for complete description
 
 ## Code Quality Tracking
 

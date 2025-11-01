@@ -15,7 +15,8 @@ This repository contains all coursework, implementations, and research materials
 **Current Status:**
 - ✅ HW01: Search Algorithms (COMPLETED - Pylint: 9.53/10)
 - ✅ HW02: CSP and Optimization (COMPLETED - Pylint: 9.32/10, Tests: 100%)
-- 🔄 Term Paper: Machine Learning for Exoplanet Detection (IN PROGRESS)
+- ✅ Term Paper Midterm: Machine Learning for Exoplanet Detection (COMPLETED - Nov 1, 2025)
+- 🔄 Term Paper Final: Dataset expansion and ensemble methods (IN PROGRESS)
 
 ---
 
@@ -24,18 +25,18 @@ This repository contains all coursework, implementations, and research materials
 ```
 CS4820/
 ├── README.md                           # This file - project overview
-├── CLAUDE.md                           # Guidelines for Claude Code assistant
+├── CLAUDE.md                           # Guidelines for Claude Code assistant ⭐
 ├── CS4820_STYLE_GUIDE.md              # Python coding standards (87 pages)
 ├── CS4820_WRITING_GUIDE.md            # Academic writing style guide (51 pages)
 ├── .pylint_summary.md                 # Code quality tracking
 │
-├── HW01/                              # Homework 1: Search Algorithms
+├── HW01/                              # Homework 1: Search Algorithms (COMPLETED)
 │   └── HW01_Code/                     # (Pylint: 9.53/10)
 │       ├── n_puzzle_*.py              # Uninformed search (BFS, DFS, IDS, BDS)
 │       ├── n_puzzle_ASTAR.py          # Informed search (A*)
 │       └── n_queens_*.py              # Local search (GA, SA)
 │
-├── HW02/                              # Homework 2: CSP & Optimization
+├── HW02/                              # Homework 2: CSP & Optimization (COMPLETED)
 │   ├── HW02_code/                     # (Pylint: 9.32/10, Tests: 100%)
 │   │   ├── sudoku_csp.py              # Backtracking, MRV, LCV, AC-3
 │   │   ├── nqueens_minconflicts.py    # Minimum conflicts local search
@@ -46,9 +47,15 @@ CS4820/
 │   ├── writeup/                       # LaTeX report (AAAI24 format)
 │   └── Manchester_Josh_CS4820_HW02_Submission/  # Final submission package
 │
-└── Term Paper/                        # Research Project
-    ├── Josh_Proposal_Part_*.tex       # RNN component proposal
-    ├── Merged_Proposal_AAAI24.tex     # Team proposal (RNN + CNN + Transformer)
+└── Term Paper/                        # Research Project (Midterm COMPLETE)
+    ├── midterm_report_RNN.tex         # ⭐ MIDTERM REPORT (main deliverable)
+    ├── resourceFile.bib               # Bibliography (6 papers)
+    ├── MIDTERM_REPORT_SUMMARY.md      # ⭐ Complete documentation
+    ├── PAPER_INVENTORY.md             # ⭐ All 6 papers tracked
+    ├── RECOMMENDED_PAPERS_MIDTERM.md  # Paper selection guide
+    ├── term paper sources/            # All 6 paper PDFs
+    ├── Josh_Proposal_Part_*.tex       # Original RNN proposal (reference)
+    ├── merged_proposal_AAAI24.tex     # Original team proposal (reference)
     └── AuthorKit24-4/                 # AAAI conference template
 ```
 
@@ -91,17 +98,35 @@ CS4820/
 **Key Finding:** AC-3 solved hard Sudoku puzzles ~200x faster than basic backtracking. PSO works well on continuous optimization but struggles with discrete CSPs.
 
 ### Term Paper: Machine Learning for Exoplanet Detection
-**Project:** Identify exoplanet transits in light-curve data
+
+**Project:** Identify exoplanet transits in TESS/Kepler light-curve data
 **Team:** Josh Manchester (RNN), Tristan Moffett (CNN), Brianne Leatherman (Transformer)
-**Dataset:** Kepler/TESS space telescope photometry
+**Dataset:** NASA TESS/Kepler space telescope photometry
+**Midterm Status:** COMPLETED (November 1, 2025)
 
-**Josh's Component (RNN):**
-- LSTM/GRU architectures for time-series classification
-- Timing-aware features for periodic transit detection
-- Class imbalance handling (focal loss, weighting)
-- Sequence-level diagnostics and error analysis
+**Josh's RNN Component - Midterm Results:**
+- **Architecture**: BiLSTM (3 layers, 256 hidden units bidirectional) + K-means clustering (k=5)
+- **Dataset**: 655 windows (150 positive transits, 505 negative, 23% imbalance)
+- **Performance**: AUC 0.6947, F1 0.34, Accuracy 52%
+- **Real-World Test**: Successfully identified TIC 307210830 (L 98-59 confirmed multi-planet system)
+- **Parameters**: 2.1M trainable parameters, pos_weight=3.367 for class imbalance
 
-**Status:** Proposal complete, implementation in progress
+**Papers (6 Total):**
+- **Original 3**: Vida (2021) RNN flares, Kugler (2016) ESN autoencoder, Du (2016) RMTPP timing
+- **NEW 3**: Speiser (2020) clustering+ML, Vu (2024) LSTM time series, Ding (2024) LSTM astronomy
+
+**📚 Complete Documentation:**
+- **`Term Paper/MIDTERM_REPORT_SUMMARY.md`** - Full status, compilation instructions, next steps
+- **`Term Paper/PAPER_INVENTORY.md`** - All 6 papers with citations and connections
+- **`Term Paper/midterm_report_RNN.tex`** - 12+ page AAAI-formatted midterm report
+- **`Term Paper/resourceFile.bib`** - Complete bibliography
+- **See `CLAUDE.md` section "Term Paper Documentation"** for complete file organization
+
+**Next Steps (Final Report):**
+1. Dataset expansion (655 → 5000-10000 windows)
+2. Add attention mechanisms to BiLSTM
+3. Ensemble methods (combine RNN + CNN + Transformer)
+4. Hyperparameter tuning and robustness testing
 
 ---
 
@@ -230,10 +255,19 @@ Russell, S. & Norvig, P. (2020). *Artificial Intelligence: A Modern Approach*, 4
 - Lecture PDFs (1-8): Introduction, Search, CSP, Optimization, Logical Agents
 - `CS 48205820 Course_Syllabus.pdf`
 
-### Term Paper References
+### Term Paper References (Midterm - 6 Papers)
+
+**Original Proposal Papers (3):**
 - Vida et al. (2021). Finding flares in Kepler and TESS data with RNNs. A&A, 652, A107.
 - Kügler et al. (2016). Explorative approach for Kepler data. MNRAS, 455(4), 4399-4405.
 - Du et al. (2016). Recurrent marked temporal point processes. KDD 2016, 1555-1564.
+
+**NEW Midterm Papers (3):**
+- Speiser et al. (2020). Machine learning for cluster analysis. Nature Communications, 11, 1493.
+- Vu et al. (2024). Harnessing LSTM and XGBoost for storm prediction. Sci. Reports, 14, 11516.
+- Ding et al. (2024). Photometric redshift estimation with LSTM. MNRAS, 535(2), 1844-1858.
+
+**See `Term Paper/PAPER_INVENTORY.md` for complete details and connections to methodology.**
 
 ---
 
