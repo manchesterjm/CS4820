@@ -16,17 +16,25 @@ This repository contains all coursework for **CS 4820/5820 (Artificial Intellige
 CS4820/
 ├── CLAUDE.md                    # This file - guidelines for all CS4820 work
 ├── CS4820_STYLE_GUIDE.md       # Comprehensive Python style guide for AI coursework
+├── CS4820_WRITING_GUIDE.md     # Josh Manchester's personal academic writing style guide
 ├── .pylint_summary.md          # Pylint code quality tracking
-├── HW01/                       # Homework 1: Search algorithms
+├── HW01/                       # Homework 1: Search algorithms (COMPLETED)
 │   └── HW01_Code/              # Implementation code
-├── HW02/                       # Homework 2: CSP and optimization
-│   └── HW02_code/              # Implementation code
+├── HW02/                       # Homework 2: CSP and optimization (COMPLETED)
+│   ├── HW02_code/              # Implementation code (Pylint: 9.32/10)
+│   ├── writeup/                # LaTeX writeup with AAAI24 format
+│   └── Manchester_Josh_CS4820_HW02_Submission/  # Final submission package
 ├── HW03/                       # Future homework (if any)
 │   └── HW03_code/
-└── Term Paper/                 # Term paper materials
+└── Term Paper/                 # Term paper materials (Exoplanet detection with ML)
+    ├── Josh_Proposal_Part_Take_2_AAAI24.tex     # RNN component proposal
+    ├── Josh_Proposal_Part_AAAI24_v2_relatedwork.tex  # Related work section
+    └── AuthorKit24-4/          # AAAI conference template
 ```
 
-## Coding Standards
+## Documentation Standards
+
+### Coding Standards
 
 **IMPORTANT**: All code must follow the comprehensive style guide in **CS4820_STYLE_GUIDE.md**.
 
@@ -41,6 +49,21 @@ The style guide covers:
 - AI disclosure requirements
 
 Quick reference below, but see **CS4820_STYLE_GUIDE.md** for complete details.
+
+### Writing Standards
+
+**IMPORTANT**: All academic papers and writeups must follow **CS4820_WRITING_GUIDE.md**.
+
+The writing guide captures Josh Manchester's distinctive writing style:
+- Pedagogical approach (question-driven, parenthetical definitions)
+- Sentence structure and voice (active, conversational yet precise)
+- Citation patterns ("According to X" phrasing)
+- Numerical reporting (always with units and context)
+- Section templates for abstracts, introductions, related work
+- Error analysis and balanced discussion patterns
+- AI disclosure formatting
+
+This ensures consistency across all written work and helps AI assistants (like Claude Code) generate text that authentically sounds like Josh's voice.
 
 ## General Assignment Guidelines
 
