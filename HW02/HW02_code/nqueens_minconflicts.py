@@ -1,22 +1,23 @@
-# nqueens_minconflicts.py
-# Implements the Minimum Conflicts heuristic for the n-Queens problem
-#
-# What is the n-Queens Problem?
-# - Place n queens on an n×n chessboard so that no two queens attack each other
-# - Queens attack along rows, columns, and diagonals
-# - This means no two queens can share a row, column, or diagonal
-#
-# What is the Minimum Conflicts Algorithm?
-# - It's a local search method that starts with a complete (but possibly incorrect) assignment
-# - The algorithm iteratively selects a conflicted variable and assigns it the value that
-#   minimizes conflicts with other variables
-# - According to empirical studies, it's very effective for large n and scales much better
-#   than backtracking (linear vs exponential time)
-#
-# Algorithm References:
-# According to Lecture 5: Constraint Satisfaction Problems, Slide 55 (Minimum Conflicts pseudocode)
-# and Russell & Norvig "Artificial Intelligence: A Modern Approach" Section 6.4
-# (Local Search for CSPs)
+"""
+Implements the Minimum Conflicts heuristic for the n-Queens problem.
+
+What is the n-Queens Problem?
+- Place n queens on an n×n chessboard so that no two queens attack each other
+- Queens attack along rows, columns, and diagonals
+- This means no two queens can share a row, column, or diagonal
+
+What is the Minimum Conflicts Algorithm?
+- It's a local search method that starts with a complete (but possibly incorrect) assignment
+- The algorithm iteratively selects a conflicted variable and assigns it the value that
+  minimizes conflicts with other variables
+- According to empirical studies, it's very effective for large n and scales much better
+  than backtracking (linear vs exponential time)
+
+Algorithm References:
+According to Lecture 5: Constraint Satisfaction Problems, Slide 55 (Minimum Conflicts pseudocode)
+and Russell & Norvig "Artificial Intelligence: A Modern Approach" Section 6.4
+(Local Search for CSPs)
+"""
 
 from typing import List, Tuple, Optional
 import random
@@ -182,7 +183,9 @@ class NQueens:
         # Break ties randomly
         return random.choice(best_rows)
 
-    def solve_min_conflicts(self, max_steps: int = MAX_STEPS) -> Tuple[Optional[List[int]], int, float, str]:
+    def solve_min_conflicts(
+            self, max_steps: int = MAX_STEPS
+            ) -> Tuple[Optional[List[int]], int, float, str]:
         """
         Solve n-Queens using Minimum Conflicts algorithm
 
@@ -249,8 +252,9 @@ class NQueens:
         # Exceeded max steps without finding solution
         return None, max_steps, time.perf_counter() - start_time, "max_steps"
 
-    def solve_with_restarts(self, max_attempts: int = 10,
-                           steps_per_attempt: int = MAX_STEPS) -> Tuple[Optional[List[int]], int, int, float, str]:
+    def solve_with_restarts(
+            self, max_attempts: int = 10, steps_per_attempt: int = MAX_STEPS
+            ) -> Tuple[Optional[List[int]], int, int, float, str]:
         """
         Solve n-Queens with random restarts
 
@@ -377,15 +381,15 @@ def run_trials(n: int, num_trials: int = 5, max_steps: int = MAX_STEPS):
         if status == "ok":
             # Verify solution
             if verify_solution(solution):
-                print(f"  Solution verified: 0 conflicts")
+                print("  Solution verified: 0 conflicts")
                 successful += 1
                 total_steps += steps
                 total_time += elapsed
                 all_steps.append(steps)
             else:
-                print(f"  ERROR: Solution has conflicts!")
+                print("  ERROR: Solution has conflicts!")
         else:
-            print(f"  Failed to find solution")
+            print("  Failed to find solution")
 
         print()
 
@@ -403,7 +407,7 @@ def run_trials(n: int, num_trials: int = 5, max_steps: int = MAX_STEPS):
         print(f"Min steps: {min(all_steps)}")
         print(f"Max steps: {max(all_steps)}")
     else:
-        print(f"No successful solutions found")
+        print("No successful solutions found")
 
     print()
 
@@ -445,7 +449,7 @@ if __name__ == "__main__":
         )
 
         if status == "ok":
-            print(f"\nStatus: SOLVED")
+            print("\nStatus: SOLVED")
             print(f"Steps taken: {steps}")
             print(f"Restart attempts: {attempts}")
             print(f"Time: {elapsed:.6f} seconds")

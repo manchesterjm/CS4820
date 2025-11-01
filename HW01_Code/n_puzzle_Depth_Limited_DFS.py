@@ -1,9 +1,14 @@
-# n_puzzle_Depth_Limited_DFS.py
-# Implements Depth-Limited Search for the n-puzzle problem
-# DFS with a maximum depth limit to prevent infinite exploration
+"""
+Depth-Limited Search implementation for the n-puzzle problem.
 
-from typing import Tuple, List, Dict, Optional, Set
-import random, time
+This module implements Depth-Limited DFS, which is DFS with a maximum depth
+limit to prevent infinite exploration. This makes the search more practical
+for larger puzzle instances.
+"""
+
+import random
+import time
+from typing import Tuple, List, Dict, Optional
 
 Position = Tuple[int, ...]
 
@@ -71,59 +76,60 @@ def reconstruct(parent: Dict[Position, Optional[Position]], s: Position) -> List
 def depth_limited_search(puz: NPuzzle, start: Position, depth_limit: int):
     """
     Depth-Limited DFS: Explore branches only up to a maximum depth
-    
+
     This prevents DFS from wandering down infinitely deep paths.
     If no solution is found within the depth limit, it returns failure.
-    
+
     Args:
         puz: NPuzzle instance
         start: Initial puzzle state
         depth_limit: Maximum depth to explore before cutting off a branch
-        
+
     Returns:
         Tuple of (solution_path, nodes_expanded, time_elapsed, status_string)
     """
     t0 = time.perf_counter()
-    
+
     # Stack now stores (state, depth) tuples to track how deep we are
     stack: List[Tuple[Position, int]] = [(start, 0)]
-    
+
     parent: Dict[Position, Optional[Position]] = {start: None}
-    
+
     # Track depth at which each state was first reached
     depth_reached: Dict[Position, int] = {start: 0}
-    
+
     nodes_expanded = 0
 
     while stack:
         if MAX_TIME_SEC and (time.perf_counter() - t0) >= MAX_TIME_SEC:
             return None, nodes_expanded, time.perf_counter() - t0, "timeout"
-        
+
         # Pop state and its current depth
         s, current_depth = stack.pop()
-        
+
         # Skip if we've already explored this state at a shallower depth
         if current_depth > depth_reached.get(s, float('inf')):
             continue
-        
+
         # Goal test
         if puz.is_goal(s):
             return reconstruct(parent, s), nodes_expanded, time.perf_counter() - t0, "ok"
-        
+
         nodes_expanded += 1
-        
+
         if nodes_expanded >= MAX_NODES:
             return None, nodes_expanded, time.perf_counter() - t0, "cap"
-        
+
         # Only expand children if we haven't reached depth limit
         if current_depth < depth_limit:
             for t in puz.neighbors(s):
-                # Add successor if we haven't seen it, or if we're reaching it at a shallower depth
+                # Add successor if we haven't seen it, or if we're reaching
+                # it at a shallower depth
                 if t not in depth_reached or current_depth + 1 < depth_reached[t]:
                     depth_reached[t] = current_depth + 1
                     parent[t] = s
                     stack.append((t, current_depth + 1))
-    
+
     # Exhausted search space within depth limit without finding solution
     return None, nodes_expanded, time.perf_counter() - t0, "depth_limit_reached"
 
@@ -137,11 +143,11 @@ def run_once(m: int, steps: int):
     """Run depth-limited DFS once"""
     # Set depth limit to 3x the scramble distance
     depth_limit = steps * DEPTH_LIMIT_MULTIPLIER
-    
+
     puz = NPuzzle(m=m)
     start = puz.random_start(steps=steps)
     path, expanded, dt, status = depth_limited_search(puz, start, depth_limit)
-    
+
     print(f"\nDepth-Limited DFS on {m}x{m} (depth_limit={depth_limit})")
     print("start:")
     print_board(start, m)
@@ -149,38 +155,38 @@ def run_once(m: int, steps: int):
     print("expanded:", expanded)
     print("time_s:", round(dt, 4))
     print("status:", status)
-    
+
     return (len(path) - 1) if path else None, expanded, dt, status
 
 def run_trials_auto():
     """
     Automated test harness with depth-limited DFS
-    
+
     Depth limits prevent infinite exploration, making 15-puzzle more tractable.
     However, solutions may not be found if they exceed the depth limit.
     """
     # Using more reasonable scrambles now that we have depth limiting
     configs = [(3, 60), (4, 30)]
-    
+
     for m, steps in configs:
         successes = 0
         attempts = 0
         total_moves = 0
         total_expanded = 0
         total_time = 0.0
-        
+
         depth_limit = steps * DEPTH_LIMIT_MULTIPLIER
-        
+
         print("\n" + "="*50)
         print(f"Target: {TRIALS_REQUIRED} successful trial(s) on {m}x{m}")
         print(f"Scramble steps: {steps}, Depth limit: {depth_limit}")
         print("="*50)
-        
+
         while successes < TRIALS_REQUIRED and attempts < MAX_ATTEMPTS_PER_SIZE:
             attempts += 1
             print(f"\nattempt {attempts}:")
             moves, expanded, dt, status = run_once(m, steps)
-            
+
             if status == "ok" and moves is not None:
                 successes += 1
                 total_moves += moves
@@ -188,7 +194,7 @@ def run_trials_auto():
                 total_time += dt
             else:
                 print(f"retrying due to {status}")
-        
+
         print("\n--- summary ---")
         print("attempts:", attempts)
         print("successful:", f"{successes}/{TRIALS_REQUIRED}")

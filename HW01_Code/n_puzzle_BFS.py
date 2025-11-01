@@ -1,11 +1,15 @@
-# n_puzzle_BFS.py
-# Implements Breadth-First Search for the n-puzzle problem
-# BFS explores shallowest nodes first using a FIFO (First-In-First-Out) queue
-# Guarantees finding the OPTIMAL (shortest) solution for unit-cost problems
+"""
+Breadth-First Search implementation for the n-puzzle problem.
 
-from collections import deque  # Efficient FIFO queue implementation
+This module implements BFS, which explores shallowest nodes first using a
+FIFO queue. BFS guarantees finding the OPTIMAL (shortest) solution for
+unit-cost problems.
+"""
+
+import random
+import time
+from collections import deque
 from typing import Tuple, List, Dict, Optional, Set
-import random, time
 
 # Type alias: Position represents a puzzle state as a flattened tuple
 # Example for 8-puzzle: (1, 2, 3, 4, 5, 6, 7, 8, 0) where 0 is the blank tile
@@ -28,10 +32,10 @@ class NPuzzle:
         """
         Generate all valid successor states by sliding tiles into the blank space
         The blank can move up, down, left, or right (if not at board edge)
-        
+
         Args:
             s: Current puzzle state
-            
+
         Returns:
             List of all reachable states from current state (2-4 neighbors typically)
         """
@@ -60,10 +64,10 @@ class NPuzzle:
     def is_goal(self, s: Position) -> bool:
         """
         Test if state s is the goal state
-        
+
         Args:
             s: State to test
-            
+
         Returns:
             True if s matches goal configuration
         """
@@ -73,10 +77,10 @@ class NPuzzle:
         """
         Generate a random solvable starting state by making random moves from goal
         This ensures the resulting state is always solvable (maintains puzzle parity)
-        
+
         Args:
             steps: Number of random moves to make from goal state
-            
+
         Returns:
             A randomized but solvable starting state
         """
@@ -89,11 +93,11 @@ class NPuzzle:
 def reconstruct(parent: Dict[Position, Optional[Position]], s: Position) -> List[Position]:
     """
     Reconstruct solution path by following parent pointers backward from goal to start
-    
+
     Args:
         parent: Dictionary mapping each state to its parent state in the search tree
         s: Goal state to start reconstruction from
-        
+
     Returns:
         List of states from start to goal (inclusive)
     """
@@ -108,7 +112,7 @@ def reconstruct(parent: Dict[Position, Optional[Position]], s: Position) -> List
 def breadth_first_search(puz: NPuzzle, start: Position):
     """
     Breadth-First Search: Explore shallowest nodes first using a FIFO queue
-    
+
     BFS Characteristics:
     - Uses a queue (FIFO) as frontier
     - Explores all nodes at depth d before any at depth d+1
@@ -116,46 +120,46 @@ def breadth_first_search(puz: NPuzzle, start: Position):
     - Complete: Will find solution if one exists
     - Space complexity: O(b^d) where b=branching factor, d=solution depth
     - Time complexity: O(b^d)
-    
+
     Why BFS is good for n-puzzle:
     - Guarantees shortest solution (fewest moves)
     - Works well for 8-puzzle with moderate scrambling
     - Can handle some 15-puzzle instances (with lighter scrambling)
-    
+
     Args:
         puz: NPuzzle instance defining the problem
         start: Initial puzzle state
-        
+
     Returns:
         Tuple of (solution_path, nodes_expanded, time_elapsed)
     """
     t0 = time.perf_counter()  # Start timing
-    
+
     # Initialize frontier with start state
     # Queue (FIFO): states are explored in the order they were discovered
     # This ensures we explore by layers (all depth d before depth d+1)
     frontier = deque([start])
-    
+
     # Track all states we've seen to avoid revisiting
     # In BFS, first visit to a state is always via shortest path
     explored: Set[Position] = {start}
-    
+
     # Track parent pointers for solution reconstruction
     # Maps each state to the state it was reached from
     parent: Dict[Position, Optional[Position]] = {start: None}
-    
+
     nodes_expanded = 0  # Count nodes we've examined (for performance metrics)
 
     while frontier:  # Continue until frontier is empty
         # Dequeue: get oldest state in frontier (FIFO = breadth-first)
         # This ensures we process all states at depth d before depth d+1
         s = frontier.popleft()
-        
+
         # Goal test: check if we've reached the solution
         # Since BFS explores by depth, this is the SHORTEST path to goal
         if puz.is_goal(s):
             return reconstruct(parent, s), nodes_expanded, time.perf_counter() - t0
-        
+
         # Expand this node: generate all successor states
         for t in puz.neighbors(s):
             # Only add new states (not yet explored)
@@ -164,7 +168,7 @@ def breadth_first_search(puz: NPuzzle, start: Position):
                 explored.add(t)         # Mark as seen
                 parent[t] = s           # Record how we reached this state
                 frontier.append(t)      # Add to back of queue (FIFO)
-        
+
         # Count this node as expanded after generating its children
         nodes_expanded += 1
 
@@ -175,7 +179,7 @@ def breadth_first_search(puz: NPuzzle, start: Position):
 def print_board(s: Position, m: int):
     """
     Display puzzle state as a human-readable m x m grid
-    
+
     Args:
         s: Puzzle state to display
         m: Board dimension
@@ -187,18 +191,18 @@ def print_board(s: Position, m: int):
 def run_once(m: int, steps: int):
     """
     Run BFS once on a random puzzle instance
-    
+
     Args:
         m: Board dimension (3 for 8-puzzle, 4 for 15-puzzle)
         steps: Number of random moves to scramble the puzzle
-        
+
     Returns:
         Tuple of (solution_length, nodes_expanded, time)
     """
     puz = NPuzzle(m=m)
     start = puz.random_start(steps=steps)
     path, expanded, dt = breadth_first_search(puz, start)
-    
+
     # Display results
     print(f"\nBFS on {m}x{m}")
     print("start:")
@@ -206,59 +210,60 @@ def run_once(m: int, steps: int):
     print("moves:", (len(path) - 1) if path else None)  # Path length minus start state
     print("expanded:", expanded)
     print("time_s:", round(dt, 4))
-    
+
     return (len(path) - 1) if path else None, expanded, dt
 
 def run_trials_auto():
     """
     Automated test harness: run BFS on both 8-puzzle and 15-puzzle
-    
+
     For each puzzle size, run exactly 3 trials and compute averages
-    
+
     BFS performance characteristics:
     - 8-puzzle (3x3): Handles deep scrambles well (40+ moves)
     - 15-puzzle (4x4): More limited - use lighter scrambling (12 steps)
-      BFS explores exponentially: b^d nodes where b≈2-4, d=solution depth
-      15-puzzle solutions often 50-80 moves deep → huge search space
-    
+      BFS explores exponentially: b^d nodes where b~2-4, d=solution depth
+      15-puzzle solutions often 50-80 moves deep -> huge search space
+
     Scramble configuration:
-    - 3x3 with 40 steps: Creates challenges requiring ~30-40 moves to solve
-    - 4x4 with 12 steps: Creates solvable instances BFS can handle in reasonable time
+    - 3x3 with 40 steps: Creates challenges requiring ~30-40 moves
+    - 4x4 with 12 steps: Creates solvable instances BFS can handle
     """
     trials = 3  # Number of runs per puzzle size
     # Configuration: (board_size, scramble_steps)
     configs = [(3, 40), (4, 40)]
-    
+
     for m, steps in configs:
         total_moves = 0
         total_expanded = 0
         total_time = 0.0
         solved = 0  # Count how many trials found solutions
-        
+
         print("\n" + "="*32)
         print(f"Running {trials} trial(s) on {m}x{m} with steps={steps}")
         print("="*32)
-        
+
         # Run exactly 'trials' number of independent tests
         for i in range(1, trials+1):
             print(f"\ntrial {i}:")
             moves, expanded, dt = run_once(m, steps)
-            
+
             # Accumulate statistics
             if moves is not None:
                 solved += 1
                 total_moves += moves
             total_expanded += expanded
             total_time += dt
-        
+
         # Compute and display averages
         avg_moves = (total_moves/solved) if solved else None
         avg_expanded = total_expanded/trials
         avg_time = total_time/trials
-        
+
         print("\n--- summary ---")
         print("solved:", f"{solved}/{trials}")
-        print("avg_moves:", round(avg_moves, 2) if avg_moves is not None else None)
+        avg_moves_rounded = round(avg_moves, 2) if avg_moves is not None else None
+        print("avg_moves:", avg_moves_rounded)
         print("avg_expanded:", round(avg_expanded, 2))
         print("avg_time_s:", round(avg_time, 4))
 

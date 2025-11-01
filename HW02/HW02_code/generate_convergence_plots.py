@@ -1,20 +1,21 @@
-# generate_convergence_plots.py
-# Generate convergence plots for PSO benchmark optimization
-#
-# Creates publication-quality plots showing:
-# - Convergence behavior across iterations
-# - Comparison of different parameter configurations
-# - Best fitness over time for Rastrigin and Rosenbrock functions
-#
-# Outputs:
-# - rastrigin_convergence.pdf: Convergence plot for Rastrigin function
-# - rosenbrock_convergence.pdf: Convergence plot for Rosenbrock function
+"""
+Generate convergence plots for PSO benchmark optimization.
+
+Creates publication-quality plots showing:
+- Convergence behavior across iterations
+- Comparison of different parameter configurations
+- Best fitness over time for Rastrigin and Rosenbrock functions
+
+Outputs:
+- rastrigin_convergence.pdf: Convergence plot for Rastrigin function
+- rosenbrock_convergence.pdf: Convergence plot for Rosenbrock function
+"""
 
 import numpy as np
 import matplotlib
-matplotlib.use('Agg')  # Non-interactive backend for generating files
-import matplotlib.pyplot as plt
-from pso_benchmark import PSO, rastrigin, rosenbrock
+matplotlib.use('Agg')  # Must be called before importing pyplot
+import matplotlib.pyplot as plt  # pylint: disable=wrong-import-position
+from pso_benchmark import PSO, rastrigin, rosenbrock  # pylint: disable=wrong-import-position
 
 # Configure matplotlib for publication quality
 plt.rcParams['font.family'] = 'serif'
@@ -89,7 +90,7 @@ def run_pso_with_convergence(objective_func, func_name, bounds, dimensions=10, t
             )
 
             # Run optimization
-            best_pos, best_score, iters, elapsed, status = pso.optimize()
+            _, best_score, iters, _, status = pso.optimize()
 
             # Store convergence history
             convergence_histories.append(pso.convergence_history)

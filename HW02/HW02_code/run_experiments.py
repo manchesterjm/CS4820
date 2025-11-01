@@ -1,20 +1,20 @@
-# run_experiments.py
-# Main experiment runner for CS 4820/5820 Homework 2
-#
-# Runs all required experiments and generates results for report:
-# - Part A: Sudoku CSP with different algorithms
-# - Part B: n-Queens with Minimum Conflicts (n=8, 16, 25)
-# - Part C1: PSO on benchmark functions (multiple parameter configs)
-# - Part C2: PSO on Sudoku (3 trials)
-#
-# Outputs tables and statistics suitable for inclusion in AAAI format report
+"""
+Main experiment runner for CS 4820/5820 Homework 2.
+
+This module runs all required experiments and generates results for report:
+- Part A: Sudoku CSP with different algorithms
+- Part B: n-Queens with Minimum Conflicts (n=8, 16, 25)
+- Part C1: PSO on benchmark functions (multiple parameter configs)
+- Part C2: PSO on Sudoku (3 trials)
+
+Outputs tables and statistics suitable for inclusion in AAAI format report.
+"""
 
 import time
 import numpy as np
-from typing import List, Dict, Tuple
 
-from sudoku_csp import SudokuCSP, assignment_to_grid, print_sudoku
-from nqueens_minconflicts import NQueens, verify_solution, print_board
+from sudoku_csp import SudokuCSP, print_sudoku
+from nqueens_minconflicts import NQueens, verify_solution
 from pso_benchmark import PSO, rastrigin, rosenbrock
 from pso_sudoku import SudokuPSO
 from sudoku_puzzles import PUZZLES, count_given_cells
@@ -53,7 +53,7 @@ def run_part_a_experiments():
 
         for name, method in methods:
             csp = SudokuCSP(puzzle)
-            solution, backtracks, elapsed = getattr(csp, method)()
+            solution, _, elapsed = getattr(csp, method)()
 
             status = "PASS" if solution else "FAIL"
             print("{:<30} {:<10} {:>15} {:>12.6f} {}".format(
@@ -96,8 +96,8 @@ def run_part_b_experiments():
         total_steps = 0
         total_time = 0.0
 
-        for trial in range(trials_per_size):
-            solution, steps, attempts, elapsed, status = nq.solve_with_restarts(
+        for _ in range(trials_per_size):
+            solution, steps, _, elapsed, status = nq.solve_with_restarts(
                 max_attempts=10,
                 steps_per_attempt=100000
             )
@@ -135,9 +135,12 @@ def run_part_c1_experiments():
 
     # Parameter configurations to test
     configs = [
-        {"name": "Config 1 (Standard)", "swarm_size": 30, "w": 0.7, "c1": 1.5, "c2": 1.5, "max_iterations": 1000},
-        {"name": "Config 2 (Large Swarm)", "swarm_size": 50, "w": 0.5, "c1": 2.0, "c2": 2.0, "max_iterations": 1000},
-        {"name": "Config 3 (High Inertia)", "swarm_size": 40, "w": 0.9, "c1": 1.2, "c2": 1.2, "max_iterations": 1500},
+        {"name": "Config 1 (Standard)", "swarm_size": 30, "w": 0.7,
+         "c1": 1.5, "c2": 1.5, "max_iterations": 1000},
+        {"name": "Config 2 (Large Swarm)", "swarm_size": 50, "w": 0.5,
+         "c1": 2.0, "c2": 2.0, "max_iterations": 1000},
+        {"name": "Config 3 (High Inertia)", "swarm_size": 40, "w": 0.9,
+         "c1": 1.2, "c2": 1.2, "max_iterations": 1500},
     ]
 
     trials = 3
@@ -165,7 +168,7 @@ def run_part_c1_experiments():
                 bounds=(-5.12, 5.12),
                 **config
             )
-            best_pos, best_score, iters, elapsed, status = pso.optimize()
+            _, best_score, _, elapsed, _ = pso.optimize()
             scores.append(best_score)
             times.append(elapsed)
 
@@ -201,7 +204,7 @@ def run_part_c1_experiments():
                 bounds=(-5, 10),
                 **config
             )
-            best_pos, best_score, iters, elapsed, status = pso.optimize()
+            _, best_score, _, elapsed, _ = pso.optimize()
             scores.append(best_score)
             times.append(elapsed)
 
@@ -215,10 +218,13 @@ def run_part_c1_experiments():
         ))
 
     print("\nInterpretation:")
-    print("- Rastrigin: Highly multimodal, tests ability to escape local minima")
+    print("- Rastrigin: Highly multimodal, tests ability to escape "
+          "local minima")
     print("- Rosenbrock: Narrow valley, tests convergence precision")
-    print("- Higher inertia (w) = more exploration, may escape local minima")
-    print("- Higher c1/c2 = stronger attraction to bests, faster convergence")
+    print("- Higher inertia (w) = more exploration, may escape local "
+          "minima")
+    print("- Higher c1/c2 = stronger attraction to bests, faster "
+          "convergence")
 
 
 def run_part_c2_experiments():
@@ -258,7 +264,7 @@ def run_part_c2_experiments():
             c2=1.5
         )
 
-        best_board, score, iters, elapsed, status = pso.optimize()
+        _, score, iters, elapsed, status = pso.optimize()
 
         scores.append(score)
         times.append(elapsed)
@@ -275,7 +281,8 @@ def run_part_c2_experiments():
     ))
 
     print("\nInterpretation:")
-    print("- PSO treats Sudoku as an optimization problem (minimize violations)")
+    print("- PSO treats Sudoku as an optimization problem "
+          "(minimize violations)")
     print("- May not always find perfect solution (0 violations)")
     print("- Demonstrates metaheuristic approach to constraint problems")
     print("- For guaranteed solutions, use CSP methods (Part A)")

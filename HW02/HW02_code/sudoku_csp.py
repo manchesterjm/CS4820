@@ -1,23 +1,27 @@
-# sudoku_csp.py
-# Implements Sudoku as a Constraint Satisfaction Problem (CSP)
-#
-# How can we represent Sudoku as a formal CSP?
-# CSP Formulation:
-# - Variables: 81 cells in a 9x9 grid
-# - Domain: {1, 2, 3, 4, 5, 6, 7, 8, 9} for each variable
-# - Constraints: 27 Alldiff constraints (9 rows + 9 columns + 9 3x3 boxes)
-#
-# This means we can solve Sudoku using systematic search algorithms designed for CSPs.
-#
-# Algorithm References:
-# According to Russell & Norvig "Artificial Intelligence: A Modern Approach" Chapter 6
-# and Lecture 5: Constraint Satisfaction Problems:
-#   * Backtracking Search (Slide 19) - Basic depth-first search with constraint checking
-#   * MRV Heuristic (Slide 24, 27) - Choose most constrained variable first
-#   * Degree Heuristic (Slide 28) - Tie-breaking for MRV
-#   * LCV Heuristic (Slide 30) - Try least constraining values first
-#   * Forward Checking (Slide 36) - Maintain arc consistency with future variables
-#   * AC-3 Constraint Propagation (Slide 70) - Full arc consistency across entire CSP
+"""
+Sudoku solver using Constraint Satisfaction Problem (CSP) techniques.
+
+This module implements Sudoku as a formal CSP:
+- Variables: 81 cells in a 9x9 grid
+- Domain: {1, 2, 3, 4, 5, 6, 7, 8, 9} for each variable
+- Constraints: 27 Alldiff constraints (9 rows + 9 columns + 9 3x3 boxes)
+
+This representation allows solving Sudoku using systematic search algorithms
+designed for CSPs.
+
+Algorithm References:
+According to Russell & Norvig "Artificial Intelligence: A Modern Approach"
+Chapter 6 and Lecture 5: Constraint Satisfaction Problems:
+  * Backtracking Search (Slide 19) - Basic depth-first search with
+    constraint checking
+  * MRV Heuristic (Slide 24, 27) - Choose most constrained variable first
+  * Degree Heuristic (Slide 28) - Tie-breaking for MRV
+  * LCV Heuristic (Slide 30) - Try least constraining values first
+  * Forward Checking (Slide 36) - Maintain arc consistency with future
+    variables
+  * AC-3 Constraint Propagation (Slide 70) - Full arc consistency across
+    entire CSP
+"""
 
 from typing import List, Tuple, Set, Dict, Optional
 import time
@@ -30,7 +34,8 @@ Domains = Dict[Position, Domain]  # Maps each position to its current domain
 
 # Safety limit to prevent excessive computation
 # According to the assignment requirements, we need a 5 minute timeout
-MAX_TIME_SEC = 300  # This prevents algorithms from running forever on hard puzzles
+# This prevents algorithms from running forever on hard puzzles
+MAX_TIME_SEC = 300
 
 class SudokuCSP:
     """
@@ -72,8 +77,9 @@ class SudokuCSP:
                     self.initial_domains[pos] = {1, 2, 3, 4, 5, 6, 7, 8, 9}
 
         # Precompute the constraint structure for efficiency
-        # According to the CSP formulation, each variable has constraints with all
-        # variables in the same row, column, and 3x3 box. This builds the constraint graph.
+        # According to the CSP formulation, each variable has constraints
+        # with all variables in the same row, column, and 3x3 box. This
+        # builds the constraint graph.
         self.neighbors: Dict[Position, Set[Position]] = {}
         for r in range(9):
             for c in range(9):
@@ -154,8 +160,9 @@ class SudokuCSP:
 
         return True
 
-    def select_unassigned_variable_basic(self, assignment: Dict[Position, int],
-                                         domains: Domains) -> Optional[Position]:
+    def select_unassigned_variable_basic(
+            self, assignment: Dict[Position, int],
+            domains: Domains) -> Optional[Position]:
         """
         Basic variable selection: choose first unassigned variable
 
@@ -175,13 +182,15 @@ class SudokuCSP:
                     return (r, c)
         return None
 
-    def select_unassigned_variable_mrv(self, assignment: Dict[Position, int],
-                                       domains: Domains) -> Optional[Position]:
+    def select_unassigned_variable_mrv(
+            self, assignment: Dict[Position, int],
+            domains: Domains) -> Optional[Position]:
         """
         MRV (Minimum Remaining Values) heuristic for variable selection
 
-        This is also known as the "most constrained variable" or "fail-first" heuristic.
-        The idea is to choose the variable with the fewest legal values remaining.
+        This is also known as the "most constrained variable" or
+        "fail-first" heuristic. The idea is to choose the variable with
+        the fewest legal values remaining.
 
         Why does MRV work so well? According to Lecture 5, Slide 24:
         - It reduces the branching factor by choosing variables that are likely to fail early
@@ -340,7 +349,10 @@ class SudokuCSP:
         for neighbor in self.neighbors[pos]:
             # Skip if neighbor is already assigned
             # (Forward checking only applies to unassigned variables)
-            if neighbor in [k for k, v in enumerate(new_domains) if len(v) == 1 and list(v)[0] == value]:
+            # Check if neighbor has single value equal to our value
+            if (neighbor in new_domains and
+                    len(new_domains[neighbor]) == 1 and
+                    list(new_domains[neighbor])[0] == value):
                 continue
 
             # Remove value from neighbor's domain (if present)
@@ -353,7 +365,9 @@ class SudokuCSP:
 
         return new_domains
 
-    def ac3(self, domains: Domains, queue: Optional[List[Tuple[Position, Position]]] = None) -> Optional[Domains]:
+    def ac3(self, domains: Domains,
+            queue: Optional[List[Tuple[Position, Position]]] = None
+            ) -> Optional[Domains]:
         """
         AC-3 (Arc Consistency 3) constraint propagation algorithm
 
@@ -363,12 +377,15 @@ class SudokuCSP:
 
         Why is AC-3 so powerful? According to Lecture 5, Slide 70:
         - It's more powerful than forward checking alone
-        - It propagates constraints transitively, creating a cascading effect
+        - It propagates constraints transitively, creating a cascading
+          effect
         - This means it can detect failures earlier than forward checking
-        - It significantly reduces the search space before backtracking even begins
+        - It significantly reduces the search space before backtracking
+          even begins
         - AC-3 makes an excellent preprocessing step before search
 
-        How does the algorithm work? According to Lecture 5, Slide 70 and Russell & Norvig Figure 6.3:
+        How does the algorithm work? According to Lecture 5, Slide 70 and
+        Russell & Norvig Figure 6.3:
         1. Initialize a queue with all arcs (Xi, Xj) where Xi and Xj are neighbors
         2. While the queue is not empty:
         3.   Remove an arc (Xi, Xj) from the queue
@@ -493,7 +510,7 @@ class SudokuCSP:
             Complete assignment if found, None if no solution exists
         """
         # Timeout check
-        if MAX_TIME_SEC > 0 and (time.perf_counter() - start_time) > MAX_TIME_SEC:
+        if 0 < MAX_TIME_SEC < (time.perf_counter() - start_time):
             return None
 
         # Base case: assignment is complete
@@ -549,7 +566,7 @@ class SudokuCSP:
             Complete assignment if found, None if no solution exists
         """
         # Timeout check
-        if MAX_TIME_SEC > 0 and (time.perf_counter() - start_time) > MAX_TIME_SEC:
+        if 0 < MAX_TIME_SEC < (time.perf_counter() - start_time):
             return None
 
         # Base case: assignment is complete
@@ -603,7 +620,7 @@ class SudokuCSP:
             Complete assignment if found, None if no solution exists
         """
         # Timeout check
-        if MAX_TIME_SEC > 0 and (time.perf_counter() - start_time) > MAX_TIME_SEC:
+        if 0 < MAX_TIME_SEC < (time.perf_counter() - start_time):
             return None
 
         # Base case: assignment is complete
@@ -666,7 +683,7 @@ class SudokuCSP:
             Complete assignment if found, None if no solution exists
         """
         # Timeout check
-        if MAX_TIME_SEC > 0 and (time.perf_counter() - start_time) > MAX_TIME_SEC:
+        if 0 < MAX_TIME_SEC < (time.perf_counter() - start_time):
             return None
 
         # Base case: assignment is complete
@@ -893,10 +910,10 @@ if __name__ == "__main__":
         print('='*60)
 
         csp = SudokuCSP(easy_puzzle)
-        solution, backtracks, elapsed = getattr(csp, method)()
+        solution, _, elapsed = getattr(csp, method)()
 
         if solution:
-            print(f"\nStatus: SOLVED")
+            print("\nStatus: SOLVED")
             print(f"Time: {elapsed:.4f} seconds")
             print(f"Runtime: {elapsed*1000:.2f} milliseconds")
 
@@ -905,12 +922,13 @@ if __name__ == "__main__":
 
             # Verify solution
             grid = assignment_to_grid(solution)
-            all_filled = all(grid[r][c] != 0 for r in range(9) for c in range(9))
-            print(f"\nVerification:")
+            all_filled = all(grid[r][c] != 0
+                             for r in range(9) for c in range(9))
+            print("\nVerification:")
             print(f"  All cells filled: {all_filled}")
-            print(f"  Total cells: 81/81")
+            print("  Total cells: 81/81")
         else:
-            print(f"\nStatus: FAILED")
+            print("\nStatus: FAILED")
             print(f"Time: {elapsed:.4f} seconds")
             print("No solution found (timeout or unsolvable)")
 

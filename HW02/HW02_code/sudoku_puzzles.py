@@ -1,12 +1,13 @@
-# sudoku_puzzles.py
-# Collection of Sudoku test puzzles at various difficulty levels
-#
-# Puzzles are 9x9 grids where 0 represents an empty cell
-# Difficulty roughly correlates with number of given cells:
-# - Easy: 35-40 given cells
-# - Medium: 28-34 given cells
-# - Hard: 22-27 given cells
-# - Expert: <22 given cells
+"""
+Collection of Sudoku test puzzles at various difficulty levels.
+
+Puzzles are 9x9 grids where 0 represents an empty cell.
+Difficulty roughly correlates with number of given cells:
+- Easy: 35-40 given cells
+- Medium: 28-34 given cells
+- Hard: 22-27 given cells
+- Expert: <22 given cells
+"""
 
 from typing import List, Dict
 

@@ -1,26 +1,24 @@
-# test_all.py
-# Comprehensive test suite for CS 4820/5820 Homework 2
-#
-# Tests all implementations:
-# - Part A: Sudoku CSP solvers (Backtracking, MRV+LCV, Forward Checking, AC-3)
-# - Part B: n-Queens with Minimum Conflicts
-# - Part C1: PSO for benchmark functions
-# - Part C2: PSO for Sudoku
-#
-# This suite automatically tests functionality and fixes any failures found
+"""
+Comprehensive test suite for CS 4820/5820 Homework 2.
+
+Tests all implementations:
+- Part A: Sudoku CSP solvers (Backtracking, MRV+LCV, Forward Checking, AC-3)
+- Part B: n-Queens with Minimum Conflicts
+- Part C1: PSO for benchmark functions
+- Part C2: PSO for Sudoku
+
+This suite automatically tests functionality and fixes any failures found.
+"""
 
 import sys
-import time
-from typing import Tuple, List
 
 # Import all modules
 try:
-    from sudoku_csp import SudokuCSP, print_sudoku, assignment_to_grid
-    from nqueens_minconflicts import NQueens, print_board as print_nqueens_board, verify_solution
+    from sudoku_csp import SudokuCSP, assignment_to_grid
+    from nqueens_minconflicts import NQueens, verify_solution
     from pso_benchmark import PSO, rastrigin, rosenbrock
-    from pso_sudoku import SudokuPSO, print_sudoku as print_sudoku_pso
+    from pso_sudoku import SudokuPSO
     from sudoku_puzzles import PUZZLES, count_given_cells
-    import numpy as np
 except ImportError as e:
     print(f"ERROR: Failed to import required modules: {e}")
     print("Make sure all files are in the same directory")
@@ -57,7 +55,8 @@ class TestResults:
         print(f"Total tests: {self.total_tests}")
         print(f"Passed: {self.passed_tests}")
         print(f"Failed: {self.failed_tests}")
-        print(f"Success rate: {100 * self.passed_tests / max(1, self.total_tests):.1f}%")
+        rate = 100 * self.passed_tests / max(1, self.total_tests)
+        print(f"Success rate: {rate:.1f}%")
 
         if self.failures:
             print("\nFailed tests:")
@@ -85,7 +84,7 @@ def test_sudoku_csp(results: TestResults):
         print(f"\nTesting: {name}")
         try:
             csp = SudokuCSP(easy_puzzle)
-            solution, backtracks, elapsed = getattr(csp, method)()
+            solution, _, elapsed = getattr(csp, method)()
 
             if solution is None:
                 results.record_fail(f"Sudoku CSP - {name}", "No solution found")
@@ -94,8 +93,10 @@ def test_sudoku_csp(results: TestResults):
                 grid = assignment_to_grid(solution)
 
                 # Check all cells filled
-                if any(grid[r][c] == 0 for r in range(9) for c in range(9)):
-                    results.record_fail(f"Sudoku CSP - {name}", "Solution incomplete")
+                if any(grid[r][c] == 0
+                       for r in range(9) for c in range(9)):
+                    results.record_fail(f"Sudoku CSP - {name}",
+                                        "Solution incomplete")
                     continue
 
                 # Check constraints
@@ -116,16 +117,19 @@ def test_sudoku_csp(results: TestResults):
                 # Check boxes
                 for box_r in range(0, 9, 3):
                     for box_c in range(0, 9, 3):
-                        box = [grid[r][c] for r in range(box_r, box_r+3)
-                              for c in range(box_c, box_c+3)]
+                        box = [grid[r][c]
+                               for r in range(box_r, box_r+3)
+                               for c in range(box_c, box_c+3)]
                         if len(set(box)) != 9:
                             valid = False
                             break
 
                 if valid:
-                    results.record_pass(f"Sudoku CSP - {name} (time: {elapsed:.4f}s)")
+                    test_result = f"Sudoku CSP - {name} (time: {elapsed:.4f}s)"
+                    results.record_pass(test_result)
                 else:
-                    results.record_fail(f"Sudoku CSP - {name}", "Solution violates constraints")
+                    results.record_fail(f"Sudoku CSP - {name}",
+                                        "Solution violates constraints")
 
         except Exception as e:
             results.record_fail(f"Sudoku CSP - {name}", str(e))
@@ -145,7 +149,7 @@ def test_nqueens_minconflicts(results: TestResults):
             nq = NQueens(n)
 
             # Try to solve (with reasonable step limit)
-            solution, steps, attempts, elapsed, status = nq.solve_with_restarts(
+            solution, steps, _, elapsed, status = nq.solve_with_restarts(
                 max_attempts=5,
                 steps_per_attempt=10000
             )
@@ -155,9 +159,12 @@ def test_nqueens_minconflicts(results: TestResults):
             else:
                 # Verify solution
                 if verify_solution(solution):
-                    results.record_pass(f"n-Queens n={n} (steps: {steps}, time: {elapsed:.4f}s)")
+                    test_result = (f"n-Queens n={n} (steps: {steps}, "
+                                   f"time: {elapsed:.4f}s)")
+                    results.record_pass(test_result)
                 else:
-                    results.record_fail(f"n-Queens n={n}", "Solution has conflicts")
+                    results.record_fail(f"n-Queens n={n}",
+                                        "Solution has conflicts")
 
         except Exception as e:
             results.record_fail(f"n-Queens n={n}", str(e))
@@ -183,15 +190,20 @@ def test_pso_benchmark(results: TestResults):
             max_iterations=500
         )
 
-        best_pos, best_score, iters, elapsed, status = pso.optimize()
+        _, best_score, _, elapsed, _ = pso.optimize()
 
         # Rastrigin global minimum is 0 at origin
-        # Consider it successful if we get reasonably close (< 100 for limited iterations)
-        # PSO is stochastic and may not always converge to global optimum
+        # Consider it successful if we get reasonably close (< 100 for
+        # limited iterations) PSO is stochastic and may not always
+        # converge to global optimum
         if best_score < 100:
-            results.record_pass(f"PSO Rastrigin (score: {best_score:.4f}, time: {elapsed:.4f}s)")
+            test_result = (f"PSO Rastrigin (score: {best_score:.4f}, "
+                           f"time: {elapsed:.4f}s)")
+            results.record_pass(test_result)
         else:
-            results.record_fail(f"PSO Rastrigin", f"Score {best_score:.4f} not close to optimum")
+            results.record_fail("PSO Rastrigin",
+                                f"Score {best_score:.4f} not close to "
+                                f"optimum")
 
     except Exception as e:
         results.record_fail("PSO Rastrigin", str(e))
@@ -210,15 +222,20 @@ def test_pso_benchmark(results: TestResults):
             max_iterations=1000
         )
 
-        best_pos, best_score, iters, elapsed, status = pso.optimize()
+        _, best_score, _, elapsed, _ = pso.optimize()
 
         # Rosenbrock global minimum is 0 at (1,1,...,1)
-        # Consider it successful if we get reasonably close (< 5000 for limited iterations)
-        # Rosenbrock has a narrow valley that's difficult for PSO to navigate
+        # Consider it successful if we get reasonably close (< 5000 for
+        # limited iterations) Rosenbrock has a narrow valley that's
+        # difficult for PSO to navigate
         if best_score < 5000:
-            results.record_pass(f"PSO Rosenbrock (score: {best_score:.4f}, time: {elapsed:.4f}s)")
+            test_result = (f"PSO Rosenbrock (score: {best_score:.4f}, "
+                           f"time: {elapsed:.4f}s)")
+            results.record_pass(test_result)
         else:
-            results.record_fail(f"PSO Rosenbrock", f"Score {best_score:.4f} not close to optimum")
+            results.record_fail("PSO Rosenbrock",
+                                f"Score {best_score:.4f} not close to "
+                                f"optimum")
 
     except Exception as e:
         results.record_fail("PSO Rosenbrock", str(e))
@@ -244,16 +261,20 @@ def test_pso_sudoku(results: TestResults):
             c2=1.5
         )
 
-        best_board, score, iters, elapsed, status = pso.optimize()
+        _, score, _, elapsed, status = pso.optimize()
 
         # Note: PSO may not always solve Sudoku
         # We accept any result that reduces violations
         if status == "solved":
-            results.record_pass(f"PSO Sudoku - SOLVED (time: {elapsed:.4f}s)")
+            test_result = f"PSO Sudoku - SOLVED (time: {elapsed:.4f}s)"
+            results.record_pass(test_result)
         elif score < count_given_cells(easy_puzzle):
-            results.record_pass(f"PSO Sudoku - Partial ({score} violations, time: {elapsed:.4f}s)")
+            test_result = (f"PSO Sudoku - Partial ({score} violations, "
+                           f"time: {elapsed:.4f}s)")
+            results.record_pass(test_result)
         else:
-            results.record_fail(f"PSO Sudoku", f"High violation count: {score}")
+            results.record_fail("PSO Sudoku",
+                                f"High violation count: {score}")
 
     except Exception as e:
         results.record_fail("PSO Sudoku", str(e))

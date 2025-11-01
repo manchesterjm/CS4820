@@ -1,40 +1,40 @@
-# pso_benchmark.py
-# Implements Particle Swarm Optimization (PSO) for benchmark function optimization
-#
-# What is PSO?
-# - It's a population-based metaheuristic inspired by the social behavior of bird flocking
-#   or fish schooling
-# - Each particle in the swarm has a position (candidate solution) and a velocity
-# - Particles move through the search space influenced by three factors:
-#   * Their own best position found so far (cognitive component)
-#   * The global best position found by the entire swarm (social component)
-#   * Inertia from their current velocity (exploration vs exploitation)
-#
-# What benchmark functions are used?
-# 1. Rastrigin: f(x) = 10n + Σ[xi² - 10cos(2πxi)]
-#    - Highly multimodal with approximately 10^n local minima
-#    - Global minimum: f(0,...,0) = 0
-#    - This tests the algorithm's ability to escape local minima
-#
-# 2. Rosenbrock: f(x) = Σ[100(xi+1 - xi²)² + (xi - 1)²]
-#    - Has a narrow parabolic valley leading to the global minimum
-#    - Global minimum: f(1,...,1) = 0
-#    - This tests the algorithm's ability to navigate a narrow valley
-#
-# Algorithm References:
-# According to Lecture 7: Search Optimization Part III (PSO slides),
-# Kennedy & Eberhart, "Particle Swarm Optimization," 1995,
-# and benchmark functions from Jamil & Yang, "A Literature Survey of Benchmark Functions"
+"""
+Particle Swarm Optimization (PSO) for benchmark function optimization.
+
+This module implements PSO, a population-based metaheuristic inspired by the
+social behavior of bird flocking or fish schooling. Each particle in the swarm
+has a position (candidate solution) and a velocity. Particles move through the
+search space influenced by three factors:
+- Their own best position found so far (cognitive component)
+- The global best position found by the entire swarm (social component)
+- Inertia from their current velocity (exploration vs exploitation)
+
+Benchmark functions included:
+1. Rastrigin: f(x) = 10n + Σ[xi² - 10cos(2πxi)]
+   - Highly multimodal with approximately 10^n local minima
+   - Global minimum: f(0,...,0) = 0
+   - Tests the algorithm's ability to escape local minima
+
+2. Rosenbrock: f(x) = Σ[100(xi+1 - xi²)² + (xi - 1)²]
+   - Has a narrow parabolic valley leading to the global minimum
+   - Global minimum: f(1,...,1) = 0
+   - Tests the algorithm's ability to navigate a narrow valley
+
+Algorithm References:
+According to Lecture 7: Search Optimization Part III (PSO slides),
+Kennedy & Eberhart, "Particle Swarm Optimization," 1995,
+and benchmark functions from Jamil & Yang, "A Literature Survey of
+Benchmark Functions"
+"""
 
 from typing import Callable, Tuple, List, Dict
-import numpy as np
-import random
 import time
-import math
+import numpy as np
 
 # Safety limit to prevent excessive computation
 # According to the assignment requirements, we need a 5 minute timeout
-MAX_TIME_SEC = 300  # This prevents PSO from running forever on hard problems
+# This prevents PSO from running forever on hard problems
+MAX_TIME_SEC = 300
 
 
 class PSO:
@@ -45,7 +45,8 @@ class PSO:
     1. Initialize the swarm with random positions and velocities
     2. Evaluate the fitness of each particle (how good is this solution?)
     3. Update each particle's personal best and the global best
-    4. Update velocities based on inertia, cognitive, and social components
+    4. Update velocities based on inertia, cognitive, and social
+       components
     5. Update positions based on the new velocities
     6. Repeat until convergence or we reach the maximum iterations
 
@@ -55,14 +56,17 @@ class PSO:
 
     where:
     - w: inertia weight (controls exploration vs exploitation tradeoff)
-    - c1: cognitive coefficient (how much the particle trusts its own experience)
-    - c2: social coefficient (how much the particle trusts the swarm's experience)
+    - c1: cognitive coefficient (how much the particle trusts its own
+      experience)
+    - c2: social coefficient (how much the particle trusts the swarm's
+      experience)
     - r1, r2: random values in [0,1] (adds stochasticity to the search)
 
     Position update equation:
     x[i] = x[i] + v[i]
 
-    This means the particle moves by adding its velocity to its current position.
+    This means the particle moves by adding its velocity to its current
+    position.
     """
 
     def __init__(self,
@@ -115,7 +119,8 @@ class PSO:
         Initialize particle positions and velocities randomly
 
         Positions: uniformly distributed within bounds
-        Velocities: small random values (usually fraction of position range)
+        Velocities: small random values (usually fraction of position
+        range)
 
         This provides good coverage of search space initially
         """
@@ -166,7 +171,7 @@ class PSO:
            - Attraction to swarm's best position
            - Encourages convergence to global optimum
 
-        Random components r1, r2 add stochasticity
+        Random components r1, r2 add stochasticity for exploration
         """
         # Generate random matrices for cognitive and social components
         r1 = np.random.random((self.swarm_size, self.dimensions))
@@ -176,10 +181,12 @@ class PSO:
         inertia = self.w * self.velocities
 
         # Cognitive component: attraction to personal best
-        cognitive = self.c1 * r1 * (self.personal_best_positions - self.positions)
+        cognitive = (self.c1 * r1 *
+                     (self.personal_best_positions - self.positions))
 
         # Social component: attraction to global best
-        social = self.c2 * r2 * (self.global_best_position - self.positions)
+        social = (self.c2 * r2 *
+                  (self.global_best_position - self.positions))
 
         # Update velocities
         self.velocities = inertia + cognitive + social
@@ -255,8 +262,9 @@ class PSO:
 
         # Main optimization loop
         for iteration in range(self.max_iterations):
-            # Check timeout
-            if MAX_TIME_SEC > 0 and (time.perf_counter() - start_time) > MAX_TIME_SEC:
+                # Check timeout
+            elapsed = time.perf_counter() - start_time
+            if 0 < MAX_TIME_SEC < elapsed:
                 return (self.global_best_position,
                        self.global_best_score,
                        iteration,
@@ -277,7 +285,9 @@ class PSO:
 
             # Check for convergence (no improvement)
             if iteration > 0:
-                improvement = abs(self.convergence_history[-2] - self.convergence_history[-1])
+                prev_score = self.convergence_history[-2]
+                curr_score = self.convergence_history[-1]
+                improvement = abs(prev_score - curr_score)
                 if improvement < self.tolerance:
                     return (self.global_best_position,
                            self.global_best_score,
@@ -368,9 +378,12 @@ def run_pso_benchmark(func_name: str,
     if configs is None:
         # Default configurations to test
         configs = [
-            {"swarm_size": 30, "w": 0.7, "c1": 1.5, "c2": 1.5, "max_iterations": 1000},
-            {"swarm_size": 50, "w": 0.5, "c1": 2.0, "c2": 2.0, "max_iterations": 1000},
-            {"swarm_size": 40, "w": 0.9, "c1": 1.2, "c2": 1.2, "max_iterations": 1500},
+            {"swarm_size": 30, "w": 0.7, "c1": 1.5, "c2": 1.5,
+             "max_iterations": 1000},
+            {"swarm_size": 50, "w": 0.5, "c1": 2.0, "c2": 2.0,
+             "max_iterations": 1000},
+            {"swarm_size": 40, "w": 0.9, "c1": 1.2, "c2": 1.2,
+             "max_iterations": 1500},
         ]
 
     print(f"\n{'='*70}")
@@ -396,10 +409,11 @@ def run_pso_benchmark(func_name: str,
             )
 
             # Run optimization
-            best_pos, best_score, iters, elapsed, status = pso.optimize()
+            _, best_score, iters, elapsed, status = pso.optimize()
 
             print(f"  Trial {trial}: score={best_score:.6e}, "
-                  f"iters={iters}, time={elapsed:.4f}s, status={status}")
+                  f"iters={iters}, time={elapsed:.4f}s, "
+                  f"status={status}")
 
             best_scores.append(best_score)
             times.append(elapsed)
@@ -412,9 +426,9 @@ def run_pso_benchmark(func_name: str,
         avg_time = np.mean(times)
         avg_iters = np.mean(iterations)
 
-        print(f"\n  Summary:")
+        print("\n  Summary:")
         print(f"    Best score: {min_score:.6e}")
-        print(f"    Avg score: {avg_score:.6e} ± {std_score:.6e}")
+        print(f"    Avg score: {avg_score:.6e} +/- {std_score:.6e}")
         print(f"    Avg iterations: {avg_iters:.1f}")
         print(f"    Avg time: {avg_time:.4f}s")
         print()
@@ -498,15 +512,18 @@ if __name__ == "__main__":
     print(f"Iterations completed: {iters}")
     print(f"Time: {elapsed:.4f} seconds")
     print(f"Runtime: {elapsed*1000:.2f} milliseconds")
-    print(f"\nBest position found:")
+    print("\nBest position found:")
     print(f"  {best_pos}")
-    print(f"\nConvergence history (every 50 iterations):")
+    print("\nConvergence history (every 50 iterations):")
     for i in range(0, len(pso.convergence_history), 50):
         improvement = ""
         if i > 0:
-            delta = pso.convergence_history[i-50] - pso.convergence_history[i]
+            prev = pso.convergence_history[i-50]
+            curr = pso.convergence_history[i]
+            delta = prev - curr
             improvement = f" (improved by {delta:.6e})"
-        print(f"  Iteration {i:3d}: {pso.convergence_history[i]:12.6e}{improvement}")
+        score = pso.convergence_history[i]
+        print(f"  Iteration {i:3d}: {score:12.6e}{improvement}")
 
     print("\n" + "="*70)
     print("All PSO benchmark tests completed")

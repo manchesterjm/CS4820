@@ -12,7 +12,10 @@
       "Bash(pip show:*)",
       "Bash(pylint:*)",
       "Bash(pylint_HW01.txt)",
-      "Bash(pylint_HW02.txt)"
+      "Bash(pylint_HW02.txt)",
+      "Bash(for file in pso_benchmark.py pso_sudoku.py run_experiments.py sudoku_csp.py sudoku_puzzles.py test_all.py)",
+      "Bash(do echo \"=== $file ===\")",
+      "Bash(done)"
     ],
     "deny": [],
     "ask": []

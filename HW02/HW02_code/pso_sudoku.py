@@ -1,33 +1,36 @@
-# pso_sudoku.py
-# Applies Particle Swarm Optimization (PSO) to solve Sudoku puzzles
-#
-# Sudoku as an Optimization Problem:
-# - Instead of CSP with hard constraints, treat as minimization problem
-# - Objective: minimize number of constraint violations
-# - Each "particle" represents a complete Sudoku board
-# - Global minimum (0 violations) = valid solution
-#
-# Representation:
-# - Fixed cells (given in puzzle) never change
-# - Only empty cells are decision variables
-# - Particle position = values for empty cells
-# - Domain: {1, 2, 3, 4, 5, 6, 7, 8, 9} for each cell
-#
-# Fitness Function:
-# - Count total violations of row, column, and box constraints
-# - Lower fitness = better solution
-# - Fitness = 0 means puzzle is solved
-#
-# Algorithm References:
-# - Lecture 7: Search Optimization Part III (PSO)
-# - Moraglio & Togelius, "Geometric Particle Swarm Optimization for Combinatorial Problems"
-# - PSO adapted for discrete/permutation problems
+"""
+Particle Swarm Optimization (PSO) for solving Sudoku puzzles.
 
-from typing import List, Tuple, Dict
-import numpy as np
-import random
+This module applies PSO to Sudoku as an optimization problem rather than
+a CSP with hard constraints. The approach treats Sudoku as a minimization
+problem where the objective is to minimize the number of constraint
+violations.
+
+Sudoku as an Optimization Problem:
+- Each "particle" represents a complete Sudoku board
+- Global minimum (0 violations) equals a valid solution
+- Fixed cells (given in puzzle) never change
+- Only empty cells are decision variables
+- Particle position equals values for empty cells
+- Domain: {1, 2, 3, 4, 5, 6, 7, 8, 9} for each cell
+
+Fitness Function:
+- Count total violations of row, column, and box constraints
+- Lower fitness equals better solution
+- Fitness equals 0 means puzzle is solved
+
+Algorithm References:
+- Lecture 7: Search Optimization Part III (PSO)
+- Moraglio & Togelius, "Geometric Particle Swarm Optimization for
+  Combinatorial Problems"
+- PSO adapted for discrete/permutation problems
+"""
+
+from typing import List, Tuple
 import time
 import copy
+import random
+import numpy as np
 
 # Safety limit to prevent excessive computation
 MAX_TIME_SEC = 300  # 5 minute timeout
@@ -38,7 +41,8 @@ class SudokuPSO:
 
     Challenges of applying PSO to Sudoku:
     1. Discrete domain (not continuous like standard PSO)
-    2. Permutation structure (values 1-9 must appear in each row/col/box)
+    2. Permutation structure (values 1-9 must appear in each
+       row/col/box)
     3. Hard constraints (given cells can't change)
 
     Solutions:
@@ -135,7 +139,8 @@ class SudokuPSO:
         - Keep given cells fixed
         - Fill empty cells with remaining values randomly
 
-        This ensures 0 row violations, focusing optimization on columns and boxes
+        This ensures 0 row violations, focusing optimization on columns
+        and boxes
 
         Returns:
             9x9 Sudoku board as initial particle
@@ -153,7 +158,8 @@ class SudokuPSO:
                     board[r][c] = self.puzzle[r][c]
 
             # Get remaining values to fill
-            remaining_values = [v for v in range(1, 10) if v not in fixed_values]
+            remaining_values = [v for v in range(1, 10)
+                                if v not in fixed_values]
             random.shuffle(remaining_values)
 
             # Fill empty cells
@@ -191,7 +197,8 @@ class SudokuPSO:
                 self.global_best_score = score
                 self.global_best = copy.deepcopy(particle)
 
-    def apply_swap(self, board: List[List[int]], row: int, col1: int, col2: int):
+    def apply_swap(self, board: List[List[int]], row: int, col1: int,
+                   col2: int):
         """
         Apply swap operation to board (in place)
 
@@ -202,14 +209,19 @@ class SudokuPSO:
             row: Row to swap within
             col1, col2: Columns to swap
         """
-        if (row, col1) not in self.fixed_cells and (row, col2) not in self.fixed_cells:
-            board[row][col1], board[row][col2] = board[row][col2], board[row][col1]
+        if ((row, col1) not in self.fixed_cells and
+                (row, col2) not in self.fixed_cells):
+            temp = board[row][col1]
+            board[row][col1] = board[row][col2]
+            board[row][col2] = temp
 
-    def generate_random_swaps(self, num_swaps: int) -> List[Tuple[int, int, int]]:
+    def generate_random_swaps(self, num_swaps: int
+                              ) -> List[Tuple[int, int, int]]:
         """
         Generate random swap operations
 
-        Each swap is (row, col1, col2) representing swapping two cells in a row
+        Each swap is (row, col1, col2) representing swapping two cells
+        in a row
 
         Args:
             num_swaps: Number of swaps to generate
@@ -229,13 +241,15 @@ class SudokuPSO:
         Update particle position using discrete PSO
 
         Discrete PSO adaptation:
-        - Instead of continuous velocity, use sequence of swap operations
+        - Instead of continuous velocity, use sequence of swap
+          operations
         - Swaps move particle toward personal best and global best
         - Probabilistically apply swaps based on w, c1, c2
 
         Algorithm:
         1. With probability w: keep some random swaps (inertia)
-        2. With probability c1: apply swaps that move toward personal best
+        2. With probability c1: apply swaps that move toward personal
+           best
         3. With probability c2: apply swaps that move toward global best
 
         Args:
@@ -268,10 +282,13 @@ class SudokuPSO:
                         if target_value != current_value:
                             # Find where target_value is in this row
                             for c2 in range(9):
-                                if new_particle[r][c2] == target_value and (r, c2) not in self.fixed_cells:
+                                if (new_particle[r][c2] == target_value and
+                                        (r, c2) not in self.fixed_cells):
                                     # Swap to match personal best
-                                    if random.random() < 0.5:  # Probabilistic
-                                        self.apply_swap(new_particle, r, c, c2)
+                                    # Probabilistic
+                                    if random.random() < 0.5:
+                                        self.apply_swap(new_particle, r, c,
+                                                        c2)
                                     break
 
         # Social component: move toward global best
@@ -287,10 +304,13 @@ class SudokuPSO:
                         if target_value != current_value:
                             # Find where target_value is in this row
                             for c2 in range(9):
-                                if new_particle[r][c2] == target_value and (r, c2) not in self.fixed_cells:
+                                if (new_particle[r][c2] == target_value and
+                                        (r, c2) not in self.fixed_cells):
                                     # Swap to match global best
-                                    if random.random() < 0.5:  # Probabilistic
-                                        self.apply_swap(new_particle, r, c, c2)
+                                    # Probabilistic
+                                    if random.random() < 0.5:
+                                        self.apply_swap(new_particle, r, c,
+                                                        c2)
                                     break
 
         # Update particle
@@ -325,7 +345,8 @@ class SudokuPSO:
         # Main optimization loop
         for iteration in range(self.max_iterations):
             # Check timeout
-            if MAX_TIME_SEC > 0 and (time.perf_counter() - start_time) > MAX_TIME_SEC:
+            elapsed = time.perf_counter() - start_time
+            if 0 < MAX_TIME_SEC < elapsed:
                 return (self.global_best,
                        self.global_best_score,
                        iteration,
@@ -349,7 +370,8 @@ class SudokuPSO:
 
             # Progress reporting every 100 iterations
             if (iteration + 1) % 100 == 0:
-                print(f"  Iteration {iteration + 1}: best score = {self.global_best_score}")
+                score = self.global_best_score
+                print(f"  Iteration {iteration + 1}: best score = {score}")
 
         # Reached max iterations
         return (self.global_best,
@@ -499,7 +521,6 @@ if __name__ == "__main__":
         print_sudoku(best_board)
 
         # Show where violations are
-        pso_temp = SudokuPSO(test_puzzle, swarm_size=1, max_iterations=1)
         col_violations = 0
         box_violations = 0
 
@@ -511,11 +532,12 @@ if __name__ == "__main__":
         # Count box violations
         for box_r in range(0, 9, 3):
             for box_c in range(0, 9, 3):
-                box = [best_board[r][c] for r in range(box_r, box_r+3)
-                      for c in range(box_c, box_c+3)]
+                box = [best_board[r][c]
+                       for r in range(box_r, box_r+3)
+                       for c in range(box_c, box_c+3)]
                 box_violations += 9 - len(set(box))
 
-        print(f"\nViolation breakdown:")
+        print("\nViolation breakdown:")
         print(f"  Column violations: {col_violations}")
         print(f"  Box violations: {box_violations}")
         print(f"  Total: {best_score}")
@@ -523,10 +545,16 @@ if __name__ == "__main__":
     print("\n" + "="*70)
     print("Analysis")
     print("="*70)
-    print("PSO demonstrates metaheuristic approach to constraint optimization.")
-    print("Unlike CSP methods (Part A) which guarantee solutions, PSO provides")
-    print("approximate optimization. CSP methods solve this puzzle in <0.02s")
-    print(f"with certainty, while PSO takes ~{np.mean(times):.1f}s and may not fully solve.")
-    print("\nPSO is better suited for continuous optimization and problems where")
+    print("PSO demonstrates metaheuristic approach to constraint "
+          "optimization.")
+    print("Unlike CSP methods (Part A) which guarantee solutions, PSO "
+          "provides")
+    print("approximate optimization. CSP methods solve this puzzle in "
+          "<0.02s")
+    avg_time = np.mean(times)
+    print(f"with certainty, while PSO takes ~{avg_time:.1f}s and may "
+          f"not fully solve.")
+    print("\nPSO is better suited for continuous optimization and "
+          "problems where")
     print("approximate solutions are acceptable.")
     print("="*70)
