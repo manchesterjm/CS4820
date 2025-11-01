@@ -1,0 +1,1005 @@
+************* Module n_puzzle_ASTAR
+HW01_Code\n_puzzle_ASTAR.py:25:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_ASTAR.py:145:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_ASTAR.py:149:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_ASTAR.py:152:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_ASTAR.py:155:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_ASTAR.py:158:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_ASTAR.py:213:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_ASTAR.py:217:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_ASTAR.py:220:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_ASTAR.py:227:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_ASTAR.py:231:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_ASTAR.py:238:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_ASTAR.py:242:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_ASTAR.py:248:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_ASTAR.py:252:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_ASTAR.py:255:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_ASTAR.py:261:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_ASTAR.py:264:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_ASTAR.py:270:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_ASTAR.py:273:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_ASTAR.py:277:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_ASTAR.py:304:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_ASTAR.py:346:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_ASTAR.py:350:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_ASTAR.py:355:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_ASTAR.py:358:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_ASTAR.py:365:61: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_ASTAR.py:368:61: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_ASTAR.py:388:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_ASTAR.py:390:0: C0304: Final newline missing (missing-final-newline)
+HW01_Code\n_puzzle_ASTAR.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+HW01_Code\n_puzzle_ASTAR.py:1:0: C0103: Module name "n_puzzle_ASTAR" doesn't conform to snake_case naming style (invalid-name)
+HW01_Code\n_puzzle_ASTAR.py:8:0: C0410: Multiple imports on one line (heapq, random, time) (multiple-imports)
+HW01_Code\n_puzzle_ASTAR.py:24:36: R1721: Unnecessary use of a comprehension, use list(range(1, m * m)) instead. (unnecessary-comprehension)
+HW01_Code\n_puzzle_ASTAR.py:53:18: C0321: More than one statement on a single line (multiple-statements)
+HW01_Code\n_puzzle_ASTAR.py:54:20: C0321: More than one statement on a single line (multiple-statements)
+HW01_Code\n_puzzle_ASTAR.py:55:18: C0321: More than one statement on a single line (multiple-statements)
+HW01_Code\n_puzzle_ASTAR.py:56:20: C0321: More than one statement on a single line (multiple-statements)
+HW01_Code\n_puzzle_ASTAR.py:112:45: R1714: Consider merging these comparisons with 'in' by using 't not in (0, puz.goal[i])'. Use a set instead if elements are hashable. (consider-using-in)
+HW01_Code\n_puzzle_ASTAR.py:179:0: R0914: Too many local variables (19/15) (too-many-locals)
+HW01_Code\n_puzzle_ASTAR.py:237:8: W0612: Unused variable 'f' (unused-variable)
+HW01_Code\n_puzzle_ASTAR.py:360:23: C0321: More than one statement on a single line (multiple-statements)
+HW01_Code\n_puzzle_ASTAR.py:361:23: C0321: More than one statement on a single line (multiple-statements)
+HW01_Code\n_puzzle_ASTAR.py:7:0: W0611: Unused deque imported from collections (unused-import)
+************* Module n_puzzle_BDS
+HW01_Code\n_puzzle_BDS.py:131:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BDS.py:140:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BDS.py:145:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BDS.py:165:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BDS.py:174:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BDS.py:178:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BDS.py:186:61: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BDS.py:210:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BDS.py:214:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BDS.py:218:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BDS.py:224:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BDS.py:228:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BDS.py:233:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BDS.py:236:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BDS.py:260:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BDS.py:269:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BDS.py:291:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BDS.py:298:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BDS.py:302:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BDS.py:308:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BDS.py:322:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BDS.py:339:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BDS.py:341:0: C0304: Final newline missing (missing-final-newline)
+HW01_Code\n_puzzle_BDS.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+HW01_Code\n_puzzle_BDS.py:1:0: C0103: Module name "n_puzzle_BDS" doesn't conform to snake_case naming style (invalid-name)
+HW01_Code\n_puzzle_BDS.py:8:0: C0410: Multiple imports on one line (random, time) (multiple-imports)
+HW01_Code\n_puzzle_BDS.py:32:36: R1721: Unnecessary use of a comprehension, use list(range(1, m * m)) instead. (unnecessary-comprehension)
+HW01_Code\n_puzzle_BDS.py:56:18: C0321: More than one statement on a single line (multiple-statements)
+HW01_Code\n_puzzle_BDS.py:57:20: C0321: More than one statement on a single line (multiple-statements)
+HW01_Code\n_puzzle_BDS.py:58:18: C0321: More than one statement on a single line (multiple-statements)
+HW01_Code\n_puzzle_BDS.py:59:20: C0321: More than one statement on a single line (multiple-statements)
+************* Module n_puzzle_BFS
+HW01_Code\n_puzzle_BFS.py:133:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BFS.py:138:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BFS.py:142:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BFS.py:146:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BFS.py:153:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BFS.py:158:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BFS.py:167:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BFS.py:201:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BFS.py:209:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BFS.py:231:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BFS.py:237:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BFS.py:241:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BFS.py:246:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BFS.py:253:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BFS.py:258:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_BFS.py:267:0: C0304: Final newline missing (missing-final-newline)
+HW01_Code\n_puzzle_BFS.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+HW01_Code\n_puzzle_BFS.py:1:0: C0103: Module name "n_puzzle_BFS" doesn't conform to snake_case naming style (invalid-name)
+HW01_Code\n_puzzle_BFS.py:8:0: C0410: Multiple imports on one line (random, time) (multiple-imports)
+HW01_Code\n_puzzle_BFS.py:25:36: R1721: Unnecessary use of a comprehension, use list(range(1, m * m)) instead. (unnecessary-comprehension)
+************* Module n_puzzle_Depth_Limited_DFS
+HW01_Code\n_puzzle_Depth_Limited_DFS.py:87:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_Depth_Limited_DFS.py:90:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_Depth_Limited_DFS.py:92:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_Depth_Limited_DFS.py:95:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_Depth_Limited_DFS.py:101:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_Depth_Limited_DFS.py:104:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_Depth_Limited_DFS.py:108:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_Depth_Limited_DFS.py:112:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_Depth_Limited_DFS.py:114:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_Depth_Limited_DFS.py:117:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_Depth_Limited_DFS.py:126:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_Depth_Limited_DFS.py:140:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_Depth_Limited_DFS.py:144:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_Depth_Limited_DFS.py:152:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_Depth_Limited_DFS.py:164:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_Depth_Limited_DFS.py:171:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_Depth_Limited_DFS.py:173:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_Depth_Limited_DFS.py:178:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_Depth_Limited_DFS.py:183:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_Depth_Limited_DFS.py:191:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_Depth_Limited_DFS.py:206:0: C0304: Final newline missing (missing-final-newline)
+HW01_Code\n_puzzle_Depth_Limited_DFS.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+HW01_Code\n_puzzle_Depth_Limited_DFS.py:1:0: C0103: Module name "n_puzzle_Depth_Limited_DFS" doesn't conform to snake_case naming style (invalid-name)
+HW01_Code\n_puzzle_Depth_Limited_DFS.py:6:0: C0410: Multiple imports on one line (random, time) (multiple-imports)
+HW01_Code\n_puzzle_Depth_Limited_DFS.py:27:36: R1721: Unnecessary use of a comprehension, use list(range(1, m * m)) instead. (unnecessary-comprehension)
+HW01_Code\n_puzzle_Depth_Limited_DFS.py:5:0: W0611: Unused Set imported from typing (unused-import)
+************* Module n_puzzle_IDS
+HW01_Code\n_puzzle_IDS.py:129:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_IDS.py:133:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_IDS.py:148:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_IDS.py:154:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_IDS.py:158:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_IDS.py:162:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_IDS.py:166:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_IDS.py:168:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_IDS.py:174:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_IDS.py:178:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_IDS.py:181:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_IDS.py:185:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_IDS.py:189:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_IDS.py:193:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_IDS.py:196:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_IDS.py:252:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_IDS.py:260:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_IDS.py:265:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_IDS.py:268:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_IDS.py:274:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_IDS.py:278:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_IDS.py:283:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_IDS.py:309:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_IDS.py:318:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_IDS.py:340:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_IDS.py:347:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_IDS.py:351:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_IDS.py:357:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_IDS.py:371:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_IDS.py:388:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_puzzle_IDS.py:390:0: C0304: Final newline missing (missing-final-newline)
+HW01_Code\n_puzzle_IDS.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+HW01_Code\n_puzzle_IDS.py:1:0: C0103: Module name "n_puzzle_IDS" doesn't conform to snake_case naming style (invalid-name)
+HW01_Code\n_puzzle_IDS.py:7:0: C0410: Multiple imports on one line (random, time) (multiple-imports)
+HW01_Code\n_puzzle_IDS.py:32:36: R1721: Unnecessary use of a comprehension, use list(range(1, m * m)) instead. (unnecessary-comprehension)
+HW01_Code\n_puzzle_IDS.py:56:18: C0321: More than one statement on a single line (multiple-statements)
+HW01_Code\n_puzzle_IDS.py:57:20: C0321: More than one statement on a single line (multiple-statements)
+HW01_Code\n_puzzle_IDS.py:58:18: C0321: More than one statement on a single line (multiple-statements)
+HW01_Code\n_puzzle_IDS.py:59:20: C0321: More than one statement on a single line (multiple-statements)
+HW01_Code\n_puzzle_IDS.py:100:0: R0913: Too many arguments (6/5) (too-many-arguments)
+HW01_Code\n_puzzle_IDS.py:100:0: R0917: Too many positional arguments (6/5) (too-many-positional-arguments)
+HW01_Code\n_puzzle_IDS.py:136:4: R0911: Too many return statements (7/6) (too-many-return-statements)
+HW01_Code\n_puzzle_IDS.py:254:8: C0103: Variable name "L" doesn't conform to snake_case naming style (invalid-name)
+HW01_Code\n_puzzle_IDS.py:306:32: C0103: Variable name "L" doesn't conform to snake_case naming style (invalid-name)
+************* Module n_queens_GA
+HW01_Code\n_queens_GA.py:121:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:125:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:128:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:135:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:165:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:170:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:178:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:229:66: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:276:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:280:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:286:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:290:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:295:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:298:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:303:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:309:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:312:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:317:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:322:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:326:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:329:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:335:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:354:58: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:369:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:375:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:380:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:388:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:399:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:405:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:446:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:450:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:452:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:458:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:461:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:468:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:470:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:479:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:485:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:500:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_GA.py:502:0: C0304: Final newline missing (missing-final-newline)
+HW01_Code\n_queens_GA.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+HW01_Code\n_queens_GA.py:1:0: C0103: Module name "n_queens_GA" doesn't conform to snake_case naming style (invalid-name)
+HW01_Code\n_queens_GA.py:7:0: C0410: Multiple imports on one line (random, time, math) (multiple-imports)
+HW01_Code\n_queens_GA.py:229:0: R0913: Too many arguments (6/5) (too-many-arguments)
+HW01_Code\n_queens_GA.py:229:0: R0917: Too many positional arguments (6/5) (too-many-positional-arguments)
+HW01_Code\n_queens_GA.py:229:0: R0914: Too many local variables (19/15) (too-many-locals)
+HW01_Code\n_queens_GA.py:354:0: R0914: Too many local variables (21/15) (too-many-locals)
+HW01_Code\n_queens_GA.py:406:4: R1705: Unnecessary "else" after "return", remove the "else" and de-indent the code inside it (no-else-return)
+HW01_Code\n_queens_GA.py:466:18: W0612: Unused variable 'avg_evals' (unused-variable)
+HW01_Code\n_queens_GA.py:475:10: W1309: Using an f-string that does not have any interpolated variables (f-string-without-interpolation)
+HW01_Code\n_queens_GA.py:459:8: W0612: Unused variable 'ok' (unused-variable)
+************* Module n_queens_SA
+HW01_Code\n_queens_SA.py:39:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_SA.py:43:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_SA.py:46:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_SA.py:52:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_SA.py:71:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_SA.py:75:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_SA.py:127:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_SA.py:131:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_SA.py:134:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_SA.py:137:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_SA.py:143:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_SA.py:147:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_SA.py:151:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_SA.py:163:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_SA.py:168:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_SA.py:173:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_SA.py:177:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_SA.py:219:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_SA.py:227:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_SA.py:255:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_SA.py:261:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_SA.py:266:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_SA.py:272:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_SA.py:284:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_SA.py:299:0: C0303: Trailing whitespace (trailing-whitespace)
+HW01_Code\n_queens_SA.py:301:0: C0304: Final newline missing (missing-final-newline)
+HW01_Code\n_queens_SA.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+HW01_Code\n_queens_SA.py:1:0: C0103: Module name "n_queens_SA" doesn't conform to snake_case naming style (invalid-name)
+HW01_Code\n_queens_SA.py:7:0: C0410: Multiple imports on one line (random, math, time) (multiple-imports)
+HW01_Code\n_queens_SA.py:82:24: C0103: Argument name "T0" doesn't conform to snake_case naming style (invalid-name)
+HW01_Code\n_queens_SA.py:133:4: C0103: Variable name "T" doesn't conform to snake_case naming style (invalid-name)
+HW01_Code\n_queens_SA.py:150:8: C0103: Variable name "dE" doesn't conform to snake_case naming style (invalid-name)
+HW01_Code\n_queens_SA.py:175:8: C0103: Variable name "T" doesn't conform to snake_case naming style (invalid-name)
+HW01_Code\n_queens_SA.py:139:8: W0612: Unused variable 'it' (unused-variable)
+HW01_Code\n_queens_SA.py:205:21: C0103: Argument name "T0" doesn't conform to snake_case naming style (invalid-name)
+HW01_Code\n_queens_SA.py:256:11: C0103: Variable name "T0" doesn't conform to snake_case naming style (invalid-name)
+HW01_Code\n_queens_SA.py:271:30: W0612: Unused variable 'conf' (unused-variable)
+HW01_Code\n_queens_SA.py:6:0: W0611: Unused Tuple imported from typing (unused-import)
+HW01_Code\n_queens_SA.py:1:0: R0801: Similar lines in 2 files
+==n_puzzle_BDS:[269:341]
+==n_puzzle_IDS:[318:390]
+    return (len(path) - 1) if path else None, expanded, dt, status
+
+def run_trials_auto():
+    """
+    Automated test harness: run IDS on both 8-puzzle and 15-puzzle
+
+    For each puzzle size, attempt to get TRIALS_REQUIRED successful solutions
+    Retry on failure up to MAX_ATTEMPTS_PER_SIZE times
+
+    IDS performance characteristics:
+    - 8-puzzle (3x3): Handles moderate scrambles well (30 steps)
+    - 15-puzzle (4x4): Limited but better than BFS on memory (8 steps)
+      IDS re-expands states but uses much less memory than BFS
+      Good choice when memory is limited but need optimal solution
+
+    Adaptive retry strategy:
+    - If hitting limits repeatedly, reduce scramble depth slightly
+    - This helps ensure we get required number of successful runs
+    """
+    # Configuration: (board_size, scramble_steps)
+    configs = [(3, 30), (4, 30)]
+
+    for m, steps in configs:
+        successes = 0
+        attempts = 0
+        total_moves = 0
+        total_expanded = 0
+        total_time = 0.0
+
+        print("\n" + "="*36)
+        print(f"Target: {TRIALS_REQUIRED} successful trial(s) on {m}x{m} (steps={steps})")
+        print("="*36)
+
+        # Keep trying until we get enough successful runs
+        while successes < TRIALS_REQUIRED and attempts < MAX_ATTEMPTS_PER_SIZE:
+            attempts += 1
+            print(f"\nattempt {attempts}:")
+            moves, expanded, dt, status = run_once(m, steps)
+
+            # Count as success if we found a solution
+            if status == "ok" and moves is not None:
+                successes += 1
+                total_moves += moves
+                total_expanded += expanded
+                total_time += dt
+            else:
+                # Retry with fresh random start
+                print("retrying due to", status)
+                # Gentle backoff: if repeatedly hitting limits, reduce scrambling
+                if status in ("timeout", "cap") and steps > 2:
+                    steps -= 1
+                    print(f"  (reducing scramble to {steps} steps)")
+
+        # Print summary statistics
+        print("\n--- summary ---")
+        print("attempts:", attempts)
+        print("successful:", f"{successes}/{TRIALS_REQUIRED}")
+        if successes > 0:
+            print("avg_moves:", round(total_moves/successes, 2))
+            print("avg_expanded:", round(total_expanded/successes, 2))
+            print("avg_time_s:", round(total_time/successes, 4))
+        else:
+            print("avg_moves:", None)
+            print("avg_expanded:", None)
+            print("avg_time_s:", None)
+
+if __name__ == "__main__":
+    # Uncomment next line for reproducible results during testing/debugging
+    # random.seed(0)
+
+    # Run automated trials on both 8-puzzle and 15-puzzle
+    run_trials_auto() (duplicate-code)
+HW01_Code\n_queens_SA.py:1:0: R0801: Similar lines in 2 files
+==n_puzzle_BFS:[13:136]
+==n_puzzle_Depth_Limited_DFS:[19:88]
+class NPuzzle:
+    """
+    Represents an n-puzzle problem where n = m^2 - 1
+    """
+    def __init__(self, m: int = 3):
+        assert m > 1, "Board size must be at least 2x2"
+        self.m = m
+        self.goal: Position = tuple([i for i in range(1, m*m)] + [0])
+
+    def neighbors(self, s: Position) -> List[Position]:
+        """Generate all valid successor states"""
+        m = self.m
+        z = s.index(0)
+        r, c = divmod(z, m)
+
+        def swap(i: int, j: int) -> Position:
+            a = list(s)
+            a[i], a[j] = a[j], a[i]
+            return tuple(a)
+
+        out: List[Position] = []
+        if r > 0:
+            out.append(swap(z, z - m))
+        if r < m-1:
+            out.append(swap(z, z + m))
+        if c > 0:
+            out.append(swap(z, z - 1))
+        if c < m-1:
+            out.append(swap(z, z + 1))
+        return out
+
+    def is_goal(self, s: Position) -> bool:
+        """Test if state s is the goal state"""
+        return s == self.goal
+
+    def random_start(self, steps: int) -> Position:
+        """Generate a random solvable starting state"""
+        s = self.goal
+        for _ in range(steps):
+            s = random.choice(self.neighbors(s))
+        return s
+
+def reconstruct(parent: Dict[Position, Optional[Position]], s: Position) -> List[Position]:
+    """Reconstruct solution path from parent pointers"""
+    path: List[Position] = [s]
+    while parent[s] is not None:
+        s = parent[s]
+        path.append(s)
+    path.reverse()
+    return path
+
+def depth_limited_search(puz: NPuzzle, start: Position, depth_limit: int):
+    """
+    Depth-Limited DFS: Explore branches only up to a maximum depth
+
+    This prevents DFS from wandering down infinitely deep paths.
+    If no solution is found within the depth limit, it returns failure.
+
+    Args:
+        puz: NPuzzle instance
+        start: Initial puzzle state
+        depth_limit: Maximum depth to explore before cutting off a branch
+
+    Returns:
+        Tuple of (solution_path, nodes_expanded, time_elapsed, status_string)
+    """
+    t0 = time.perf_counter()
+
+    # Stack now stores (state, depth) tuples to track how deep we are (duplicate-code)
+HW01_Code\n_queens_SA.py:1:0: R0801: Similar lines in 2 files
+==n_puzzle_BDS:[18:92]
+==n_puzzle_IDS:[18:92]
+TRIALS_REQUIRED = 3         # Number of successful runs needed per puzzle size
+MAX_ATTEMPTS_PER_SIZE = 20  # Maximum attempts before giving up
+
+class NPuzzle:
+    """
+    Represents an n-puzzle problem where n = m^2 - 1
+    For m=3: 8-puzzle (3x3 board with 8 tiles + 1 blank)
+    For m=4: 15-puzzle (4x4 board with 15 tiles + 1 blank)
+    """
+    def __init__(self, m: int = 3):
+        assert m > 1, "Board size must be at least 2x2"
+        self.m = m  # Board dimension (m x m)
+        # Goal state: tiles in order 1,2,3,...,n with blank (0) at end
+        self.goal: Position = tuple([i for i in range(1, m*m)] + [0])
+
+    def neighbors(self, s: Position) -> List[Position]:
+        """
+        Generate all valid successor states by sliding tiles into the blank space
+
+        Args:
+            s: Current puzzle state
+
+        Returns:
+            List of all reachable states from current state (2-4 neighbors)
+        """
+        m = self.m
+        z = s.index(0)  # Find index of blank tile (0)
+        r, c = divmod(z, m)  # Convert 1D index to 2D row,col coordinates
+
+        def swap(i: int, j: int) -> Position:
+            """Helper: swap tiles at positions i and j, return new state"""
+            a = list(s)
+            a[i], a[j] = a[j], a[i]
+            return tuple(a)
+
+        out: List[Position] = []
+        # Generate neighbors by sliding blank in each valid direction
+        if r > 0: out.append(swap(z, z - m))      # up
+        if r < m-1: out.append(swap(z, z + m))    # down
+        if c > 0: out.append(swap(z, z - 1))      # left
+        if c < m-1: out.append(swap(z, z + 1))    # right
+        return out
+
+    def is_goal(self, s: Position) -> bool:
+        """Test if state s is the goal state"""
+        return s == self.goal
+
+    def random_start(self, steps: int) -> Position:
+        """
+        Generate a random solvable starting state by random walk from goal
+        This ensures the resulting state is always solvable
+
+        Args:
+            steps: Number of random moves to make from goal state
+
+        Returns:
+            A randomized but solvable starting state
+        """
+        s = self.goal
+        for _ in range(steps):
+            s = random.choice(self.neighbors(s))
+        return s
+
+def reconstruct(parent: Dict[Position, Optional[Position]], s: Position) -> List[Position]:
+    """
+    Reconstruct solution path by following parent pointers backward from goal to start
+
+    Args:
+        parent: Dictionary mapping each state to its parent state
+        s: Goal state to start reconstruction from
+
+    Returns:
+        List of states from start to goal (inclusive)
+    """ (duplicate-code)
+HW01_Code\n_queens_SA.py:1:0: R0801: Similar lines in 2 files
+==n_puzzle_ASTAR:[40:111]
+==n_puzzle_BDS:[43:92]
+        m = self.m
+        z = s.index(0)  # Find index of blank tile (0)
+        r, c = divmod(z, m)  # Convert 1D index to 2D row,col coordinates
+
+        def swap(i: int, j: int) -> Position:
+            """Helper: swap tiles at positions i and j, return new state"""
+            a = list(s)
+            a[i], a[j] = a[j], a[i]
+            return tuple(a)
+
+        out: List[Position] = []
+        # Generate neighbors by sliding blank in each valid direction
+        if r > 0: out.append(swap(z, z - m))      # up
+        if r < m-1: out.append(swap(z, z + m))    # down
+        if c > 0: out.append(swap(z, z - 1))      # left
+        if c < m-1: out.append(swap(z, z + 1))    # right
+        return out
+
+    def is_goal(self, s: Position) -> bool:
+        """Test if state s is the goal state"""
+        return s == self.goal
+
+    def random_start(self, steps: int) -> Position:
+        """
+        Generate a random solvable starting state by random walk from goal
+        This ensures the resulting state is always solvable
+
+        Args:
+            steps: Number of random moves to make from goal state
+
+        Returns:
+            A randomized but solvable starting state
+        """
+        s = self.goal
+        for _ in range(steps):
+            s = random.choice(self.neighbors(s))
+        return s
+
+def _reconstruct(parent: Dict[Position, Optional[Position]], meet: Position) -> List[Position]:
+    """
+    Reconstruct path from one endpoint to meeting point by following parent pointers
+
+    Args:
+        parent: Dictionary mapping states to their parents in search tree
+        meet: Meeting point state to reconstruct path to
+
+    Returns:
+        List of states from endpoint to meeting point
+    """ (duplicate-code)
+HW01_Code\n_queens_SA.py:1:0: R0801: Similar lines in 2 files
+==n_puzzle_BDS:[323:341]
+==n_puzzle_Depth_Limited_DFS:[191:206]
+        print("\n--- summary ---")
+        print("attempts:", attempts)
+        print("successful:", f"{successes}/{TRIALS_REQUIRED}")
+        if successes > 0:
+            print("avg_moves:", round(total_moves/successes, 2))
+            print("avg_expanded:", round(total_expanded/successes, 2))
+            print("avg_time_s:", round(total_time/successes, 4))
+        else:
+            print("avg_moves:", None)
+            print("avg_expanded:", None)
+            print("avg_time_s:", None)
+
+if __name__ == "__main__":
+    # random.seed(0)  # Uncomment for reproducible results
+    run_trials_auto() (duplicate-code)
+HW01_Code\n_queens_SA.py:1:0: R0801: Similar lines in 2 files
+==n_puzzle_BFS:[57:131]
+==n_puzzle_IDS:[59:127]
+        return out
+
+    def is_goal(self, s: Position) -> bool:
+        """
+        Test if state s is the goal state
+
+        Args:
+            s: State to test
+
+        Returns:
+            True if s matches goal configuration
+        """
+        return s == self.goal
+
+    def random_start(self, steps: int) -> Position:
+        """
+        Generate a random solvable starting state by making random moves from goal
+        This ensures the resulting state is always solvable (maintains puzzle parity)
+
+        Args:
+            steps: Number of random moves to make from goal state
+
+        Returns:
+            A randomized but solvable starting state
+        """
+        s = self.goal
+        for _ in range(steps):
+            # Take a random legal move - this maintains solvability
+            s = random.choice(self.neighbors(s))
+        return s
+
+def reconstruct(parent: Dict[Position, Optional[Position]], s: Position) -> List[Position]:
+    """
+    Reconstruct solution path by following parent pointers backward from goal to start
+
+    Args:
+        parent: Dictionary mapping each state to its parent state in the search tree
+        s: Goal state to start reconstruction from
+
+    Returns:
+        List of states from start to goal (inclusive)
+    """
+    path: List[Position] = [s]
+    # Follow parent pointers backward until we reach start (parent is None)
+    while parent[s] is not None:
+        s = parent[s]
+        path.append(s)
+    path.reverse()  # Reverse to get start-to-goal order
+    return path
+
+def breadth_first_search(puz: NPuzzle, start: Position):
+    """
+    Breadth-First Search: Explore shallowest nodes first using a FIFO queue
+
+    BFS Characteristics:
+    - Uses a queue (FIFO) as frontier
+    - Explores all nodes at depth d before any at depth d+1
+    - OPTIMAL: Guaranteed to find shortest path for unit-cost problems
+    - Complete: Will find solution if one exists
+    - Space complexity: O(b^d) where b=branching factor, d=solution depth
+    - Time complexity: O(b^d)
+
+    Why BFS is good for n-puzzle:
+    - Guarantees shortest solution (fewest moves)
+    - Works well for 8-puzzle with moderate scrambling
+    - Can handle some 15-puzzle instances (with lighter scrambling)
+
+    Args:
+        puz: NPuzzle instance defining the problem
+        start: Initial puzzle state
+
+    Returns:
+        Tuple of (solution_path, nodes_expanded, time_elapsed)
+    """ (duplicate-code)
+HW01_Code\n_queens_SA.py:1:0: R0801: Similar lines in 2 files
+==n_puzzle_BDS:[21:55]
+==n_puzzle_BFS:[13:49]
+class NPuzzle:
+    """
+    Represents an n-puzzle problem where n = m^2 - 1
+    For m=3: 8-puzzle (3x3 board with 8 tiles + 1 blank)
+    For m=4: 15-puzzle (4x4 board with 15 tiles + 1 blank)
+    """
+    def __init__(self, m: int = 3):
+        assert m > 1, "Board size must be at least 2x2"
+        self.m = m  # Board dimension (m x m)
+        # Goal state: tiles in order 1,2,3,...,n with blank (0) at end
+        self.goal: Position = tuple([i for i in range(1, m*m)] + [0])
+
+    def neighbors(self, s: Position) -> List[Position]:
+        """
+        Generate all valid successor states by sliding tiles into the blank space
+
+        Args:
+            s: Current puzzle state
+
+        Returns:
+            List of all reachable states from current state (2-4 neighbors)
+        """
+        m = self.m
+        z = s.index(0)  # Find index of blank tile (0)
+        r, c = divmod(z, m)  # Convert 1D index to 2D row,col coordinates
+
+        def swap(i: int, j: int) -> Position:
+            """Helper: swap tiles at positions i and j, return new state"""
+            a = list(s)
+            a[i], a[j] = a[j], a[i]
+            return tuple(a)
+
+        out: List[Position] = []
+        # Generate neighbors by sliding blank in each valid direction (duplicate-code)
+HW01_Code\n_queens_SA.py:1:0: R0801: Similar lines in 2 files
+==n_puzzle_Depth_Limited_DFS:[19:40]
+==n_puzzle_IDS:[21:55]
+class NPuzzle:
+    """
+    Represents an n-puzzle problem where n = m^2 - 1
+    """
+    def __init__(self, m: int = 3):
+        assert m > 1, "Board size must be at least 2x2"
+        self.m = m
+        self.goal: Position = tuple([i for i in range(1, m*m)] + [0])
+
+    def neighbors(self, s: Position) -> List[Position]:
+        """Generate all valid successor states"""
+        m = self.m
+        z = s.index(0)
+        r, c = divmod(z, m)
+
+        def swap(i: int, j: int) -> Position:
+            a = list(s)
+            a[i], a[j] = a[j], a[i]
+            return tuple(a)
+
+        out: List[Position] = [] (duplicate-code)
+HW01_Code\n_queens_SA.py:1:0: R0801: Similar lines in 2 files
+==n_puzzle_BDS:[303:316]
+==n_puzzle_Depth_Limited_DFS:[178:189]
+        while successes < TRIALS_REQUIRED and attempts < MAX_ATTEMPTS_PER_SIZE:
+            attempts += 1
+            print(f"\nattempt {attempts}:")
+            moves, expanded, dt, status = run_once(m, steps)
+
+            if status == "ok" and moves is not None:
+                successes += 1
+                total_moves += moves
+                total_expanded += expanded
+                total_time += dt
+            else: (duplicate-code)
+HW01_Code\n_queens_SA.py:1:0: R0801: Similar lines in 2 files
+==n_puzzle_ASTAR:[40:52]
+==n_puzzle_BFS:[37:49]
+        m = self.m
+        z = s.index(0)  # Find index of blank tile (0)
+        r, c = divmod(z, m)  # Convert 1D index to 2D row,col coordinates
+
+        def swap(i: int, j: int) -> Position:
+            """Helper: swap tiles at positions i and j, return new state"""
+            a = list(s)
+            a[i], a[j] = a[j], a[i]
+            return tuple(a)
+
+        out: List[Position] = []
+        # Generate neighbors by sliding blank in each valid direction (duplicate-code)
+HW01_Code\n_queens_SA.py:1:0: R0801: Similar lines in 2 files
+==n_puzzle_ASTAR:[171:215]
+==n_puzzle_BFS:[99:136]
+    path: List[Position] = [s]
+    # Follow parent pointers backward until we reach start (parent is None)
+    while parent[s] is not None:
+        s = parent[s]
+        path.append(s)
+    path.reverse()  # Reverse to get start-to-goal order
+    return path
+
+def breadth_first_search(puz: NPuzzle, start: Position):
+    """
+    Breadth-First Search: Explore shallowest nodes first using a FIFO queue
+
+    BFS Characteristics:
+    - Uses a queue (FIFO) as frontier
+    - Explores all nodes at depth d before any at depth d+1
+    - OPTIMAL: Guaranteed to find shortest path for unit-cost problems
+    - Complete: Will find solution if one exists
+    - Space complexity: O(b^d) where b=branching factor, d=solution depth
+    - Time complexity: O(b^d)
+
+    Why BFS is good for n-puzzle:
+    - Guarantees shortest solution (fewest moves)
+    - Works well for 8-puzzle with moderate scrambling
+    - Can handle some 15-puzzle instances (with lighter scrambling)
+
+    Args:
+        puz: NPuzzle instance defining the problem
+        start: Initial puzzle state
+
+    Returns:
+        Tuple of (solution_path, nodes_expanded, time_elapsed)
+    """
+    t0 = time.perf_counter()  # Start timing
+
+    # Initialize frontier with start state
+    # Queue (FIFO): states are explored in the order they were discovered
+    # This ensures we explore by layers (all depth d before depth d+1) (duplicate-code)
+HW01_Code\n_queens_SA.py:1:0: R0801: Similar lines in 2 files
+==n_puzzle_BDS:[262:289]
+==n_puzzle_Depth_Limited_DFS:[145:162]
+    print("start:")
+    print_board(start, m)
+    print("moves:", (len(path) - 1) if path else None)
+    print("expanded:", expanded)
+    print("time_s:", round(dt, 4))
+    print("status:", status)
+
+    return (len(path) - 1) if path else None, expanded, dt, status
+
+def run_trials_auto():
+    """
+    Automated test harness with depth-limited DFS
+
+    Depth limits prevent infinite exploration, making 15-puzzle more tractable.
+    However, solutions may not be found if they exceed the depth limit.
+    """
+    # Using more reasonable scrambles now that we have depth limiting (duplicate-code)
+HW01_Code\n_queens_SA.py:1:0: R0801: Similar lines in 2 files
+==n_puzzle_ASTAR:[56:111]
+==n_puzzle_BFS:[57:99]
+        return out
+
+    def is_goal(self, s: Position) -> bool:
+        """
+        Test if state s is the goal state
+
+        Args:
+            s: State to test
+
+        Returns:
+            True if s matches goal configuration
+        """
+        return s == self.goal
+
+    def random_start(self, steps: int) -> Position:
+        """
+        Generate a random solvable starting state by making random moves from goal
+        This ensures the resulting state is always solvable (maintains puzzle parity)
+
+        Args:
+            steps: Number of random moves to make from goal state
+
+        Returns:
+            A randomized but solvable starting state
+        """
+        s = self.goal
+        for _ in range(steps):
+            # Take a random legal move - this maintains solvability
+            s = random.choice(self.neighbors(s))
+        return s
+
+def reconstruct(parent: Dict[Position, Optional[Position]], s: Position) -> List[Position]:
+    """
+    Reconstruct solution path by following parent pointers backward from goal to start
+
+    Args:
+        parent: Dictionary mapping each state to its parent state in the search tree
+        s: Goal state to start reconstruction from
+
+    Returns:
+        List of states from start to goal (inclusive)
+    """ (duplicate-code)
+HW01_Code\n_queens_SA.py:1:0: R0801: Similar lines in 2 files
+==n_puzzle_ASTAR:[171:211]
+==n_puzzle_IDS:[92:127]
+    path: List[Position] = [s]
+    while parent[s] is not None:
+        s = parent[s]
+        path.append(s)
+    path.reverse()
+    return path
+
+def depth_limited_search(puz: NPuzzle, start: Position, limit: int,
+                         t0: float, max_time_sec: int,
+                         node_budget: int) -> tuple:
+    """
+    Depth-Limited Search: DFS that stops at a specified depth limit
+
+    This is a helper for IDS. It performs DFS but cuts off at depth=limit.
+    Uses recursion with path checking to avoid cycles.
+
+    Returns different status codes:
+    - "ok": Found goal within depth limit
+    - "cutoff": Reached depth limit, solution may exist deeper
+    - "failure": Exhausted all paths at this depth, no solution exists
+    - "timeout": Exceeded time limit
+    - "cap": Exceeded node budget
+
+    Args:
+        puz: NPuzzle instance
+        start: Initial state
+        limit: Maximum depth to explore
+        t0: Start time (for timeout checking)
+        max_time_sec: Time limit in seconds
+        node_budget: Maximum nodes allowed for this iteration
+
+    Returns:
+        Tuple of (status, goal_state_or_None, nodes_used, parent_dict)
+    """
+    # Initialize parent tracking for path reconstruction (duplicate-code)
+HW01_Code\n_queens_SA.py:1:0: R0801: Similar lines in 2 files
+==n_puzzle_BDS:[59:92]
+==n_puzzle_Depth_Limited_DFS:[48:63]
+        return out
+
+    def is_goal(self, s: Position) -> bool:
+        """Test if state s is the goal state"""
+        return s == self.goal
+
+    def random_start(self, steps: int) -> Position:
+        """
+        Generate a random solvable starting state by random walk from goal
+        This ensures the resulting state is always solvable
+
+        Args:
+            steps: Number of random moves to make from goal state
+
+        Returns:
+            A randomized but solvable starting state
+        """
+        s = self.goal
+        for _ in range(steps):
+            s = random.choice(self.neighbors(s))
+        return s
+
+def _reconstruct(parent: Dict[Position, Optional[Position]], meet: Position) -> List[Position]:
+    """
+    Reconstruct path from one endpoint to meeting point by following parent pointers
+
+    Args:
+        parent: Dictionary mapping states to their parents in search tree
+        meet: Meeting point state to reconstruct path to
+
+    Returns:
+        List of states from endpoint to meeting point
+    """ (duplicate-code)
+HW01_Code\n_queens_SA.py:1:0: R0801: Similar lines in 2 files
+==n_puzzle_BDS:[291:298]
+==n_puzzle_Depth_Limited_DFS:[164:171]
+    for m, steps in configs:
+        successes = 0
+        attempts = 0
+        total_moves = 0
+        total_expanded = 0
+        total_time = 0.0
+ (duplicate-code)
+HW01_Code\n_queens_SA.py:1:0: R0801: Similar lines in 2 files
+==n_queens_GA:[31:38]
+==n_queens_SA:[36:47]
+    n = len(state)
+    cnt = 0
+    for c1 in range(n):
+        r1 = state[c1]
+        for c2 in range(c1+1, n):
+            r2 = state[c2]
+            # Check for row conflict or diagonal conflict (duplicate-code)
+HW01_Code\n_queens_SA.py:1:0: R0801: Similar lines in 2 files
+==n_queens_GA:[342:367]
+==n_queens_SA:[189:201]
+    n = len(state)
+    for r in range(n):
+        row = []
+        for c in range(n):
+            # Check if there's a queen at this position
+            row.append('Q' if state[c] == r else '.')
+        print(" ".join(row))
+
+# ============================================================================
+# TRIAL HARNESS
+# ============================================================================
+# Trial configuration (duplicate-code)
+HW01_Code\n_queens_SA.py:1:0: R0801: Similar lines in 2 files
+==n_puzzle_ASTAR:[11:28]
+==n_puzzle_BFS:[11:37]
+Position = Tuple[int, ...]
+
+class NPuzzle:
+    """
+    Represents an n-puzzle problem where n = m^2 - 1
+    For m=3: 8-puzzle (3x3 board with 8 tiles + 1 blank)
+    For m=4: 15-puzzle (4x4 board with 15 tiles + 1 blank)
+    """
+    def __init__(self, m: int = 3):
+        assert m > 1, "Board size must be at least 2x2"
+        self.m = m  # Board dimension (m x m)
+        # Goal state: tiles in order 1,2,3,...,n with blank (0) at end
+        # Example for 8-puzzle: (1, 2, 3, 4, 5, 6, 7, 8, 0)
+        self.goal: Position = tuple([i for i in range(1, m*m)] + [0])
+
+    def neighbors(self, s: Position) -> List[Position]:
+        """
+        Generate all valid successor states by sliding tiles into the blank space
+        The blank can move up, down, left, or right (if not at board edge)
+
+        Args:
+            s: Current puzzle state
+
+        Returns:
+            List of all reachable states from current state (2-4 neighbors typically)
+        """ (duplicate-code)
+HW01_Code\n_queens_SA.py:1:0: R0801: Similar lines in 2 files
+==n_puzzle_BDS:[241:258]
+==n_puzzle_BFS:[182:199]
+    for i in range(0, m*m, m):
+        row = s[i:i+m]
+        print(" ".join(str(x) for x in row))
+
+def run_once(m: int, steps: int):
+    """
+    Run BFS once on a random puzzle instance
+
+    Args:
+        m: Board dimension (3 for 8-puzzle, 4 for 15-puzzle)
+        steps: Number of random moves to scramble the puzzle
+
+    Returns:
+        Tuple of (solution_length, nodes_expanded, time)
+    """
+    puz = NPuzzle(m=m)
+    start = puz.random_start(steps=steps) (duplicate-code)
+HW01_Code\n_queens_SA.py:1:0: R0801: Similar lines in 2 files
+==n_puzzle_BDS:[262:267]
+==n_puzzle_BFS:[203:209]
+    print("start:")
+    print_board(start, m)
+    print("moves:", (len(path) - 1) if path else None)
+    print("expanded:", expanded)
+    print("time_s:", round(dt, 4)) (duplicate-code)
+HW01_Code\n_queens_SA.py:1:0: R0801: Similar lines in 2 files
+==n_puzzle_Depth_Limited_DFS:[145:150]
+==n_puzzle_IDS:[311:316]
+    print("start:")
+    print_board(start, m)
+    print("moves:", (len(path) - 1) if path else None)
+    print("expanded:", expanded)
+    print("time_s:", round(dt, 4)) (duplicate-code)
+
+-----------------------------------
+Your code has been rated at 7.00/10
+

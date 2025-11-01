@@ -8,7 +8,11 @@
       "Bash(pip install:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(pip show:*)",
+      "Bash(pylint:*)",
+      "Bash(pylint_HW01.txt)",
+      "Bash(pylint_HW02.txt)"
     ],
     "deny": [],
     "ask": []
