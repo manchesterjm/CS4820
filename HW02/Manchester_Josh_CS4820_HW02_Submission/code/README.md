@@ -36,16 +36,14 @@ pip install numpy
 
 ```
 HW02_code/
-├── sudoku_csp.py                 # Part A: Sudoku CSP solver (all variants)
-├── nqueens_minconflicts.py       # Part B: n-Queens with Minimum Conflicts
-├── pso_benchmark.py              # Part C1: PSO for benchmark functions
-├── pso_sudoku.py                 # Part C2: PSO applied to Sudoku
-├── sudoku_puzzles.py             # Collection of test Sudoku puzzles
-├── test_all.py                   # Comprehensive test suite
-├── run_experiments.py            # Main experiment runner (generates results)
-├── generate_convergence_plots.py # Generate convergence plots for PSO
-├── run_all.ps1                   # PowerShell script to run all programs
-└── README.md                     # This file
+├── sudoku_csp.py              # Part A: Sudoku CSP solver (all variants)
+├── nqueens_minconflicts.py    # Part B: n-Queens with Minimum Conflicts
+├── pso_benchmark.py           # Part C1: PSO for benchmark functions
+├── pso_sudoku.py              # Part C2: PSO applied to Sudoku
+├── sudoku_puzzles.py          # Collection of test Sudoku puzzles
+├── test_all.py                # Comprehensive test suite
+├── run_experiments.py         # Main experiment runner (generates results)
+└── README.md                  # This file
 ```
 
 ## Quick Start
@@ -93,23 +91,7 @@ python test_all.py
 
 This runs automated tests on all components and reports pass/fail status.
 
-### Option 4: Generate Convergence Plots
-
-Generate publication-quality convergence plots for PSO benchmarks:
-
-```bash
-python generate_convergence_plots.py
-```
-
-This will:
-- Run PSO with all 3 parameter configurations
-- Track iteration-by-iteration convergence
-- Generate plots for Rastrigin and Rosenbrock functions
-- Output PDF files: `rastrigin_convergence.pdf`, `rosenbrock_convergence.pdf`
-
-**Runtime:** Approximately 2-3 minutes
-
-### Option 5: Run Individual Programs
+### Option 4: Run Individual Programs
 
 You can run each part independently:
 

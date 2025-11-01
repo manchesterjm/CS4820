@@ -1,45 +1,41 @@
 # nqueens_minconflicts.py
 # Implements the Minimum Conflicts heuristic for the n-Queens problem
 #
-# What is the n-Queens Problem?
+# n-Queens Problem:
 # - Place n queens on an n×n chessboard so that no two queens attack each other
 # - Queens attack along rows, columns, and diagonals
-# - This means no two queens can share a row, column, or diagonal
 #
-# What is the Minimum Conflicts Algorithm?
-# - It's a local search method that starts with a complete (but possibly incorrect) assignment
-# - The algorithm iteratively selects a conflicted variable and assigns it the value that
-#   minimizes conflicts with other variables
-# - According to empirical studies, it's very effective for large n and scales much better
-#   than backtracking (linear vs exponential time)
+# Minimum Conflicts Algorithm:
+# - Local search method that starts with a complete (but possibly incorrect) assignment
+# - Iteratively selects a conflicted variable and assigns it the value with minimum conflicts
+# - Very effective for large n (scales much better than backtracking)
 #
 # Algorithm References:
-# According to Lecture 5: Constraint Satisfaction Problems, Slide 55 (Minimum Conflicts pseudocode)
-# and Russell & Norvig "Artificial Intelligence: A Modern Approach" Section 6.4
-# (Local Search for CSPs)
+# - Lecture 5: Constraint Satisfaction Problems, Slide 55 (Minimum Conflicts pseudocode)
+# - Russell & Norvig "Artificial Intelligence: A Modern Approach" Section 6.4
+#   (Local Search for CSPs)
 
 from typing import List, Tuple, Optional
 import random
 import time
 
-# Safety limits to prevent excessive computation
-# According to the assignment requirements, we need a 5 minute timeout
-MAX_TIME_SEC = 300  # This prevents the algorithm from running forever
-MAX_STEPS = 1000000  # Maximum iterations before giving up and restarting
+# Safety limit to prevent excessive computation
+MAX_TIME_SEC = 300  # 5 minute timeout as specified in requirements
+MAX_STEPS = 1000000  # Maximum iterations before giving up
 
 class NQueens:
     """
     Represents the n-Queens problem as a CSP
 
-    How do we represent the state?
-    - Use a 1D list where board[col] = row means the queen in column col is at that row
-    - This implicitly satisfies the column constraints (one queen per column by construction)
-    - This means we only need to check for row and diagonal conflicts
+    State representation:
+    - Use a 1D list where board[col] = row means queen in column col is at row
+    - This implicitly satisfies column constraints (one queen per column)
+    - Only need to check row and diagonal conflicts
 
-    Why is this representation efficient for Minimum Conflicts?
-    - It uses O(n) space instead of O(n²) for a full board
-    - It's easy to move a queen within its column (just change one value)
-    - Conflict counting is fast since we know exactly where each queen is
+    This representation is efficient for Minimum Conflicts:
+    - O(n) space instead of O(n²)
+    - Easy to move a queen within its column
+    - Fast conflict counting
     """
 
     def __init__(self, n: int):
@@ -54,16 +50,16 @@ class NQueens:
 
     def random_initial_state(self) -> List[int]:
         """
-        Generate a random initial state with one queen per column
+        Generate random initial state with one queen per column
 
-        Each queen is placed randomly in its column. This gives us a complete assignment
-        that may have conflicts (queens attacking each other).
+        Each queen is placed randomly in its column
+        This gives us a complete assignment that may have conflicts
 
-        Why start with a complete assignment? According to Lecture 5, Slide 52:
-        - Minimum Conflicts is a local search method, not systematic search
-        - Local search works on complete assignments and improves them
-        - The algorithm moves from neighbor to neighbor to improve the solution
-        - This is much faster than systematic search for large n
+        Why start with complete assignment (Lecture 5, Slide 52):
+        - Minimum Conflicts is a local search method
+        - Local search works on complete assignments
+        - Moves from neighbor to neighbor to improve solution
+        - Much faster than systematic search for large n
 
         Returns:
             List where board[col] = row for each column
@@ -133,22 +129,23 @@ class NQueens:
 
     def min_conflicts_value(self, board: List[int], col: int) -> int:
         """
-        Find the row with minimum conflicts for the queen in the given column
+        Find row with minimum conflicts for queen in given column
 
-        How does the Minimum Conflicts heuristic work? According to Lecture 5, Slide 55:
-        - For the selected variable (column), try all possible values (rows)
-        - Choose the value that results in the minimum number of conflicts
-        - Break ties randomly to avoid getting stuck in patterns
+        Minimum Conflicts heuristic (Lecture 5, Slide 55):
+        - For the selected variable (column)
+        - Try all possible values (rows)
+        - Choose value that results in minimum conflicts
+        - Break ties randomly
 
-        This is a greedy local search strategy. What does that mean?
-        - It always moves toward better states (fewer conflicts)
-        - It can get stuck in local minima, but this is rare for n-Queens
-        - It's very effective in practice
+        This is a greedy local search strategy:
+        - Always moves toward better states
+        - Can get stuck in local minima (but rare for n-Queens)
+        - Very effective in practice
 
-        Why does it work so well for n-Queens?
-        - The n-Queens problem has many solutions (high solution density of approximately n!/e)
-        - Local minima are rare because there are so many solutions
-        - Random restarts handle the rare cases where we do get stuck
+        Why it works for n-Queens:
+        - n-Queens has many solutions (high solution density)
+        - Local minima are rare
+        - Random restarts handle the rare local minima
 
         Args:
             board: Current board state

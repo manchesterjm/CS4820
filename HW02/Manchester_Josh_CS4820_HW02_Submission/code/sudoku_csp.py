@@ -1,23 +1,20 @@
 # sudoku_csp.py
 # Implements Sudoku as a Constraint Satisfaction Problem (CSP)
 #
-# How can we represent Sudoku as a formal CSP?
 # CSP Formulation:
 # - Variables: 81 cells in a 9x9 grid
 # - Domain: {1, 2, 3, 4, 5, 6, 7, 8, 9} for each variable
 # - Constraints: 27 Alldiff constraints (9 rows + 9 columns + 9 3x3 boxes)
 #
-# This means we can solve Sudoku using systematic search algorithms designed for CSPs.
-#
 # Algorithm References:
-# According to Russell & Norvig "Artificial Intelligence: A Modern Approach" Chapter 6
-# and Lecture 5: Constraint Satisfaction Problems:
-#   * Backtracking Search (Slide 19) - Basic depth-first search with constraint checking
-#   * MRV Heuristic (Slide 24, 27) - Choose most constrained variable first
-#   * Degree Heuristic (Slide 28) - Tie-breaking for MRV
-#   * LCV Heuristic (Slide 30) - Try least constraining values first
-#   * Forward Checking (Slide 36) - Maintain arc consistency with future variables
-#   * AC-3 Constraint Propagation (Slide 70) - Full arc consistency across entire CSP
+# - Russell & Norvig "Artificial Intelligence: A Modern Approach" Chapter 6
+# - Lecture 5: Constraint Satisfaction Problems
+#   * Backtracking Search (Slide 19)
+#   * MRV Heuristic (Slide 24, 27)
+#   * Degree Heuristic (Slide 28)
+#   * LCV Heuristic (Slide 30)
+#   * Forward Checking (Slide 36)
+#   * AC-3 Constraint Propagation (Slide 70)
 
 from typing import List, Tuple, Set, Dict, Optional
 import time
@@ -29,19 +26,15 @@ Domain = Set[int]           # Set of possible values for a variable
 Domains = Dict[Position, Domain]  # Maps each position to its current domain
 
 # Safety limit to prevent excessive computation
-# According to the assignment requirements, we need a 5 minute timeout
-MAX_TIME_SEC = 300  # This prevents algorithms from running forever on hard puzzles
+MAX_TIME_SEC = 300  # 5 minute timeout as specified in requirements
 
 class SudokuCSP:
     """
     Represents a Sudoku puzzle as a Constraint Satisfaction Problem
 
-    How does this work? The puzzle is represented as:
-    - A 9x9 grid where each cell is a variable
-    - Each variable can take values from 1 to 9
-    - Constraints ensure no duplicates appear in rows, columns, or 3x3 boxes
-
-    This representation allows us to apply systematic CSP solving algorithms.
+    The puzzle is a 9x9 grid where:
+    - Each cell is a variable that can take values 1-9
+    - Constraints ensure no duplicates in rows, columns, or 3x3 boxes
     """
 
     def __init__(self, puzzle: List[List[int]]):
@@ -49,7 +42,7 @@ class SudokuCSP:
         Initialize Sudoku CSP from a 9x9 puzzle grid
 
         Args:
-            puzzle: 9x9 grid where 0 represents empty cells to be filled
+            puzzle: 9x9 grid where 0 represents empty cells
         """
         assert len(puzzle) == 9 and all(len(row) == 9 for row in puzzle), \
             "Puzzle must be 9x9"
@@ -57,23 +50,20 @@ class SudokuCSP:
         self.puzzle = [row[:] for row in puzzle]  # Deep copy
 
         # Initialize domains for all variables
-        # How do we set up the initial domains?
-        # - Given cells have singleton domains (only one possible value)
-        # - Empty cells have the full domain {1, 2, 3, 4, 5, 6, 7, 8, 9}
+        # Given cells have singleton domains, empty cells have {1-9}
         self.initial_domains: Domains = {}
         for r in range(9):
             for c in range(9):
                 pos = (r, c)
                 if puzzle[r][c] != 0:
-                    # Given cell: domain contains only the fixed value
+                    # Given cell: domain is singleton
                     self.initial_domains[pos] = {puzzle[r][c]}
                 else:
-                    # Empty cell: all values 1-9 are initially possible
+                    # Empty cell: full domain
                     self.initial_domains[pos] = {1, 2, 3, 4, 5, 6, 7, 8, 9}
 
-        # Precompute the constraint structure for efficiency
-        # According to the CSP formulation, each variable has constraints with all
-        # variables in the same row, column, and 3x3 box. This builds the constraint graph.
+        # Precompute constraint structure for efficiency
+        # Each variable has constraints with variables in same row, col, and box
         self.neighbors: Dict[Position, Set[Position]] = {}
         for r in range(9):
             for c in range(9):
@@ -180,19 +170,18 @@ class SudokuCSP:
         """
         MRV (Minimum Remaining Values) heuristic for variable selection
 
-        This is also known as the "most constrained variable" or "fail-first" heuristic.
-        The idea is to choose the variable with the fewest legal values remaining.
+        Also known as "most constrained variable" or "fail-first" heuristic
+        Chooses the variable with the fewest legal values remaining
 
-        Why does MRV work so well? According to Lecture 5, Slide 24:
-        - It reduces the branching factor by choosing variables that are likely to fail early
-        - This means failures are detected earlier in the search tree
-        - The earlier we detect failures, the more of the search space we can prune
+        Why MRV works well (Lecture 5, Slide 24):
+        - Reduces branching factor by choosing variables likely to fail early
+        - Detects failures earlier in the search tree
+        - Prunes more of the search space sooner
 
-        What about tie-breaking? According to Lecture 5, Slide 28:
-        - Use the degree heuristic when multiple variables have the same domain size
-        - Among tied variables, choose the one with the most constraints on remaining
-          unassigned variables
-        - This further reduces the future branching factor
+        Tie-breaking: Use degree heuristic (Lecture 5, Slide 28)
+        - Among variables with same domain size, choose one with most
+          constraints on remaining unassigned variables
+        - This further reduces future branching
 
         Reference: Russell & Norvig Section 6.3.1
 
@@ -259,20 +248,18 @@ class SudokuCSP:
         """
         LCV (Least Constraining Value) heuristic for value ordering
 
-        This heuristic orders values by how many choices they rule out for neighboring
-        variables. The idea is to prefer values that leave maximum flexibility for
-        future assignments.
+        Orders values by how many choices they rule out for neighboring variables
+        Prefers values that leave maximum flexibility for future assignments
 
-        Why does LCV work well? According to Lecture 5, Slide 30:
-        - Unlike MRV which tries to fail fast, LCV tries to succeed
-        - Choosing the least constraining value leaves more options for neighbor variables
-        - This increases the likelihood of finding a complete solution
-        - LCV is most effective when combined with MRV for variable selection
+        Why LCV works well (Lecture 5, Slide 30):
+        - Want to succeed, not fail fast (unlike MRV)
+        - Choosing least constraining value leaves more options for neighbors
+        - Increases likelihood of finding complete solution
+        - Most effective when combined with MRV for variable selection
 
-        How is it implemented?
-        - For each value in the domain, count how many neighbor values would be eliminated
-        - Sort the values by this count in ascending order (least constraining first)
-        - This means we try values that preserve the most options for other variables
+        Implementation:
+        - For each value, count how many neighbor values would be eliminated
+        - Sort values by this count (ascending = least constraining first)
 
         Reference: Russell & Norvig Section 6.3.1
 
@@ -307,21 +294,20 @@ class SudokuCSP:
         """
         Forward Checking: maintain arc consistency for future variables
 
-        What does forward checking do? When we assign a value to a variable,
-        we reduce the domains of unassigned neighbors by removing that value
-        from their domains (since it's now used and can't appear again).
+        When we assign value to pos, reduce domains of unassigned neighbors
+        by removing this value from their domains (since it's now used)
 
-        Why does Forward Checking work? According to Lecture 5, Slide 36:
-        - It detects failures early by checking if any domain becomes empty
-        - This means we find out about problems before we backtrack
-        - It's much cheaper than full arc consistency (AC-3) but still effective
-        - It prunes the search space by eliminating values we know won't work
+        Why Forward Checking works (Lecture 5, Slide 36):
+        - Detects failures early by checking if any domain becomes empty
+        - Much cheaper than full arc consistency (AC-3)
+        - Prunes search space by eliminating inconsistent values
+        - Keeps track of legal values for unassigned variables
 
-        How does the algorithm work? According to Lecture 5, Slide 36:
-        1. For each unassigned neighbor of the variable we just assigned
-        2. Remove the assigned value from the neighbor's domain (if it's there)
-        3. If any domain becomes empty, return None (we detected a failure)
-        4. Otherwise return the updated domains and continue
+        Algorithm (Lecture 5, Slide 36):
+        1. For each unassigned neighbor of pos
+        2. Remove value from neighbor's domain (if present)
+        3. If any domain becomes empty, return None (failure detected)
+        4. Otherwise return updated domains
 
         Reference: Russell & Norvig Section 6.3.2
 
@@ -357,33 +343,32 @@ class SudokuCSP:
         """
         AC-3 (Arc Consistency 3) constraint propagation algorithm
 
-        What is arc consistency? An arc (Xi, Xj) is consistent if for every value in
-        Xi's domain, there exists some value in Xj's domain that satisfies the constraint
-        between them. AC-3 enforces this across all constraints in the CSP.
+        Enforces arc consistency across all constraints in the CSP
+        An arc (Xi, Xj) is consistent if for every value in Xi's domain,
+        there exists some value in Xj's domain that satisfies the constraint
 
-        Why is AC-3 so powerful? According to Lecture 5, Slide 70:
-        - It's more powerful than forward checking alone
-        - It propagates constraints transitively, creating a cascading effect
-        - This means it can detect failures earlier than forward checking
-        - It significantly reduces the search space before backtracking even begins
-        - AC-3 makes an excellent preprocessing step before search
+        Why AC-3 works (Lecture 5, Slide 70):
+        - More powerful than forward checking
+        - Propagates constraints transitively (cascading effect)
+        - Can detect failures earlier than forward checking
+        - Significantly reduces search space before backtracking
+        - Good preprocessing step before search begins
 
-        How does the algorithm work? According to Lecture 5, Slide 70 and Russell & Norvig Figure 6.3:
-        1. Initialize a queue with all arcs (Xi, Xj) where Xi and Xj are neighbors
-        2. While the queue is not empty:
-        3.   Remove an arc (Xi, Xj) from the queue
-        4.   If Revise(Xi, Xj) causes Xi's domain to change:
-        5.     If Xi's domain is empty, return failure (no solution exists)
-        6.     Add all arcs (Xk, Xi) to the queue where Xk is a neighbor of Xi
-        7. Return the updated domains
+        Algorithm (Lecture 5, Slide 70, Russell & Norvig Figure 6.3):
+        1. Initialize queue with all arcs (Xi, Xj) where Xi and Xj are neighbors
+        2. While queue not empty:
+        3.   Remove arc (Xi, Xj) from queue
+        4.   If Revise(Xi, Xj) causes domain change:
+        5.     If Xi's domain is empty, return failure
+        6.     Add all arcs (Xk, Xi) to queue where Xk is neighbor of Xi
+        7. Return updated domains
 
-        What does Revise(Xi, Xj) do?
-        - It removes values from Di (Xi's domain) that have no consistent value in Dj
-        - Returns true if Di was changed, false otherwise
+        Revise(Xi, Xj):
+        - Remove values from Di that have no consistent value in Dj
+        - Return true if Di was changed
 
-        What's the cost? Time Complexity is O(cd³) where c equals the number of constraints
-        and d is the max domain size. Space Complexity is O(c) for the queue. This means
-        AC-3 has a higher per-node cost, but it explores far fewer nodes.
+        Time Complexity: O(cd³) where c = number of constraints, d = max domain size
+        Space Complexity: O(c) for queue
 
         Reference: Russell & Norvig Section 6.2.5
 

@@ -1,0 +1,26 @@
+
+
+
+
+
+To What Extent Should We Allow Artificial Intelligence to Make Decisions That Impact Human Lives
+
+
+Joshua Manchester
+Department of Engineering, University of Colorado at Colorado Springs
+CS 3050: Social and Ethical Implications of Computing
+Dr. Serena Sullivan
+August 31, 2023
+
+How Much Should We Rely on Artificial Intelligence?
+	To what extent should we allow Artificial Intelligence (AI) to make decisions that impact human lives?  Right now, our lives are impacted by AI in ways we do not know, see, or recognize.  When driving in foreign cities, our route most likely comes from a driving app like Waze or Google.  AI is helping radiologists make a diagnosis from medical imaging.  Vehicles can drive themselves on the highway.  Airplanes can land themselves when pilots cannot see the runway.  All these devices run on programs that take in real-time data, process that data, and make a decision based on that data.  That decision can either be presented to us as a choice of what to do, like Waze or Google, or it can be steering and speed changes in the case of a self-driving vehicle or airplane. Mark Ryan argues that we do not trust these AI but rely on them.  That reliance is based on our belief that these machines will make correct decisions; otherwise, we will become disappointed in them, lessening our reliance on them (Ryan, 2020). However, to what extent should we allow these AI to make these decisions for us?
+	Right now, society allows AI to make decisions that impact us until they fail to make good decisions.  As previously stated, AI takes in external data and makes decisions based on that data.  Tesla’s website on its car autopilot system shows that its cars can only drive in traffic if its cameras provide clear images processed by the AI at high speed.  It can see “in every direction simultaneously, and on wavelengths that go far beyond the human senses” (Tesla, 2023, p. 1).  The car needs good data to make good decisions.  So, as long as AI has the right data at the right time to make that decision, we should let it.
+	AI can diagnose computerized tomography (CT) scan images better than a radiologist in medical diagnostics, but does that mean it is always correct?  According to Dr. Xiaoli Tang, AI is not always correct. However, it does catch things on CT imaging that a radiologist can miss, allowing the doctor and the AI to make a better diagnosis.  This deep learning AI can also predict health problems that may appear in the future.  The predictions and diagnoses are even better if the AI has multiple images from multiple periods to compare (Tang, 2019).  Like the car AI, an imagery AI is only as good as the imagery it is fed, and the more data you can feed the AI, the better its output will be.
+	Another example is airplane auto-pilot.  Few people recognize this as AI because they do not have first-hand use or knowledge of it.  During flight, the autopilot flies the plane according to the data entered.  It decides to turn, fly up/down, and accelerate/decelerate the plane based on external data gathered from instruments attached to the plane and data beamed to it via radio.  Howard Slutsken (2019) shows how most large airliners' autopilot uses “autoland” to land the plane in the worst visual settings without the pilot's intervention.  In all these examples, autoland affects the most people at one time based solely on the decisions of an AI.
+	Largely, we allow these AI to make decisions for us because we can directly countermand any decision.  We can turn off autopilot, not follow Waze's route, re-run images through imagery AI, and take the car's wheel.  We allow these AI to make these decisions because we know that the AI's data to make its decisions is good, and we rely on the AI to provide the best output possible.  Society should allow AI to do what it does up until it is proven to be unreliable.
+
+References
+Ryan, M. (2020). In AI we trust: ethics, artificial intelligence, and reliability.  Science and Engineering Ethics, 26(5), 2749-2767. htts://link.springer.com/article/10.1007/s11948-020-00228-y
+Slutsken, H. (2019). Autoland: When pilots can’t see the runway. CNN. https://cnn.com/travel/article/autoland-pilots-runway/index.html 
+Tang, X. (2019). The role of artificial intelligence in medical imaging research. The British Institute of Radiology. https://doi.org/10.1259/bjro.20190031 
+Tesla. (2023). Future of Driving. Tesla. https://tesla.com/autopilot

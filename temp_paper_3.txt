@@ -1,0 +1,21 @@
+
+
+
+The Ghost in Your Genes
+Joshua Manchester
+University of Colorado at Colorado Springs
+ANTH 3380: Evolutionary Medicine and Health
+Professor Michelle Escasa-Dorne
+January 2, 2025
+
+The Ghost in Your Genes
+The Horizon video “The Ghost in Your Genes” explores epigenetics, demonstrating how environmental factors experienced by ancestors can influence the health and development of progeny. It highlights events like the multiple famines in an isolated town in Sweden, where pregnancy during famine increased health risks in offspring, and the effects could be seen in multiple generations. The video explores the concept of parent-of-origin effects, where specific gene expression depends on whether it is inherited from the mother or father. This complexity of genetics and environmental factors shapes individual development.
+The video illustrates the concept of developmental plasticity. The example of the Dutch Hunger Winter, where children conceived during famine exhibited increased risks of chronic diseases later in life, demonstrates how environmental stressors experienced during critical developmental windows can have profound consequences. This aligns with how ecological cues experienced in utero can alter gene expression patterns, leading to phenotypic changes that may be adaptive in the short term but deleterious in the long term.
+The video also touches on key aspects of life history theory. The fetus's experience in utero during famine likely triggered physiological changes that prioritized short-term survival over long-term growth, a reallocation of resources characteristic of life history theory. While beneficial in a challenging environment, this adaption may have unintended consequences in later life, contributing to increased susceptibility to chronic diseases in a more nutrient-rich environment.
+The video highlights the concept of parent-of-origin effects, where the expression of specific genes depends on inheritance from either the mother or the father. This imprinting demonstrates how identical genetic sequences can have different effects depending on parental origin. For example, Prader-Willi syndrome (deletion of paternal genes) and Angelman syndrome (deletion of maternal genes) arise from the same chromosomal region but exhibit distinct phenotypes. This concept emphasizes the interactions between genetic factors and parental influences in shaping individual development and health outcomes.
+Acknowledging the limitations of our current understanding of epigenetic inheritance is crucial. The mechanisms by which epigenetic information is transmitted across generations are still not fully understood, and further research is necessary to establish causality between ancestral experiences and the health of subsequent generations.
+The Horizon video "The Ghost in Your Genes" effectively illustrates key concepts from the book, highlighting the impact of environmental factors on gene expression and the consequences of these influences. It marks the importance of considering evolutionary principles when tackling health and disease. Recognizing how genetics and environment shape individual development is key to building effective strategies to prevent and treat health challenges.
+
+
+References
+Gluckman, P., Beedle, A., Hanson, M., & Low, F., Buklijas, T. (2016). Principles of Evolutionary Medicine (2nd ed.). Oxford University Press.

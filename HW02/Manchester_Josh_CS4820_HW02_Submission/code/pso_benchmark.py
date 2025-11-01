@@ -1,30 +1,27 @@
 # pso_benchmark.py
 # Implements Particle Swarm Optimization (PSO) for benchmark function optimization
 #
-# What is PSO?
-# - It's a population-based metaheuristic inspired by the social behavior of bird flocking
-#   or fish schooling
-# - Each particle in the swarm has a position (candidate solution) and a velocity
-# - Particles move through the search space influenced by three factors:
-#   * Their own best position found so far (cognitive component)
-#   * The global best position found by the entire swarm (social component)
-#   * Inertia from their current velocity (exploration vs exploitation)
+# PSO Overview:
+# - Population-based metaheuristic inspired by social behavior of bird flocking
+# - Each particle has position (candidate solution) and velocity
+# - Particles move through search space influenced by:
+#   * Their own best position (cognitive component)
+#   * Global best position (social component)
+#   * Inertia from current velocity
 #
-# What benchmark functions are used?
+# Benchmark Functions:
 # 1. Rastrigin: f(x) = 10n + Σ[xi² - 10cos(2πxi)]
-#    - Highly multimodal with approximately 10^n local minima
+#    - Highly multimodal (many local minima)
 #    - Global minimum: f(0,...,0) = 0
-#    - This tests the algorithm's ability to escape local minima
 #
 # 2. Rosenbrock: f(x) = Σ[100(xi+1 - xi²)² + (xi - 1)²]
-#    - Has a narrow parabolic valley leading to the global minimum
+#    - Narrow valley leading to global minimum
 #    - Global minimum: f(1,...,1) = 0
-#    - This tests the algorithm's ability to navigate a narrow valley
 #
 # Algorithm References:
-# According to Lecture 7: Search Optimization Part III (PSO slides),
-# Kennedy & Eberhart, "Particle Swarm Optimization," 1995,
-# and benchmark functions from Jamil & Yang, "A Literature Survey of Benchmark Functions"
+# - Lecture 7: Search Optimization Part III (PSO slides)
+# - Kennedy & Eberhart, "Particle Swarm Optimization," 1995
+# - Benchmark functions from Jamil & Yang, "A Literature Survey of Benchmark Functions"
 
 from typing import Callable, Tuple, List, Dict
 import numpy as np
@@ -33,36 +30,32 @@ import time
 import math
 
 # Safety limit to prevent excessive computation
-# According to the assignment requirements, we need a 5 minute timeout
-MAX_TIME_SEC = 300  # This prevents PSO from running forever on hard problems
+MAX_TIME_SEC = 300  # 5 minute timeout as specified in requirements
 
 
 class PSO:
     """
     Particle Swarm Optimization for continuous function minimization
 
-    How does the PSO algorithm work?
-    1. Initialize the swarm with random positions and velocities
-    2. Evaluate the fitness of each particle (how good is this solution?)
-    3. Update each particle's personal best and the global best
+    PSO Algorithm:
+    1. Initialize swarm with random positions and velocities
+    2. Evaluate fitness of each particle
+    3. Update personal best and global best
     4. Update velocities based on inertia, cognitive, and social components
-    5. Update positions based on the new velocities
-    6. Repeat until convergence or we reach the maximum iterations
+    5. Update positions
+    6. Repeat until convergence or max iterations
 
-    What are the key equations?
     Velocity update equation:
     v[i] = w*v[i] + c1*r1*(pbest[i] - x[i]) + c2*r2*(gbest - x[i])
 
     where:
-    - w: inertia weight (controls exploration vs exploitation tradeoff)
-    - c1: cognitive coefficient (how much the particle trusts its own experience)
-    - c2: social coefficient (how much the particle trusts the swarm's experience)
-    - r1, r2: random values in [0,1] (adds stochasticity to the search)
+    - w: inertia weight (controls exploration vs exploitation)
+    - c1: cognitive coefficient (attraction to personal best)
+    - c2: social coefficient (attraction to global best)
+    - r1, r2: random values in [0,1]
 
     Position update equation:
     x[i] = x[i] + v[i]
-
-    This means the particle moves by adding its velocity to its current position.
     """
 
     def __init__(self,
