@@ -20,6 +20,13 @@ CS4820/
 ├── .pylint_summary.md          # Pylint code quality tracking
 ├── README.md                   # Repository overview and quick start
 │
+├── archived_documents/          # Archived/superseded files
+│   ├── 8 - Logical Agent Part I-IV.pdf  # Original lecture PDF (superseded by split versions)
+│   └── split_pdf.py                      # PDF splitting utility (one-time use)
+│
+├── 8 - Logical Agent Part I-IV_Part1.pdf  # Lecture 8 Part 1 (split for easier reading)
+├── 8 - Logical Agent Part I-IV_Part2.pdf  # Lecture 8 Part 2 (split for easier reading)
+│
 ├── HW01/                       # Homework 1: Search algorithms (COMPLETED)
 │   └── HW01_Code/              # Implementation code (Pylint: 9.53/10)
 │
@@ -54,6 +61,37 @@ CS4820/
         ├── aaai24.sty                     # AAAI style file
         └── aaai24.bst                     # AAAI bibliography style
 ```
+
+## Archived Documents
+
+The `archived_documents/` folder contains files that have been superseded or are no longer actively used but are preserved for reference:
+
+### Current Archive Contents
+
+**Lecture Materials:**
+- **`8 - Logical Agent Part I-IV.pdf`** (2.2MB, 118 pages)
+  - Original unsplit lecture PDF on Logical Agents
+  - Archived on: November 1, 2025
+  - Reason: Superseded by split versions for easier reading
+  - Replaced by: `8 - Logical Agent Part I-IV_Part1.pdf` and `8 - Logical Agent Part I-IV_Part2.pdf`
+  - Content: Knowledge-based agents, Wumpus world, propositional logic, inference (resolution, forward/backward chaining, DPLL, WalkSAT)
+
+**Utility Scripts:**
+- **`split_pdf.py`**
+  - PDF splitting utility used to divide large PDFs into smaller parts
+  - Archived on: November 1, 2025
+  - Reason: One-time use utility, no longer needed for regular coursework
+  - Dependencies: pypdf or PyPDF2
+  - Usage: Splits PDFs at midpoint for easier reading on smaller screens
+
+### Archive Policy
+
+Files are moved to `archived_documents/` when:
+1. They have been superseded by newer/better versions
+2. They are utility scripts used once and no longer needed for regular work
+3. They are reference materials kept for historical purposes but not actively used
+
+The archive preserves git history (files are moved with `git mv` to maintain full commit history).
 
 ## Documentation Standards
 
