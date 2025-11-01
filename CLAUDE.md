@@ -21,9 +21,12 @@ CS4820/
 ├── README.md                   # Repository overview and quick start
 │
 ├── archived_documents/          # Archived/superseded files
-│   ├── 8 - Logical Agent Part I-IV.pdf  # Original lecture PDF (superseded by split versions)
-│   └── split_pdf.py                      # PDF splitting utility (one-time use)
+│   ├── 7 - Search Optimization Part I-III.pptx  # Original PowerPoint (converted to PDF)
+│   ├── 8 - Logical Agent Part I-IV.pdf          # Original lecture PDF (superseded by split versions)
+│   ├── convert_pptx_to_pdf.ps1                  # PowerPoint to PDF converter (one-time use)
+│   └── split_pdf.py                             # PDF splitting utility (one-time use)
 │
+├── 7 - Search Optimization Part I-III.pdf  # Lecture 7 (converted from .pptx)
 ├── 8 - Logical Agent Part I-IV_Part1.pdf  # Lecture 8 Part 1 (split for easier reading)
 ├── 8 - Logical Agent Part I-IV_Part2.pdf  # Lecture 8 Part 2 (split for easier reading)
 │
@@ -76,6 +79,13 @@ The `archived_documents/` folder contains files that have been superseded or are
   - Replaced by: `8 - Logical Agent Part I-IV_Part1.pdf` and `8 - Logical Agent Part I-IV_Part2.pdf`
   - Content: Knowledge-based agents, Wumpus world, propositional logic, inference (resolution, forward/backward chaining, DPLL, WalkSAT)
 
+- **`7 - Search Optimization Part I-III.pptx`** (5.1MB)
+  - Original PowerPoint lecture slides on Search Optimization
+  - Archived on: November 1, 2025
+  - Reason: Converted to PDF for easier access and version control
+  - Replaced by: `7 - Search Optimization Part I-III.pdf`
+  - Content: Local search, hill climbing, simulated annealing, genetic algorithms, optimization techniques
+
 **Utility Scripts:**
 - **`split_pdf.py`**
   - PDF splitting utility used to divide large PDFs into smaller parts
@@ -83,6 +93,13 @@ The `archived_documents/` folder contains files that have been superseded or are
   - Reason: One-time use utility, no longer needed for regular coursework
   - Dependencies: pypdf or PyPDF2
   - Usage: Splits PDFs at midpoint for easier reading on smaller screens
+
+- **`convert_pptx_to_pdf.ps1`**
+  - PowerShell script to convert PowerPoint presentations to PDF format
+  - Archived on: November 1, 2025
+  - Reason: One-time conversion utility, no longer needed for regular coursework
+  - Dependencies: Microsoft PowerPoint (COM automation)
+  - Usage: Uses PowerPoint COM objects to convert .pptx to .pdf format
 
 ### Archive Policy
 
