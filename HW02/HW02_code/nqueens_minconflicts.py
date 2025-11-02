@@ -73,7 +73,7 @@ class NQueens:
 
     def count_conflicts(self, board: List[int], col: int) -> int:
         """
-        Count number of conflicts for queen in given column
+        Count number of conflicts for queen in given column.
 
         A conflict occurs when this queen attacks another queen
         Need to check:
@@ -87,6 +87,8 @@ class NQueens:
         - Two queens at (r1,c1) and (r2,c2) are on same diagonal if:
           * |r1-r2| == |c1-c2| (same diagonal)
 
+        Complexity: O(n) - must check against n-1 other queens
+
         Args:
             board: Current board state
             col: Column of queen to check
@@ -94,21 +96,29 @@ class NQueens:
         Returns:
             Number of queens this queen conflicts with
         """
+        # Get the row position of the queen in this column
         row = board[col]
         conflicts = 0
 
-        # Check against all other queens
+        # Check against all other queens (O(n) iteration)
         for other_col in range(self.n):
+            # Skip checking queen against itself
             if other_col == col:
                 continue  # Don't check against self
 
+            # Get the row of the other queen
             other_row = board[other_col]
 
-            # Row conflict: same row
+            # Row conflict check: Do queens share the same row?
+            # Since we have one queen per column by construction, if two queens
+            # are in the same row, they attack each other horizontally
             if other_row == row:
                 conflicts += 1
 
-            # Diagonal conflict: |row difference| == |column difference|
+            # Diagonal conflict check: Are queens on the same diagonal?
+            # Mathematical condition: |r1-r2| == |c1-c2|
+            # This works because diagonals have slope ±1 (45° angles)
+            # If row difference equals column difference, they're on same diagonal
             if abs(other_row - row) == abs(other_col - col):
                 conflicts += 1
 
@@ -159,22 +169,30 @@ class NQueens:
             Row that minimizes conflicts for this queen
         """
         # Try all possible rows for this column
-        min_conflicts = float('inf')
-        best_rows = []
+        # This is the core of the Minimum Conflicts heuristic:
+        # evaluate all possible moves and pick the best one
+        min_conflicts = float('inf')  # Track best conflict count seen
+        best_rows = []  # Track all rows that achieve minimum conflicts (for tie-breaking)
 
+        # Evaluate each possible row placement (O(n) rows to try)
         for row in range(self.n):
-            # Temporarily place queen at this row
+            # Temporarily place queen at this row to evaluate it
+            # Save old position so we can restore it after counting
             old_row = board[col]
             board[col] = row
 
-            # Count conflicts
+            # Count conflicts with this placement
+            # This calls count_conflicts() which is O(n), so total is O(n²) for this function
             conflicts = self.count_conflicts(board, col)
 
-            # Track minimum
+            # Update best rows list based on conflict count
             if conflicts < min_conflicts:
+                # Found a better row - this becomes new minimum
                 min_conflicts = conflicts
-                best_rows = [row]
+                best_rows = [row]  # Start new list with this row
             elif conflicts == min_conflicts:
+                # Tied with current minimum - add to list for random selection
+                # This randomization helps avoid deterministic behavior/loops
                 best_rows.append(row)
 
             # Restore original position
@@ -220,36 +238,52 @@ class NQueens:
             - time: Elapsed time in seconds
             - status: "ok" if solved, "max_steps" if exceeded, "timeout" if timed out
         """
+        # Start timing for performance measurement
         start_time = time.perf_counter()
 
-        # Initialize with random complete assignment
+        # Step 1: Initialize with random complete assignment
+        # Unlike backtracking which starts empty, local search starts complete
+        # This may have conflicts initially, but that's okay - we'll fix them
         board = self.random_initial_state()
 
-        # Iteratively improve solution
+        # Step 2: Iteratively improve solution using hill-climbing
+        # On each iteration, we reduce conflicts by moving one queen
+        # This is the main Minimum Conflicts loop (Lecture 5, Slide 55)
         for step in range(max_steps):
-            # Check timeout
+            # Safety check: timeout protection (5 minute limit)
+            # Prevents infinite loops if algorithm gets stuck
             if MAX_TIME_SEC > 0 and (time.perf_counter() - start_time) > MAX_TIME_SEC:
                 return None, step, time.perf_counter() - start_time, "timeout"
 
-            # Check if current state is a solution
+            # Step 3: Check if current state is a solution (goal test)
+            # If no conflicts, we have a valid n-Queens solution
             if self.total_conflicts(board) == 0:
                 return board, step, time.perf_counter() - start_time, "ok"
 
-            # Select a random conflicted variable
-            # Only consider columns that have conflicts
+            # Step 4: Select a random conflicted variable (column)
+            # Key insight: Only move queens that are currently in conflict
+            # This focuses effort on problematic queens, not happy ones
+            # List comprehension builds list of columns with conflicts
             conflicted_cols = [col for col in range(self.n)
                              if self.count_conflicts(board, col) > 0]
 
+            # Double-check for solution (redundant but safe)
             if not conflicted_cols:
                 # No conflicts - solution found
                 return board, step, time.perf_counter() - start_time, "ok"
 
+            # Randomly select one conflicted column
+            # Randomness helps avoid deterministic patterns that might loop
             col = random.choice(conflicted_cols)
 
-            # Set variable to value with minimum conflicts
+            # Step 5: Set variable to value with minimum conflicts
+            # This is the greedy move: always choose best available option
+            # min_conflicts_value() tries all rows and picks the one with fewest conflicts
             board[col] = self.min_conflicts_value(board, col)
 
-        # Exceeded max steps without finding solution
+        # Step 6: Return failure if max steps exceeded
+        # If we haven't found solution after max_steps iterations, give up
+        # This suggests we're stuck in a local minimum - need a restart
         return None, max_steps, time.perf_counter() - start_time, "max_steps"
 
     def solve_with_restarts(
@@ -275,9 +309,13 @@ class NQueens:
         Returns:
             Tuple of (solution, total_steps, attempts_used, time, status)
         """
+        # Start overall timing for all restart attempts
         start_time = time.perf_counter()
-        total_steps = 0
+        total_steps = 0  # Accumulate steps across all attempts
 
+        # Try multiple restart attempts
+        # Each attempt gets a fresh random initial state
+        # This provides insurance against unlucky initial states that lead to local minima
         for attempt in range(1, max_attempts + 1):
             # Check timeout
             if MAX_TIME_SEC > 0 and (time.perf_counter() - start_time) > MAX_TIME_SEC:
