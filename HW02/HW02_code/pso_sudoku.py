@@ -255,48 +255,66 @@ class SudokuPSO:
         Args:
             particle_idx: Index of particle to update
         """
-        particle = self.particles[particle_idx]
-        personal_best = self.personal_bests[particle_idx]
-        global_best = self.global_best
+        # Get references to current particle, its personal best, and swarm's global best
+        # These represent the three knowledge sources in PSO
+        particle = self.particles[particle_idx]  # Current particle position (Sudoku board)
+        personal_best = self.personal_bests[particle_idx]  # Best position this particle has found
+        global_best = self.global_best  # Best position any particle has found
 
-        # Create copy to modify
+        # Create deep copy to modify (don't modify original until we commit changes)
+        # This prevents corrupting the particle state if updates fail
         new_particle = copy.deepcopy(particle)
 
         # Inertia component: random exploration swaps
+        # With probability w, apply random swaps to explore new regions
+        # Higher w = more exploration (more random changes)
+        # Lower w = more exploitation (stick closer to current position)
         if random.random() < self.w:
-            num_swaps = max(1, int(5 * self.w))
-            swaps = self.generate_random_swaps(num_swaps)
+            # Number of swaps scales with inertia weight
+            # More inertia = more random changes = more exploration
+            num_swaps = max(1, int(5 * self.w))  # At least 1 swap, up to ~5 swaps
+            swaps = self.generate_random_swaps(num_swaps)  # Generate random swap operations
             for row, col1, col2 in swaps:
+                # Apply each swap to the new particle
+                # This moves particle in random direction (exploration)
                 self.apply_swap(new_particle, row, col1, col2)
 
         # Cognitive component: move toward personal best
+        # With probability c1, apply swaps that make particle look more like its personal best
+        # This is the "individual learning" component - particle remembers what worked for it
         if random.random() < self.c1:
             # Find differences between current and personal best
-            # Attempt swaps to match personal best
-            for r in range(9):
-                for c in range(9):
-                    if (r, c) not in self.fixed_cells:
-                        target_value = personal_best[r][c]
-                        current_value = new_particle[r][c]
+            # For each cell that doesn't match, attempt swap to fix it
+            # This gradually moves particle toward its best known configuration
+            for r in range(9):  # For each row
+                for c in range(9):  # For each column
+                    if (r, c) not in self.fixed_cells:  # Only modify non-fixed cells
+                        target_value = personal_best[r][c]  # Value we want at this cell
+                        current_value = new_particle[r][c]  # Value currently at this cell
 
-                        if target_value != current_value:
-                            # Find where target_value is in this row
+                        if target_value != current_value:  # If they don't match
+                            # Find where target_value currently is in this row
+                            # We need to swap it to position (r, c)
                             for c2 in range(9):
                                 if (new_particle[r][c2] == target_value and
                                         (r, c2) not in self.fixed_cells):
-                                    # Swap to match personal best
-                                    # Probabilistic
+                                    # Found the target value at position (r, c2)
+                                    # Swap probabilistically to add stochasticity
+                                    # Don't always swap or we might oscillate
                                     if random.random() < 0.5:
-                                        self.apply_swap(new_particle, r, c,
-                                                        c2)
-                                    break
+                                        self.apply_swap(new_particle, r, c, c2)
+                                    break  # Found and (maybe) swapped, move to next cell
 
         # Social component: move toward global best
+        # With probability c2, apply swaps that make particle look more like global best
+        # This is the "social learning" component - particle learns from swarm's success
+        # Higher c2 = faster convergence to swarm's best solution
         if random.random() < self.c2:
             # Find differences between current and global best
-            # Attempt swaps to match global best
-            for r in range(9):
-                for c in range(9):
+            # For each cell that doesn't match, attempt swap to fix it
+            # This pulls all particles toward the best solution found by anyone
+            for r in range(9):  # For each row
+                for c in range(9):  # For each column
                     if (r, c) not in self.fixed_cells:
                         target_value = global_best[r][c]
                         current_value = new_particle[r][c]

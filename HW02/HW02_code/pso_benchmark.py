@@ -174,28 +174,47 @@ class PSO:
         Random components r1, r2 add stochasticity for exploration
         """
         # Generate random matrices for cognitive and social components
+        # r1, r2 are uniform random values in [0,1]
+        # Shape: (swarm_size x dimensions) so each particle-dimension gets unique random value
+        # This adds stochasticity to prevent premature convergence
         r1 = np.random.random((self.swarm_size, self.dimensions))
         r2 = np.random.random((self.swarm_size, self.dimensions))
 
-        # Inertia component: maintain current velocity
+        # Inertia component: w * v[i]
+        # Maintains momentum in current direction
+        # Higher w (e.g., 0.9) = more exploration (particle keeps going in same direction)
+        # Lower w (e.g., 0.4) = more exploitation (particle slows down, focuses on best positions)
         inertia = self.w * self.velocities
 
-        # Cognitive component: attraction to personal best
+        # Cognitive component: c1 * r1 * (pbest[i] - x[i])
+        # Pulls particle toward its own personal best position
+        # (pbest[i] - x[i]) is the direction vector pointing from current position to personal best
+        # Multiplying by random r1 adds stochasticity (sometimes pull strongly, sometimes weakly)
+        # c1 controls overall strength of this attraction (typical value: 1.5-2.0)
         cognitive = (self.c1 * r1 *
                      (self.personal_best_positions - self.positions))
 
-        # Social component: attraction to global best
+        # Social component: c2 * r2 * (gbest - x[i])
+        # Pulls particle toward the global best position found by entire swarm
+        # (gbest - x[i]) is direction vector from current position to global best
+        # Broadcasting: gbest is 1D array, gets broadcast to match positions shape
+        # c2 controls strength of social influence (typical value: 1.5-2.0)
+        # Higher c2 = particles converge faster to swarm's best solution
         social = (self.c2 * r2 *
                   (self.global_best_position - self.positions))
 
-        # Update velocities
+        # Combine all three components to get new velocity
+        # New velocity = where particle was going + where it wants to go personally + where swarm is going
+        # This creates a balance between exploration and exploitation
         self.velocities = inertia + cognitive + social
 
-        # Velocity clamping to prevent explosion
-        # Limit velocity to fraction of search space
+        # Velocity clamping to prevent particles from moving too fast
+        # Without clamping, velocities can explode and particles fly out of search space
+        # Limit velocity to 20% of search space range (common heuristic)
+        # This prevents overshooting while still allowing reasonable movement
         min_bound, max_bound = self.bounds
-        v_max = (max_bound - min_bound) * 0.2
-        self.velocities = np.clip(self.velocities, -v_max, v_max)
+        v_max = (max_bound - min_bound) * 0.2  # Maximum velocity magnitude
+        self.velocities = np.clip(self.velocities, -v_max, v_max)  # Clamp to [-v_max, +v_max]
 
     def update_positions(self):
         """
@@ -207,22 +226,34 @@ class PSO:
         - If particle moves outside bounds, clamp to boundary
         - Reset velocity component that caused violation
         """
-        # Update positions
+        # Update positions: x_new = x_old + velocity
+        # Each particle moves in the direction and magnitude specified by its velocity
+        # This is simple Eulerian integration: position += velocity * dt (where dt=1)
         self.positions = self.positions + self.velocities
 
         # Boundary handling: clamp positions and reset velocities
+        # Without boundary handling, particles can fly outside the search space
+        # and never come back, wasting computational resources
         min_bound, max_bound = self.bounds
 
-        # Find violations
+        # Find violations: create boolean masks for out-of-bounds positions
+        # below_min[i,j] = True if particle i's dimension j went below minimum
+        # above_max[i,j] = True if particle i's dimension j went above maximum
         below_min = self.positions < min_bound
         above_max = self.positions > max_bound
 
-        # Clamp positions
+        # Clamp positions to valid search space
+        # Any position < min_bound gets set to min_bound
+        # Any position > max_bound gets set to max_bound
+        # This prevents particles from leaving the search space
         self.positions = np.clip(self.positions, min_bound, max_bound)
 
-        # Reset velocity components that hit boundaries
-        self.velocities[below_min] *= -0.5  # Bounce back with damping
-        self.velocities[above_max] *= -0.5
+        # Reset velocity components that hit boundaries (bounce back with damping)
+        # When a particle hits a boundary, reverse its velocity in that dimension
+        # Multiply by -0.5 instead of -1.0 to add damping (particle loses energy on bounce)
+        # This prevents particles from bouncing back and forth endlessly at boundaries
+        self.velocities[below_min] *= -0.5  # Reverse and dampen velocity for positions that went too low
+        self.velocities[above_max] *= -0.5  # Reverse and dampen velocity for positions that went too high
 
     def evaluate_and_update_bests(self):
         """
@@ -233,19 +264,27 @@ class PSO:
         - Update personal best if improved
         - Update global best if any particle improved it
         """
+        # Iterate through all particles in the swarm
         for i in range(self.swarm_size):
-            # Evaluate fitness
+            # Evaluate fitness: call objective function on current position
+            # Lower fitness = better solution (we're minimizing)
+            # For Rastrigin/Rosenbrock, this computes the function value at this point
             fitness = self.objective_func(self.positions[i])
 
-            # Update personal best if improved
+            # Update personal best if this particle found a better position
+            # Personal best = best position this individual particle has ever seen
+            # This is the "cognitive" memory component of PSO
             if fitness < self.personal_best_scores[i]:
-                self.personal_best_scores[i] = fitness
-                self.personal_best_positions[i] = self.positions[i].copy()
+                self.personal_best_scores[i] = fitness  # Update personal best score
+                self.personal_best_positions[i] = self.positions[i].copy()  # Save position (must copy!)
 
-                # Update global best if improved
+                # Update global best if this is best position found by ANY particle
+                # Global best = best position found by entire swarm
+                # This is the "social" knowledge component of PSO
+                # All particles will be attracted to this position in next velocity update
                 if fitness < self.global_best_score:
-                    self.global_best_score = fitness
-                    self.global_best_position = self.positions[i].copy()
+                    self.global_best_score = fitness  # Update global best score
+                    self.global_best_position = self.positions[i].copy()  # Save position (must copy!)
 
     def optimize(self) -> Tuple[np.ndarray, float, int, float, str]:
         """
@@ -254,48 +293,70 @@ class PSO:
         Returns:
             Tuple of (best_position, best_score, iterations, time, status)
         """
+        # Record start time for timeout checking and performance measurement
         start_time = time.perf_counter()
 
-        # Initialize swarm
+        # Initialize swarm: create particles with random positions/velocities
+        # This also evaluates initial fitness and sets initial personal/global bests
         self.initialize_swarm()
+
+        # Initialize convergence history with the initial best score
+        # We'll track global best score at each iteration to detect convergence
         self.convergence_history = [self.global_best_score]
 
-        # Main optimization loop
+        # Main optimization loop: iterate until convergence or max iterations
+        # Each iteration is one complete PSO update cycle:
+        # 1. Update velocities (based on inertia, cognitive, social)
+        # 2. Update positions (move particles)
+        # 3. Evaluate fitness (see if we found better solutions)
         for iteration in range(self.max_iterations):
-                # Check timeout
+            # Check timeout to prevent running forever on hard problems
+            # According to assignment requirements, we need 5 minute timeout
             elapsed = time.perf_counter() - start_time
             if 0 < MAX_TIME_SEC < elapsed:
+                # Timeout exceeded: return best found so far
                 return (self.global_best_position,
                        self.global_best_score,
-                       iteration,
+                       iteration,  # How many iterations we completed
                        time.perf_counter() - start_time,
                        "timeout")
 
-            # Update velocities
+            # PSO Algorithm Step 1: Update velocities
+            # Apply velocity update equation with inertia, cognitive, and social components
+            # This determines how particles will move in next step
             self.update_velocities()
 
-            # Update positions
+            # PSO Algorithm Step 2: Update positions
+            # Move particles based on their velocities
+            # Also handles boundary conditions (particles that leave search space)
             self.update_positions()
 
-            # Evaluate and update bests
+            # PSO Algorithm Step 3: Evaluate and update bests
+            # Compute fitness at new positions
+            # Update personal bests (individual particle memories)
+            # Update global best (swarm's collective knowledge)
             self.evaluate_and_update_bests()
 
-            # Track convergence
+            # Track convergence: record best score found so far
+            # This history lets us plot convergence curves and detect stagnation
             self.convergence_history.append(self.global_best_score)
 
-            # Check for convergence (no improvement)
+            # Check for convergence (algorithm has stopped improving)
+            # If improvement is less than tolerance, we've converged
             if iteration > 0:
-                prev_score = self.convergence_history[-2]
-                curr_score = self.convergence_history[-1]
-                improvement = abs(prev_score - curr_score)
+                prev_score = self.convergence_history[-2]  # Score from previous iteration
+                curr_score = self.convergence_history[-1]  # Score from current iteration
+                improvement = abs(prev_score - curr_score)  # How much did we improve?
                 if improvement < self.tolerance:
+                    # Converged: no significant improvement, stop early
                     return (self.global_best_position,
                            self.global_best_score,
-                           iteration + 1,
+                           iteration + 1,  # Total iterations completed
                            time.perf_counter() - start_time,
                            "converged")
 
-        # Reached max iterations
+        # Reached max iterations without timeout or convergence
+        # Return best solution found so far
         return (self.global_best_position,
                self.global_best_score,
                self.max_iterations,

@@ -25,11 +25,19 @@ All algorithms were implemented according to specifications from:
 
 - Python 3.7 or higher
 - NumPy (for PSO implementations)
+- Matplotlib (for convergence plots)
 - No specialized CSP or optimization libraries (all algorithms implemented from scratch)
 
-Install NumPy if needed:
+### Installation
+
+Install all dependencies using the provided requirements file:
 ```bash
-pip install numpy
+pip install -r requirements.txt
+```
+
+Or install manually:
+```bash
+pip install numpy>=1.20.0 matplotlib>=3.3.0
 ```
 
 ## File Structure
@@ -45,6 +53,7 @@ HW02_code/
 ├── run_experiments.py            # Main experiment runner (generates results)
 ├── generate_convergence_plots.py # Generate convergence plots for PSO
 ├── run_all.ps1                   # PowerShell script to run all programs
+├── requirements.txt              # Python dependencies (numpy, matplotlib)
 └── README.md                     # This file
 ```
 
