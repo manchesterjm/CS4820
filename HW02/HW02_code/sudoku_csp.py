@@ -212,37 +212,48 @@ class SudokuCSP:
         Returns:
             Unassigned variable with minimum remaining values
         """
+        # Get list of all unassigned variables
         unassigned = [(r, c) for r in range(9) for c in range(9)
                       if (r, c) not in assignment]
 
         if not unassigned:
-            return None
+            return None  # All variables assigned
 
         # Compute actual legal values for each unassigned variable
-        # based on current assignment
+        # This is the core of MRV: count how many values are still legal
+        # given the current partial assignment
+        # A smaller count means the variable is more constrained
         legal_values = {}
         for pos in unassigned:
+            # Filter domain to only values consistent with current assignment
+            # This gives us the "remaining values" for MRV
             legal = [v for v in domains[pos]
                     if self.is_consistent(pos, v, assignment)]
-            legal_values[pos] = len(legal)
+            legal_values[pos] = len(legal)  # Count of legal values
 
-        # Find minimum number of legal values
+        # Find minimum number of legal values across all unassigned variables
+        # The MRV heuristic selects variables with this minimum
         min_size = min(legal_values.values())
 
-        # Get all variables with minimum legal values
+        # Get all variables that have the minimum number of legal values
+        # There may be ties - multiple variables with same (minimum) count
         candidates = [pos for pos in unassigned if legal_values[pos] == min_size]
 
+        # If only one variable has minimum remaining values, return it
         if len(candidates) == 1:
             return candidates[0]
 
-        # Tie-breaking with degree heuristic
-        # Choose variable involved in most constraints with unassigned variables
+        # Tie-breaking with degree heuristic (Lecture 5, Slide 28)
+        # Among variables with same MRV, choose the one involved in most
+        # constraints with other unassigned variables
+        # This helps reduce future branching factor
         def degree(pos: Position) -> int:
-            """Count unassigned neighbors"""
+            """Count unassigned neighbors (variables constrained by pos)"""
             return sum(1 for neighbor in self.neighbors[pos]
                       if neighbor not in assignment)
 
-        # Return variable with highest degree (most constraints)
+        # Return variable with highest degree (most constraining)
+        # Breaking ties this way helps prune the search tree more effectively
         return max(candidates, key=degree)
 
     def order_domain_values_basic(self, pos: Position, assignment: Dict[Position, int],
@@ -455,24 +466,39 @@ class SudokuCSP:
 
             return revised
 
-        # Process arcs until queue is empty
+        # Main AC-3 Loop: Process arcs until queue is empty
+        # Each iteration makes one arc consistent and may add more arcs to queue
+        # This creates a cascading constraint propagation effect
         while queue:
+            # Dequeue next arc to process (FIFO queue)
+            # xi is the "source" variable whose domain we might reduce
+            # xj is the "destination" variable that constrains xi
             xi, xj = queue.pop(0)
 
-            # Make arc (Xi, Xj) consistent
+            # Make arc (Xi, Xj) consistent by calling revise()
+            # This removes values from Di that have no supporting value in Dj
             if revise(xi, xj):
-                # Domain was reduced
+                # Domain of Xi was reduced (some values removed)
+                # This is significant because it may affect other arcs!
 
-                # Check for domain wipeout (failure)
+                # Early failure detection: Check for domain wipeout
+                # If Xi's domain is now empty, the CSP is unsolvable
+                # This is one of AC-3's key strengths - detecting failures early
                 if len(new_domains[xi]) == 0:
-                    return None
+                    return None  # CSP is inconsistent - no solution possible
 
-                # Add all arcs (Xk, Xi) to queue where Xk is neighbor of Xi
-                # (excluding the arc we just processed)
+                # Propagate constraint: Add all arcs (Xk, Xi) to queue
+                # Why? Because Xi's domain changed, so arcs pointing to Xi
+                # may now be inconsistent and need to be revised again
+                # This is the "cascading" part of constraint propagation
+                # We exclude Xj because we just processed (Xi, Xj) - no need to re-check
                 for xk in self.neighbors[xi]:
-                    if xk != xj:
-                        queue.append((xk, xi))
+                    if xk != xj:  # Don't add the reverse of arc we just processed
+                        queue.append((xk, xi))  # Xk may need revision due to Xi's change
 
+        # Queue is empty - all arcs are consistent!
+        # Return the pruned domains (significantly smaller than original)
+        # This makes subsequent backtracking search much more efficient
         return new_domains
 
     def backtrack_basic(self, assignment: Dict[Position, int], domains: Domains,
@@ -509,35 +535,51 @@ class SudokuCSP:
         Returns:
             Complete assignment if found, None if no solution exists
         """
-        # Timeout check
+        # Step 0: Timeout protection (safety guard against infinite loops)
+        # Check if we've exceeded the maximum allowed search time
         if 0 < MAX_TIME_SEC < (time.perf_counter() - start_time):
-            return None
+            return None  # Abandon search if timeout exceeded
 
-        # Base case: assignment is complete
+        # Step 1: Check if assignment is complete (BASE CASE)
+        # Sudoku has 81 cells (9x9 grid), so complete assignment has 81 entries
+        # If we've successfully assigned all variables, we have a solution!
         if len(assignment) == 81:
             return assignment
 
-        # Select unassigned variable (no heuristic)
+        # Step 2: Select an unassigned variable to assign next
+        # Basic version uses no heuristic - just picks first unassigned variable
+        # This is inefficient but serves as baseline for comparison with MRV
         pos = self.select_unassigned_variable_basic(assignment, domains)
         if pos is None:
-            return assignment
+            return assignment  # All variables assigned
 
-        # Try each value in variable's domain
+        # Step 3: Try each value in variable's domain (RECURSIVE CASE)
+        # Basic ordering: no heuristic, just tries values in sorted order
+        # This is less efficient than LCV but simpler to understand
         for value in self.order_domain_values_basic(pos, assignment, domains):
-            # Check if value is consistent with current assignment
+            # Step 4: Check if value is consistent with current assignment
+            # Consistency means: no conflict with already-assigned neighbors
+            # This checks row, column, and box constraints
             if self.is_consistent(pos, value, assignment):
-                # Add assignment
+                # Step 5: Make assignment (extend partial solution)
+                # Add this variable-value binding to current assignment
                 assignment[pos] = value
 
-                # Recurse
+                # Step 6: Recursive call - try to complete rest of puzzle
+                # This explores the search tree depth-first
+                # If successful, solution propagates back up the recursion
                 result = self.backtrack_basic(assignment, domains, start_time)
                 if result is not None:
-                    return result
+                    return result  # Solution found! Return it upward
 
-                # Backtrack: remove assignment
+                # Step 7: Backtrack - this assignment didn't lead to solution
+                # Remove the assignment and try next value
+                # This is the key "backtracking" step that gives algorithm its name
                 del assignment[pos]
 
-        # No valid assignment found for this variable
+        # Step 8: Exhausted all values for this variable without finding solution
+        # This means current partial assignment is unsolvable - return failure
+        # Calling function will backtrack further up the search tree
         return None
 
     def backtrack_mrv_lcv(self, assignment: Dict[Position, int], domains: Domains,

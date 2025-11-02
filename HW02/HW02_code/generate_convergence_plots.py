@@ -1,10 +1,28 @@
 """
 Generate convergence plots for PSO benchmark optimization.
 
-Creates publication-quality plots showing:
-- Convergence behavior across iterations
-- Comparison of different parameter configurations
-- Best fitness over time for Rastrigin and Rosenbrock functions
+This script creates publication-quality visualizations showing how PSO
+converges over iterations. Convergence plots are essential for:
+
+1. Understanding Algorithm Behavior:
+   - How quickly does PSO find good solutions?
+   - Does it converge smoothly or oscillate?
+   - Are there plateaus indicating local minima?
+
+2. Parameter Sensitivity Analysis:
+   - How do different parameter settings affect convergence?
+   - Does higher inertia (w) lead to slower but better convergence?
+   - Do larger swarms find better solutions?
+
+3. Function Characteristics:
+   - Rastrigin: Multimodal - convergence should show exploration phase
+   - Rosenbrock: Narrow valley - convergence should show exploitation
+
+Methodology:
+- Run PSO with 3 different parameter configurations
+- Track global best fitness at each iteration
+- Average over 3 trials to reduce noise from randomness
+- Plot all configurations on same axes for comparison
 
 Outputs:
 - rastrigin_convergence.pdf: Convergence plot for Rastrigin function
@@ -13,17 +31,18 @@ Outputs:
 
 import numpy as np
 import matplotlib
-matplotlib.use('Agg')  # Must be called before importing pyplot
+matplotlib.use('Agg')  # Use non-interactive backend (required for PDF generation)
 import matplotlib.pyplot as plt  # pylint: disable=wrong-import-position
 from pso_benchmark import PSO, rastrigin, rosenbrock  # pylint: disable=wrong-import-position
 
-# Configure matplotlib for publication quality
-plt.rcParams['font.family'] = 'serif'
-plt.rcParams['font.size'] = 10
-plt.rcParams['axes.labelsize'] = 11
-plt.rcParams['axes.titlesize'] = 12
-plt.rcParams['legend.fontsize'] = 9
-plt.rcParams['lines.linewidth'] = 1.5
+# Configure matplotlib for publication-quality figures
+# These settings ensure plots are readable and professional for academic reports
+plt.rcParams['font.family'] = 'serif'  # Use serif fonts (more formal)
+plt.rcParams['font.size'] = 10  # Base font size
+plt.rcParams['axes.labelsize'] = 11  # Axis label size
+plt.rcParams['axes.titlesize'] = 12  # Title size
+plt.rcParams['legend.fontsize'] = 9  # Legend font size
+plt.rcParams['lines.linewidth'] = 1.5  # Thicker lines for clarity
 
 
 def run_pso_with_convergence(objective_func, func_name, bounds, dimensions=10, trials=3):

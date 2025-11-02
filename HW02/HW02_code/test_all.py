@@ -1,18 +1,30 @@
 """
 Comprehensive test suite for CS 4820/5820 Homework 2.
 
+This module provides automated testing for all algorithm implementations.
+Testing ensures:
+1. Correctness: Algorithms produce valid solutions
+2. Robustness: Algorithms handle edge cases and errors gracefully
+3. Performance: Algorithms complete within reasonable time bounds
+4. Integration: All components work together properly
+
 Tests all implementations:
 - Part A: Sudoku CSP solvers (Backtracking, MRV+LCV, Forward Checking, AC-3)
 - Part B: n-Queens with Minimum Conflicts
 - Part C1: PSO for benchmark functions
 - Part C2: PSO for Sudoku
 
-This suite automatically tests functionality and fixes any failures found.
+Test Design Philosophy:
+- Each test is independent (no shared state between tests)
+- Tests verify both success conditions and error handling
+- Stochastic algorithms (PSO, Minimum Conflicts) are tested multiple times
+- Clear pass/fail reporting with detailed error messages
 """
 
 import sys
 
-# Import all modules
+# Import all required modules
+# If any import fails, exit gracefully with helpful error message
 try:
     from sudoku_csp import SudokuCSP, assignment_to_grid
     from nqueens_minconflicts import NQueens, verify_solution
@@ -65,19 +77,30 @@ class TestResults:
 
 
 def test_sudoku_csp(results: TestResults):
-    """Test all Sudoku CSP solver variants"""
+    """
+    Test all Sudoku CSP solver variants for correctness.
+
+    Test Strategy:
+    - Use easy puzzle to ensure all algorithms can solve within timeout
+    - Verify solution correctness (no constraint violations)
+    - Test that all 4 algorithm variants produce valid solutions
+    - Compare performance qualitatively (AC-3 should be fastest)
+    """
     print("\n" + "="*70)
     print("TESTING PART A: Sudoku CSP Solvers")
     print("="*70)
 
-    # Test on easy puzzle
+    # Use easy puzzle for testing (36 givens, should solve quickly)
+    # All algorithms should succeed on this puzzle
     easy_puzzle = PUZZLES["easy"][0]
 
+    # Test all four algorithm variants
+    # Each represents different search space pruning strategy
     methods = [
-        ("Basic Backtracking", "solve_basic"),
-        ("Backtracking + MRV + LCV", "solve_mrv_lcv"),
-        ("Backtracking + Forward Checking", "solve_forward_checking"),
-        ("Backtracking + AC-3", "solve_ac3")
+        ("Basic Backtracking", "solve_basic"),  # Baseline - no optimization
+        ("Backtracking + MRV + LCV", "solve_mrv_lcv"),  # Heuristics
+        ("Backtracking + Forward Checking", "solve_forward_checking"),  # Inference
+        ("Backtracking + AC-3", "solve_ac3")  # Full constraint propagation
     ]
 
     for name, method in methods:

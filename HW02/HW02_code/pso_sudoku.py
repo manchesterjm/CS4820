@@ -354,15 +354,21 @@ class SudokuPSO:
         Returns:
             Tuple of (best_board, best_score, iterations, time, status)
         """
+        # Start timing for performance measurement
         start_time = time.perf_counter()
 
-        # Initialize swarm
+        # Initialize swarm: Create random particles, evaluate them, set initial bests
+        # Each particle is a complete Sudoku board (not a partial assignment like CSP)
+        # This is fundamentally different from backtracking - we start with complete solutions
         self.initialize_swarm()
+        # Track how global best score improves over iterations (for convergence plots)
         self.convergence_history = [self.global_best_score]
 
-        # Main optimization loop
+        # Main PSO Optimization Loop
+        # Each iteration: all particles update positions based on personal/global bests
+        # This is the key difference from random search - particles learn from experience
         for iteration in range(self.max_iterations):
-            # Check timeout
+            # Safety check: timeout protection (prevent infinite runtime)
             elapsed = time.perf_counter() - start_time
             if 0 < MAX_TIME_SEC < elapsed:
                 return (self.global_best,
@@ -371,14 +377,22 @@ class SudokuPSO:
                        time.perf_counter() - start_time,
                        "timeout")
 
-            # Update all particles
+            # Update all particles in the swarm
+            # Each particle independently applies:
+            #   1. Inertia (w): random exploration to maintain diversity
+            #   2. Cognitive (c1): move toward own personal best (individual learning)
+            #   3. Social (c2): move toward swarm's global best (social learning)
+            # This balance between exploration and exploitation is PSO's key strength
             for i in range(self.swarm_size):
-                self.update_particle(i)
+                self.update_particle(i)  # May update personal best and global best
 
-            # Track convergence
+            # Track convergence: record best score after this iteration
+            # Convergence history helps visualize optimization progress
+            # Ideally we see monotonically decreasing scores (improving solutions)
             self.convergence_history.append(self.global_best_score)
 
-            # Check if solved
+            # Check for perfect solution: 0 violations means valid Sudoku
+            # This is the termination condition - success!
             if self.global_best_score == 0:
                 return (self.global_best,
                        0,
@@ -386,12 +400,17 @@ class SudokuPSO:
                        time.perf_counter() - start_time,
                        "solved")
 
-            # Progress reporting every 100 iterations
+            # Progress reporting: print status every 100 iterations
+            # Helps monitor convergence and detect stagnation
+            # If score stops improving, swarm may be stuck in local minimum
             if (iteration + 1) % 100 == 0:
                 score = self.global_best_score
                 print(f"  Iteration {iteration + 1}: best score = {score}")
 
-        # Reached max iterations
+        # Reached max iterations without finding perfect solution
+        # PSO is not guaranteed to solve hard combinatorial problems like Sudoku
+        # This is a limitation compared to systematic CSP methods
+        # Return best solution found, even if imperfect
         return (self.global_best,
                self.global_best_score,
                self.max_iterations,
