@@ -1,0 +1,52 @@
+Dear Students,
+
+I hope you’re all doing well. Homework 3 is now posted on Canvas, covering topics from Lecture 8 (Logical Agents, Propositional Logic, and Wumpus World Reasoning).
+
+Please download the attached HW3 PDF for full details.
+Overview
+
+This homework focuses on:
+
+    Designing and implementing small Knowledge-Based (KB) agents
+
+    Performing Horn-clause inference (forward or backward chaining)
+
+    Applying reasoning to a simplified Wumpus World scenario
+
+    (For graduate students / bonus for undergraduates) extending the system to include Resolution-based inference or Scaling analysis
+
+Implementation Notes
+
+    You may use any programming language (Python, Java, C++, etc.).
+
+    You must implement inference logic yourself—do not rely on SAT/logic libraries.
+
+    Keep KBs and grid sizes small (e.g., 4×4) for clarity and runtime efficiency.
+
+    Include brief comments and screenshots or printed traces in your report showing inference steps and agent decisions.
+
+Grading
+Part 	Topic 	CS 4820 (UG) 	CS 5820 (Grad)
+A 	KB Agents & Propositional Logic 	3.5 	3.0
+B 	Horn Inference Engine 	4.0 	4.0
+C 	Wumpus Reasoning (Two Moves) 	5.0 	3.5
+D 	Graduate Extension / UG Bonus 	Bonus up to +2.0 	2.0 (Required)
+Total Counted 		12.5 pts 	12.5 pts
+
+Undergraduates may earn up to +2.0 bonus points by attempting Part D (Resolution or Scaling Study).
+Submission
+
+    Submit a single PDF report and your source code (with a README) to Canvas.
+
+    Make sure your code runs independently on a small example.
+
+    Late submissions are not accepted.
+
+Attached: HW3 - Logical Agents.pdf
+
+Download HW3 - Logical Agents.pdf
+
+Good luck everyone — I look forward to seeing how your agents reason their way through the Wumpus World!
+
+Sincerely,
+Adham Atyabi

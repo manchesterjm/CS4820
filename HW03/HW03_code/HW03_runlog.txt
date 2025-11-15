@@ -1,0 +1,351 @@
+
+================================================================================
+CS 4820/5820 - HW03: Logical Agents and Propositional Inference
+================================================================================
+
+Student: Josh Manchester
+Email: josh.manchester@uccs.edu
+Institution: University of Colorado Colorado Springs
+
+This program demonstrates implementations of:
+  - Part A: Propositional logic (equivalences, model checking)
+  - Part B: Horn clause inference (forward chaining)
+  - Part C: Wumpus World reasoning agent
+  - Part D: Resolution-based inference
+
+
+================================================================================
+PART A: PROPOSITIONAL LOGIC AND MODEL CHECKING
+================================================================================
+
+A.2: Logical Equivalences
+--------------------------------------------------------------------------------
+
+=== Logical Equivalence: De Morgan's Law ===
+
+Formula: NOT(P OR Q) == (NOT P) AND (NOT Q)?
+
+Truth Table:
+P | Q | P OR Q | NOT(P OR Q) | NOT P | NOT Q | (NOT P) AND (NOT Q) | Equivalent?
+--------------------------------------------------------------------------------
+T | T |   T   |      F      |   F  |   F  |         F        |    YES
+T | F |   T   |      F      |   F  |   T  |         F        |    YES
+F | T |   T   |      F      |   T  |   F  |         F        |    YES
+F | F |   F   |      T      |   T  |   T  |         T        |    YES
+
+Result: EQUIVALENT (De Morgan's Law confirmed)
+
+
+=== Logical Equivalence: Contraposition ===
+
+Formula: (P => Q) == (NOT Q => NOT P)?
+
+Truth Table:
+P | Q | P => Q | NOT Q | NOT P | (NOT Q) => (NOT P) | Equivalent?
+---------------------------------------------------------------------------
+T | T |   T    |   F   |   F   |         T          |    YES
+T | F |   F    |   T   |   F   |         F          |    YES
+F | T |   T    |   F   |   T   |         T          |    YES
+F | F |   T    |   T   |   T   |         T          |    YES
+
+Result: EQUIVALENT (Contraposition confirmed)
+
+
+A.3: Model Checking
+--------------------------------------------------------------------------------
+
+=== Model Checking ===
+
+Knowledge Base:
+  1. P => Q
+  2. Q => R
+  3. P
+
+Query: R
+Symbols: {P, Q, R}
+
+Enumerating all possible models...
+
+  Model 1: {P=True, Q=True, R=True}  =>  KB=True, Query=True
+
+Total models: 8
+Models where KB is true: 1
+Counterexamples (KB true, query false): 0
+
+Result: KB |= query (ENTAILED)
+Reasoning: In all models where KB is true, query is also true
+
+
+================================================================================
+PART B: HORN CLAUSE INFERENCE (FORWARD CHAINING)
+================================================================================
+
+B.1: Generic Knowledge Base Test
+--------------------------------------------------------------------------------
+
+Testing query: C
+=== Forward Chaining ===
+
+Knowledge Base:
+Facts:
+  A
+  B
+Rules:
+  1. A AND B => C
+  2. C => D
+  3. D AND E => F
+
+Query: C
+
+Initial fact: A, B
+
+Iteration 1: Processing fact 'A'
+  -> Already inferred, skipping
+
+Iteration 2: Processing fact 'B'
+  -> Rule 1: A AND B => C
+     ALL premises satisfied! Adding 'C' to agenda
+
+Iteration 3: Processing fact 'C'
+  -> Query 'C' found!
+Result: ENTAILED (derived in 3 iterations)
+Elapsed time: 0.000033s
+
+
+Testing query: D
+=== Forward Chaining ===
+
+Knowledge Base:
+Facts:
+  A
+  B
+Rules:
+  1. A AND B => C
+  2. C => D
+  3. D AND E => F
+
+Query: D
+
+Initial fact: A, B
+
+Iteration 1: Processing fact 'A'
+  -> Already inferred, skipping
+
+Iteration 2: Processing fact 'B'
+  -> Rule 1: A AND B => C
+     ALL premises satisfied! Adding 'C' to agenda
+
+Iteration 3: Processing fact 'C'
+  -> Rule 2: C => D
+     ALL premises satisfied! Adding 'D' to agenda
+
+Iteration 4: Processing fact 'D'
+  -> Query 'D' found!
+Result: ENTAILED (derived in 4 iterations)
+Elapsed time: 0.000017s
+
+
+
+B.2: Wumpus World Fragment Test
+--------------------------------------------------------------------------------
+
+Testing query: not_P_1_2
+=== Forward Chaining ===
+
+Knowledge Base:
+Facts:
+  B_2_1
+  not_B_1_1
+  not_B_1_2
+Rules:
+  1. not_B_1_1 => not_P_2_1
+  2. not_B_1_1 => not_P_1_2
+  3. not_B_1_2 => not_P_1_1
+  4. not_B_1_2 => not_P_2_2
+
+Query: not_P_1_2
+
+Initial fact: not_B_1_2, not_B_1_1, B_2_1
+
+Iteration 1: Processing fact 'not_B_1_2'
+  -> Rule 3: not_B_1_2 => not_P_1_1
+     ALL premises satisfied! Adding 'not_P_1_1' to agenda
+  -> Rule 4: not_B_1_2 => not_P_2_2
+     ALL premises satisfied! Adding 'not_P_2_2' to agenda
+
+Iteration 2: Processing fact 'not_B_1_1'
+  -> Rule 1: not_B_1_1 => not_P_2_1
+     ALL premises satisfied! Adding 'not_P_2_1' to agenda
+  -> Rule 2: not_B_1_1 => not_P_1_2
+     ALL premises satisfied! Adding 'not_P_1_2' to agenda
+
+Iteration 3: Processing fact 'B_2_1'
+  -> Already inferred, skipping
+
+Iteration 4: Processing fact 'not_P_1_1'
+  -> Already inferred, skipping
+
+Iteration 5: Processing fact 'not_P_2_2'
+  -> Already inferred, skipping
+
+Iteration 6: Processing fact 'not_P_2_1'
+  -> Already inferred, skipping
+
+Iteration 7: Processing fact 'not_P_1_2'
+  -> Query 'not_P_1_2' found!
+Result: ENTAILED (derived in 7 iterations)
+Elapsed time: 0.000021s
+
+
+================================================================================
+PART C: WUMPUS WORLD REASONING AGENT
+================================================================================
+
+C: Two-Step Agent Reasoning
+--------------------------------------------------------------------------------
+================================================================================
+Part C: Wumpus World Agent Test
+================================================================================
+
+================================================================================
+Wumpus World Agent - Reasoning Trace
+================================================================================
+
+World configuration: 4x4 grid
+  Pits: [(3, 1)]
+  Wumpus: (1, 3)
+
+======================================== STEP 1 ========================================
+
+Current position: (1, 1)
+Percept((1, 1)): Breeze=NO, Stench=NO
+
+KB additions: (1, 1)
+
+Safe neighbors found: [(1, 2), (2, 1)]
+Reasoning: Safe neighbors: [(1, 2), (2, 1)], choosing (1, 2)
+MOVING: (1, 1) -> (1, 2)
+
+======================================== STEP 2 ========================================
+
+Current position: (1, 2)
+Percept((1, 2)): Breeze=NO, Stench=YES
+
+KB additions: (1, 2)
+
+Safe neighbors found: [(1, 1)]
+Reasoning: All safe neighbors visited: [(1, 1)]
+STOPPING: No move available
+
+================================================================================
+World State After Agent Moves
+================================================================================
+
+    1   2   3   4
+4   ?  ?  ?  ? 
+3   ?  ?  ?  ? 
+2   V  ?  ?  ? 
+1   V  S  ?  ? 
+
+Legend: V = Visited, S = Safe (inferred), ? = Unknown
+
+================================================================================
+Part C: Wumpus World Agent - COMPLETE
+================================================================================
+
+================================================================================
+PART D: RESOLUTION-BASED INFERENCE (GRADUATE EXTENSION)
+================================================================================
+
+D.1: Entailed Query Test
+--------------------------------------------------------------------------------
+================================================================================
+Part D: Resolution Test 1 - Entailed Query
+================================================================================
+
+================================================================================
+Resolution-Based Inference
+================================================================================
+
+Knowledge Base:
+  1. P => Q
+  2. Q => R
+  3. P
+
+Query: R
+
+Initial CNF clauses:
+  1. [-P | Q]
+  2. [-Q | R]
+  3. [P]
+  4. [-R]
+
+Resolution steps:
+
+  Step 1: Resolve [-P | Q] and [-Q | R] on Q => [-P | R]
+  Step 2: Resolve [-P | Q] and [P] on -P => [Q]
+  Step 3: Resolve [-Q | R] and [-R] on R => [-Q]
+  Step 4: Resolve [-P | Q] and [-Q] on Q => [-P]
+  Step 5: Resolve [-Q | R] and [Q] on -Q => [R]
+  Step 6: Resolve [Q] and [-Q] on Q => []
+            => [] (EMPTY CLAUSE - CONTRADICTION)
+
+Result: ENTAILED
+Elapsed time: 0.000136s
+
+TEST PASSED: Resolution correctly proved entailment
+
+
+D.2: Non-Entailed Query Test
+--------------------------------------------------------------------------------
+================================================================================
+Part D: Resolution Test 2 - Non-Entailed Query
+================================================================================
+
+================================================================================
+Resolution-Based Inference
+================================================================================
+
+Knowledge Base:
+  1. P => Q
+  2. Q
+
+Query: P
+
+Initial CNF clauses:
+  1. [-P | Q]
+  2. [Q]
+  3. [-P]
+
+Result: NOT ENTAILED
+Elapsed time: 0.000016s
+
+TEST PASSED: Resolution correctly determined non-entailment
+
+
+================================================================================
+EXPERIMENT COMPLETION SUMMARY
+================================================================================
+
+All experiments completed successfully!
+
+Part A: Propositional Logic
+  - Logical equivalences verified (De Morgan, Contraposition)
+  - Model checking demonstrated on KB => R
+
+Part B: Horn Clause Inference
+  - Forward chaining tested on generic KB
+  - Forward chaining tested on Wumpus fragment
+
+Part C: Wumpus World Agent
+  - Agent executed 2-step reasoning
+  - Successfully inferred safe moves from percepts
+
+Part D: Resolution-Based Inference
+  - Resolution proved entailment by deriving empty clause
+  - Resolution correctly identified non-entailment
+
+================================================================================
+All output above can be used for the assignment writeup
+================================================================================
+
