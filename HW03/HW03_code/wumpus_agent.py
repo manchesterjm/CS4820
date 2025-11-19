@@ -580,9 +580,10 @@ class WumpusAgent:
             best_risky_move = min(risk_scores, key=risk_scores.get)
             min_risk = risk_scores[best_risky_move]
 
-            # Only take risk if it's somewhat reasonable (risk <= 3)
-            # This means at most 1 breeze or part of probable set
-            if min_risk <= 3:
+            # Only take risk if it's somewhat reasonable (risk <= 5)
+            # Allows: 1-2 breezes, or 1 breeze + probable pit, or 1 stench + probable wumpus
+            # Rejects: Multiple stenches, or very high combined risk
+            if min_risk <= 5:
                 return best_risky_move
 
         return None
