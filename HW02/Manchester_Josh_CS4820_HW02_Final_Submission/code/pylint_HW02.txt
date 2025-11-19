@@ -1,0 +1,272 @@
+************* Module generate_convergence_plots
+generate_convergence_plots.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+generate_convergence_plots.py:16:0: C0413: Import "import matplotlib.pyplot as plt" should be placed at the top of the module (wrong-import-position)
+generate_convergence_plots.py:17:0: C0413: Import "from pso_benchmark import PSO, rastrigin, rosenbrock" should be placed at the top of the module (wrong-import-position)
+generate_convergence_plots.py:28:0: R0914: Too many local variables (22/15) (too-many-locals)
+generate_convergence_plots.py:92:12: W0612: Unused variable 'best_pos' (unused-variable)
+generate_convergence_plots.py:92:41: W0612: Unused variable 'elapsed' (unused-variable)
+************* Module nqueens_minconflicts
+nqueens_minconflicts.py:185:0: C0301: Line too long (109/100) (line-too-long)
+nqueens_minconflicts.py:253:0: C0301: Line too long (115/100) (line-too-long)
+nqueens_minconflicts.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+nqueens_minconflicts.py:45:23: W0621: Redefining name 'n' from outer scope (line 423) (redefined-outer-name)
+nqueens_minconflicts.py:228:15: R1716: Simplify chained comparison between the operands (chained-comparison)
+nqueens_minconflicts.py:283:12: W0621: Redefining name 'solution' from outer scope (line 442) (redefined-outer-name)
+nqueens_minconflicts.py:283:22: W0621: Redefining name 'steps' from outer scope (line 442) (redefined-outer-name)
+nqueens_minconflicts.py:283:32: W0621: Redefining name 'status' from outer scope (line 442) (redefined-outer-name)
+nqueens_minconflicts.py:279:15: R1716: Simplify chained comparison between the operands (chained-comparison)
+nqueens_minconflicts.py:307:4: W0621: Redefining name 'n' from outer scope (line 423) (redefined-outer-name)
+nqueens_minconflicts.py:328:4: W0621: Redefining name 'nq' from outer scope (line 428) (redefined-outer-name)
+nqueens_minconflicts.py:332:0: R0914: Too many local variables (16/15) (too-many-locals)
+nqueens_minconflicts.py:332:15: W0621: Redefining name 'n' from outer scope (line 423) (redefined-outer-name)
+nqueens_minconflicts.py:357:4: W0621: Redefining name 'nq' from outer scope (line 428) (redefined-outer-name)
+nqueens_minconflicts.py:367:8: W0621: Redefining name 'solution' from outer scope (line 442) (redefined-outer-name)
+nqueens_minconflicts.py:367:18: W0621: Redefining name 'steps' from outer scope (line 442) (redefined-outer-name)
+nqueens_minconflicts.py:367:25: W0621: Redefining name 'attempts' from outer scope (line 442) (redefined-outer-name)
+nqueens_minconflicts.py:367:35: W0621: Redefining name 'elapsed' from outer scope (line 442) (redefined-outer-name)
+nqueens_minconflicts.py:367:44: W0621: Redefining name 'status' from outer scope (line 442) (redefined-outer-name)
+nqueens_minconflicts.py:380:22: W1309: Using an f-string that does not have any interpolated variables (f-string-without-interpolation)
+nqueens_minconflicts.py:386:22: W1309: Using an f-string that does not have any interpolated variables (f-string-without-interpolation)
+nqueens_minconflicts.py:388:18: W1309: Using an f-string that does not have any interpolated variables (f-string-without-interpolation)
+nqueens_minconflicts.py:406:14: W1309: Using an f-string that does not have any interpolated variables (f-string-without-interpolation)
+nqueens_minconflicts.py:431:14: W1309: Using an f-string that does not have any interpolated variables (f-string-without-interpolation)
+nqueens_minconflicts.py:448:18: W1309: Using an f-string that does not have any interpolated variables (f-string-without-interpolation)
+nqueens_minconflicts.py:454:18: W1309: Using an f-string that does not have any interpolated variables (f-string-without-interpolation)
+************* Module pso_benchmark
+pso_benchmark.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+pso_benchmark.py:40:0: R0902: Too many instance attributes (16/7) (too-many-instance-attributes)
+pso_benchmark.py:68:4: R0913: Too many arguments (10/5) (too-many-arguments)
+pso_benchmark.py:68:4: R0917: Too many positional arguments (10/5) (too-many-positional-arguments)
+pso_benchmark.py:229:12: W0621: Redefining name 'i' from outer scope (line 504) (redefined-outer-name)
+pso_benchmark.py:280:16: W0621: Redefining name 'improvement' from outer scope (line 505) (redefined-outer-name)
+pso_benchmark.py:259:15: R1716: Simplify chained comparison between the operands (chained-comparison)
+pso_benchmark.py:346:0: R0913: Too many arguments (6/5) (too-many-arguments)
+pso_benchmark.py:346:0: R0917: Too many positional arguments (6/5) (too-many-positional-arguments)
+pso_benchmark.py:346:0: R0914: Too many local variables (23/15) (too-many-locals)
+pso_benchmark.py:391:12: W0621: Redefining name 'pso' from outer scope (line 483) (redefined-outer-name)
+pso_benchmark.py:399:12: W0621: Redefining name 'best_pos' from outer scope (line 494) (redefined-outer-name)
+pso_benchmark.py:399:22: W0621: Redefining name 'best_score' from outer scope (line 494) (redefined-outer-name)
+pso_benchmark.py:399:34: W0621: Redefining name 'iters' from outer scope (line 494) (redefined-outer-name)
+pso_benchmark.py:399:41: W0621: Redefining name 'elapsed' from outer scope (line 494) (redefined-outer-name)
+pso_benchmark.py:399:50: W0621: Redefining name 'status' from outer scope (line 494) (redefined-outer-name)
+pso_benchmark.py:415:14: W1309: Using an f-string that does not have any interpolated variables (f-string-without-interpolation)
+pso_benchmark.py:399:12: W0612: Unused variable 'best_pos' (unused-variable)
+pso_benchmark.py:501:10: W1309: Using an f-string that does not have any interpolated variables (f-string-without-interpolation)
+pso_benchmark.py:503:10: W1309: Using an f-string that does not have any interpolated variables (f-string-without-interpolation)
+pso_benchmark.py:31:0: C0411: standard import "random" should be placed before third party import "numpy" (wrong-import-order)
+pso_benchmark.py:32:0: C0411: standard import "time" should be placed before third party import "numpy" (wrong-import-order)
+pso_benchmark.py:33:0: C0411: standard import "math" should be placed before third party import "numpy" (wrong-import-order)
+pso_benchmark.py:31:0: W0611: Unused import random (unused-import)
+pso_benchmark.py:33:0: W0611: Unused import math (unused-import)
+************* Module pso_sudoku
+pso_sudoku.py:271:0: C0301: Line too long (107/100) (line-too-long)
+pso_sudoku.py:290:0: C0301: Line too long (107/100) (line-too-long)
+pso_sudoku.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+pso_sudoku.py:35:0: R0902: Too many instance attributes (14/7) (too-many-instance-attributes)
+pso_sudoku.py:51:4: R0913: Too many arguments (7/5) (too-many-arguments)
+pso_sudoku.py:51:4: R0917: Too many positional arguments (7/5) (too-many-positional-arguments)
+pso_sudoku.py:79:16: W0621: Redefining name 'c' from outer scope (line 507) (redefined-outer-name)
+pso_sudoku.py:112:12: W0621: Redefining name 'c' from outer scope (line 507) (redefined-outer-name)
+pso_sudoku.py:113:12: W0621: Redefining name 'column' from outer scope (line 508) (redefined-outer-name)
+pso_sudoku.py:118:12: W0621: Redefining name 'box_r' from outer scope (line 512) (redefined-outer-name)
+pso_sudoku.py:119:16: W0621: Redefining name 'box_c' from outer scope (line 513) (redefined-outer-name)
+pso_sudoku.py:120:16: W0621: Redefining name 'box' from outer scope (line 514) (redefined-outer-name)
+pso_sudoku.py:149:16: W0621: Redefining name 'c' from outer scope (line 507) (redefined-outer-name)
+pso_sudoku.py:227:4: R0914: Too many local variables (17/15) (too-many-locals)
+pso_sudoku.py:263:20: W0621: Redefining name 'c' from outer scope (line 507) (redefined-outer-name)
+pso_sudoku.py:259:8: R1702: Too many nested blocks (8/5) (too-many-nested-blocks)
+pso_sudoku.py:278:8: R1702: Too many nested blocks (8/5) (too-many-nested-blocks)
+pso_sudoku.py:227:4: R0912: Too many branches (20/12) (too-many-branches)
+pso_sudoku.py:328:15: R1716: Simplify chained comparison between the operands (chained-comparison)
+pso_sudoku.py:401:4: W0621: Redefining name 'best_board' from outer scope (line 484) (redefined-outer-name)
+pso_sudoku.py:453:4: C0103: Constant name "num_trials" doesn't conform to UPPER_CASE naming style (invalid-name)
+pso_sudoku.py:486:10: W1309: Using an f-string that does not have any interpolated variables (f-string-without-interpolation)
+pso_sudoku.py:518:14: W1309: Using an f-string that does not have any interpolated variables (f-string-without-interpolation)
+pso_sudoku.py:28:0: C0411: standard import "random" should be placed before third party import "numpy" (wrong-import-order)
+pso_sudoku.py:29:0: C0411: standard import "time" should be placed before third party import "numpy" (wrong-import-order)
+pso_sudoku.py:30:0: C0411: standard import "copy" should be placed before third party import "numpy" (wrong-import-order)
+pso_sudoku.py:26:0: W0611: Unused Dict imported from typing (unused-import)
+************* Module run_experiments
+run_experiments.py:138:0: C0301: Line too long (114/100) (line-too-long)
+run_experiments.py:139:0: C0301: Line too long (117/100) (line-too-long)
+run_experiments.py:140:0: C0301: Line too long (118/100) (line-too-long)
+run_experiments.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+run_experiments.py:44:10: C0209: Formatting a regular string which could be an f-string (consider-using-f-string)
+run_experiments.py:59:18: C0209: Formatting a regular string which could be an f-string (consider-using-f-string)
+run_experiments.py:56:22: W0612: Unused variable 'backtracks' (unused-variable)
+run_experiments.py:73:0: R0914: Too many local variables (16/15) (too-many-locals)
+run_experiments.py:88:10: C0209: Formatting a regular string which could be an f-string (consider-using-f-string)
+run_experiments.py:114:14: C0209: Formatting a regular string which could be an f-string (consider-using-f-string)
+run_experiments.py:99:12: W0612: Unused variable 'trial' (unused-variable)
+run_experiments.py:100:29: W0612: Unused variable 'attempts' (unused-variable)
+run_experiments.py:151:10: C0209: Formatting a regular string which could be an f-string (consider-using-f-string)
+run_experiments.py:174:14: C0209: Formatting a regular string which could be an f-string (consider-using-f-string)
+run_experiments.py:187:10: C0209: Formatting a regular string which could be an f-string (consider-using-f-string)
+run_experiments.py:210:14: C0209: Formatting a regular string which could be an f-string (consider-using-f-string)
+run_experiments.py:168:12: W0612: Unused variable 'best_pos' (unused-variable)
+run_experiments.py:168:34: W0612: Unused variable 'iters' (unused-variable)
+run_experiments.py:168:50: W0612: Unused variable 'status' (unused-variable)
+run_experiments.py:242:10: C0209: Formatting a regular string which could be an f-string (consider-using-f-string)
+run_experiments.py:268:14: C0209: Formatting a regular string which could be an f-string (consider-using-f-string)
+run_experiments.py:273:10: C0209: Formatting a regular string which could be an f-string (consider-using-f-string)
+run_experiments.py:261:8: W0612: Unused variable 'best_board' (unused-variable)
+run_experiments.py:14:0: C0411: standard import "typing.List" should be placed before third party import "numpy" (wrong-import-order)
+run_experiments.py:14:0: W0611: Unused List imported from typing (unused-import)
+run_experiments.py:14:0: W0611: Unused Dict imported from typing (unused-import)
+run_experiments.py:14:0: W0611: Unused Tuple imported from typing (unused-import)
+run_experiments.py:16:0: W0611: Unused assignment_to_grid imported from sudoku_csp (unused-import)
+run_experiments.py:17:0: W0611: Unused print_board imported from nqueens_minconflicts (unused-import)
+************* Module sudoku_csp
+sudoku_csp.py:343:0: C0301: Line too long (105/100) (line-too-long)
+sudoku_csp.py:356:0: C0301: Line too long (114/100) (line-too-long)
+sudoku_csp.py:371:0: C0301: Line too long (102/100) (line-too-long)
+sudoku_csp.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+sudoku_csp.py:158:41: W0613: Unused argument 'domains' (unused-argument)
+sudoku_csp.py:239:55: W0613: Unused argument 'assignment' (unused-argument)
+sudoku_csp.py:496:11: R1716: Simplify chained comparison between the operands (chained-comparison)
+sudoku_csp.py:552:11: R1716: Simplify chained comparison between the operands (chained-comparison)
+sudoku_csp.py:606:11: R1716: Simplify chained comparison between the operands (chained-comparison)
+sudoku_csp.py:669:11: R1716: Simplify chained comparison between the operands (chained-comparison)
+sudoku_csp.py:728:8: W0621: Redefining name 'elapsed' from outer scope (line 896) (redefined-outer-name)
+sudoku_csp.py:729:8: W0621: Redefining name 'backtracks' from outer scope (line 896) (redefined-outer-name)
+sudoku_csp.py:752:8: W0621: Redefining name 'elapsed' from outer scope (line 896) (redefined-outer-name)
+sudoku_csp.py:753:8: W0621: Redefining name 'backtracks' from outer scope (line 896) (redefined-outer-name)
+sudoku_csp.py:784:8: W0621: Redefining name 'elapsed' from outer scope (line 896) (redefined-outer-name)
+sudoku_csp.py:785:8: W0621: Redefining name 'backtracks' from outer scope (line 896) (redefined-outer-name)
+sudoku_csp.py:816:8: W0621: Redefining name 'elapsed' from outer scope (line 896) (redefined-outer-name)
+sudoku_csp.py:817:8: W0621: Redefining name 'backtracks' from outer scope (line 896) (redefined-outer-name)
+sudoku_csp.py:850:4: W0621: Redefining name 'grid' from outer scope (line 907) (redefined-outer-name)
+sudoku_csp.py:899:18: W1309: Using an f-string that does not have any interpolated variables (f-string-without-interpolation)
+sudoku_csp.py:909:18: W1309: Using an f-string that does not have any interpolated variables (f-string-without-interpolation)
+sudoku_csp.py:911:18: W1309: Using an f-string that does not have any interpolated variables (f-string-without-interpolation)
+sudoku_csp.py:913:18: W1309: Using an f-string that does not have any interpolated variables (f-string-without-interpolation)
+************* Module sudoku_puzzles
+sudoku_puzzles.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+sudoku_puzzles.py:142:12: W0621: Redefining name 'i' from outer scope (line 155) (redefined-outer-name)
+************* Module test_all
+test_all.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+test_all.py:68:0: R0914: Too many local variables (17/15) (too-many-locals)
+test_all.py:130:15: W0718: Catching too general exception Exception (broad-exception-caught)
+test_all.py:84:4: R1702: Too many nested blocks (6/5) (too-many-nested-blocks)
+test_all.py:68:0: R0912: Too many branches (14/12) (too-many-branches)
+test_all.py:88:22: W0612: Unused variable 'backtracks' (unused-variable)
+test_all.py:162:15: W0718: Catching too general exception Exception (broad-exception-caught)
+test_all.py:148:29: W0612: Unused variable 'attempts' (unused-variable)
+test_all.py:196:11: W0718: Catching too general exception Exception (broad-exception-caught)
+test_all.py:194:32: W1309: Using an f-string that does not have any interpolated variables (f-string-without-interpolation)
+test_all.py:223:11: W0718: Catching too general exception Exception (broad-exception-caught)
+test_all.py:221:32: W1309: Using an f-string that does not have any interpolated variables (f-string-without-interpolation)
+test_all.py:186:8: W0612: Unused variable 'best_pos' (unused-variable)
+test_all.py:186:30: W0612: Unused variable 'iters' (unused-variable)
+test_all.py:186:46: W0612: Unused variable 'status' (unused-variable)
+test_all.py:258:11: W0718: Catching too general exception Exception (broad-exception-caught)
+test_all.py:256:32: W1309: Using an f-string that does not have any interpolated variables (f-string-without-interpolation)
+test_all.py:247:8: W0612: Unused variable 'best_board' (unused-variable)
+test_all.py:247:27: W0612: Unused variable 'iters' (unused-variable)
+test_all.py:284:4: C0103: Constant name "exit_code" doesn't conform to UPPER_CASE naming style (invalid-name)
+test_all.py:13:0: W0611: Unused import time (unused-import)
+test_all.py:14:0: W0611: Unused Tuple imported from typing (unused-import)
+test_all.py:14:0: W0611: Unused List imported from typing (unused-import)
+test_all.py:18:4: W0611: Unused print_sudoku imported from sudoku_csp (unused-import)
+test_all.py:19:4: W0611: Unused print_board imported from nqueens_minconflicts as print_nqueens_board (unused-import)
+test_all.py:23:4: W0611: Unused numpy imported as np (unused-import)
+test_all.py:1:0: R0801: Similar lines in 2 files
+==pso_benchmark:[482:495]
+==test_all:[174:190]
+    pso = PSO(
+        objective_func=rastrigin,
+        dimensions=10,
+        bounds=(-5.12, 5.12),
+        swarm_size=30,
+        w=0.7,
+        c1=1.5,
+        c2=1.5,
+        max_iterations=500
+    )
+
+    best_pos, best_score, iters, elapsed, status = pso.optimize()
+ (duplicate-code)
+test_all.py:1:0: R0801: Similar lines in 2 files
+==pso_sudoku:[424:435]
+==sudoku_csp:[860:871]
+        [5, 3, 0, 0, 7, 0, 0, 0, 0],
+        [6, 0, 0, 1, 9, 5, 0, 0, 0],
+        [0, 9, 8, 0, 0, 0, 0, 6, 0],
+        [8, 0, 0, 0, 6, 0, 0, 0, 3],
+        [4, 0, 0, 8, 0, 3, 0, 0, 1],
+        [7, 0, 0, 0, 2, 0, 0, 0, 6],
+        [0, 6, 0, 0, 0, 0, 2, 8, 0],
+        [0, 0, 0, 4, 1, 9, 0, 0, 5],
+        [0, 0, 0, 0, 8, 0, 0, 7, 9]
+    ]
+ (duplicate-code)
+test_all.py:1:0: R0801: Similar lines in 2 files
+==sudoku_csp:[829:849]
+==sudoku_puzzles:[155:164]
+        if i > 0 and i % 3 == 0:
+            print("-" * 21)
+        row_str = ""
+        for j, val in enumerate(row):
+            if j > 0 and j % 3 == 0:
+                row_str += "| "
+            row_str += (str(val) if val != 0 else ".") + " "
+        print(row_str)
+
+
+def assignment_to_grid(assignment: Dict[Position, int]) -> List[List[int]]:
+    """
+    Convert assignment dictionary to 9x9 grid format
+
+    Args:
+        assignment: Dictionary mapping (row, col) to values
+
+    Returns:
+        9x9 grid representation
+    """ (duplicate-code)
+test_all.py:1:0: R0801: Similar lines in 2 files
+==sudoku_csp:[882:890]
+==test_all:[76:84]
+    methods = [
+        ("Basic Backtracking", "solve_basic"),
+        ("Backtracking + MRV + LCV", "solve_mrv_lcv"),
+        ("Backtracking + Forward Checking", "solve_forward_checking"),
+        ("Backtracking + AC-3", "solve_ac3")
+    ]
+
+    for name, method in methods: (duplicate-code)
+test_all.py:1:0: R0801: Similar lines in 2 files
+==pso_sudoku:[364:370]
+==sudoku_csp:[829:835]
+        if i > 0 and i % 3 == 0:
+            print("-" * 21)
+        row_str = ""
+        for j, val in enumerate(row):
+            if j > 0 and j % 3 == 0:
+                row_str += "| " (duplicate-code)
+test_all.py:1:0: R0801: Similar lines in 2 files
+==run_experiments:[33:40]
+==sudoku_csp:[882:889]
+    methods = [
+        ("Basic Backtracking", "solve_basic"),
+        ("Backtracking + MRV + LCV", "solve_mrv_lcv"),
+        ("Backtracking + Forward Checking", "solve_forward_checking"),
+        ("Backtracking + AC-3", "solve_ac3")
+    ]
+ (duplicate-code)
+test_all.py:1:0: R0801: Similar lines in 2 files
+==pso_benchmark:[249:259]
+==pso_sudoku:[318:328]
+        start_time = time.perf_counter()
+
+        # Initialize swarm
+        self.initialize_swarm()
+        self.convergence_history = [self.global_best_score]
+
+        # Main optimization loop
+        for iteration in range(self.max_iterations):
+            # Check timeout
+            if MAX_TIME_SEC > 0 and (time.perf_counter() - start_time) > MAX_TIME_SEC: (duplicate-code)
+
+------------------------------------------------------------------
+Your code has been rated at 8.65/10 (previous run: 8.65/10, +0.00)
+
