@@ -32,16 +32,39 @@ class Percept:
     Immutable percept snapshot.
 
     SOFA: Functional - Frozen dataclass for immutability
+
+    Percepts in Wumpus World (Russell & Norvig Section 7.7):
+    - Breeze: Felt in squares adjacent to pit
+    - Stench: Smelled in squares adjacent to Wumpus
+    - Glitter: Visible when gold is in current square
+    - Bump: Felt when walking into wall
+    - Scream: Heard when Wumpus is killed
     """
     position: Tuple[int, int]
     breeze: bool
     stench: bool
+    glitter: bool
+    bump: bool
+    scream: bool
 
     def __str__(self) -> str:
         """String representation."""
-        breeze_str = "YES" if self.breeze else "NO"
-        stench_str = "YES" if self.stench else "NO"
-        return f"Percept({self.position}): Breeze={breeze_str}, Stench={stench_str}"
+        parts = []
+        if self.breeze:
+            parts.append("Breeze")
+        if self.stench:
+            parts.append("Stench")
+        if self.glitter:
+            parts.append("GLITTER")
+        if self.bump:
+            parts.append("Bump")
+        if self.scream:
+            parts.append("SCREAM")
+
+        if not parts:
+            parts.append("Nothing")
+
+        return f"Percept({self.position}): {', '.join(parts)}"
 
 
 @dataclass(frozen=True)
@@ -91,6 +114,9 @@ class WumpusWorld:
         self.grid_size = grid_size
         self.pits: Set[Tuple[int, int]] = set()
         self.wumpus: Optional[Tuple[int, int]] = None
+        self.gold: Optional[Tuple[int, int]] = None
+        self.wumpus_alive = True
+        self.last_scream = False  # True for one percept after wumpus killed
 
     def add_pit(self, x: int, y: int) -> None:
         """Add a pit at location (x, y)."""
@@ -100,7 +126,86 @@ class WumpusWorld:
         """Add the Wumpus at location (x, y)."""
         self.wumpus = (x, y)
 
-    def sense_percepts(self, x: int, y: int) -> Percept:
+    def add_gold(self, x: int, y: int) -> None:
+        """Add gold at location (x, y)."""
+        self.gold = (x, y)
+
+    def grab_gold(self, x: int, y: int) -> bool:
+        """
+        Attempt to grab gold at current position.
+
+        Args:
+            x: X coordinate
+            y: Y coordinate
+
+        Returns:
+            True if gold was at this location and grabbed, False otherwise
+        """
+        if self.gold == (x, y):
+            self.gold = None  # Remove gold from world
+            return True
+        return False
+
+    def shoot_arrow(self, from_pos: Tuple[int, int], direction: str) -> bool:
+        """
+        Shoot arrow in direction from position.
+
+        Args:
+            from_pos: Current position (x, y)
+            direction: One of 'up', 'down', 'left', 'right'
+
+        Returns:
+            True if wumpus was hit and killed, False otherwise
+        """
+        if not self.wumpus or not self.wumpus_alive:
+            return False
+
+        x, y = from_pos
+        wx, wy = self.wumpus
+
+        # Check if wumpus is in the direction of shot
+        hit = False
+        if direction == 'up' and x == wx and y < wy:
+            hit = True
+        elif direction == 'down' and x == wx and y > wy:
+            hit = True
+        elif direction == 'right' and y == wy and x < wx:
+            hit = True
+        elif direction == 'left' and y == wy and x > wx:
+            hit = True
+
+        if hit:
+            self.wumpus_alive = False
+            self.last_scream = True
+            return True
+        return False
+
+    def is_agent_dead(self, x: int, y: int) -> bool:
+        """
+        Check if agent died at this location.
+
+        Agent dies if:
+        - Falls into a pit
+        - Enters square with alive Wumpus
+
+        Args:
+            x: X coordinate
+            y: Y coordinate
+
+        Returns:
+            True if agent is dead, False otherwise
+        """
+        # Check if in pit
+        if (x, y) in self.pits:
+            return True
+
+        # Check if in square with alive Wumpus
+        if self.wumpus_alive and self.wumpus == (x, y):
+            return True
+
+        return False
+
+    def sense_percepts(self, x: int, y: int, bump: bool = False) -> Percept:
         """
         Get immutable percept at location (x, y).
 
@@ -109,13 +214,28 @@ class WumpusWorld:
         Args:
             x: X coordinate
             y: Y coordinate
+            bump: True if agent bumped into wall
 
         Returns:
-            Immutable Percept with breeze and stench information
+            Immutable Percept with all sensory information
         """
         breeze = self._has_adjacent_pit(x, y)
-        stench = self._has_adjacent_wumpus(x, y)
-        return Percept(position=(x, y), breeze=breeze, stench=stench)
+        stench = self._has_adjacent_wumpus(x, y) if self.wumpus_alive else False
+        glitter = (self.gold == (x, y)) if self.gold else False
+
+        # Scream is only perceived once after wumpus is killed
+        scream = self.last_scream
+        if self.last_scream:
+            self.last_scream = False  # Clear scream after one percept
+
+        return Percept(
+            position=(x, y),
+            breeze=breeze,
+            stench=stench,
+            glitter=glitter,
+            bump=bump,
+            scream=scream
+        )
 
     def _has_adjacent_pit(self, x: int, y: int) -> bool:
         """Pure function: Check if position is adjacent to pit."""
@@ -315,6 +435,11 @@ class WumpusAgentState:
     steps: List[AgentStep] = field(default_factory=list)
     grid_size: int = 4
     previous_position: Optional[Tuple[int, int]] = None  # Track where we came from
+    has_gold: bool = False
+    has_arrow: bool = True
+    alive: bool = True
+    wumpus_killed: bool = False
+    game_won: bool = False
 
 
 class WumpusAgent:
@@ -358,10 +483,36 @@ class WumpusAgent:
         Returns:
             Immutable record of this step
         """
-        # 1. Sense percepts
+        # 1. Check if agent died (fell into pit or met wumpus)
+        if world.is_agent_dead(*self._state.position):
+            self._state.alive = False
+            death_reason = "Fell into pit!" if self._state.position in world.pits else "Eaten by Wumpus!"
+            reasoning = f"GAME OVER: {death_reason}"
+            step = AgentStep(
+                step_number=step_number,
+                position=self._state.position,
+                percept=Percept(self._state.position, False, False, False, False, False),
+                safe_neighbors=tuple(),
+                chosen_move=None,
+                reasoning=reasoning
+            )
+            self._state.steps.append(step)
+            return step
+
+        # 2. Sense percepts
         percept = world.sense_percepts(*self._state.position)
 
-        # 2. Add percepts to KB
+        # 3. Handle gold pickup
+        if percept.glitter and not self._state.has_gold:
+            grabbed = world.grab_gold(*self._state.position)
+            if grabbed:
+                self._state.has_gold = True
+
+        # 4. Handle wumpus scream (if heard)
+        if percept.scream:
+            self._state.wumpus_killed = True
+
+        # 5. Add percepts to KB
         self._state.kb.add_percept(
             percept.position[0],
             percept.position[1],
@@ -369,21 +520,34 @@ class WumpusAgent:
             percept.stench
         )
 
-        # 3. Find safe neighbors (excluding current position)
+        # 6. Try to triangulate wumpus exact location
+        wumpus_location = self._infer_wumpus_location()
+
+        # 7. If have gold and know wumpus location, shoot it!
+        if self._state.has_gold and not self._state.wumpus_killed and wumpus_location and self._state.has_arrow:
+            shot_direction = self._get_shot_direction(wumpus_location)
+            if shot_direction:
+                hit = world.shoot_arrow(self._state.position, shot_direction)
+                if hit:
+                    self._state.wumpus_killed = True
+                    self._state.game_won = True  # Have gold + killed wumpus = WIN!
+                self._state.has_arrow = False
+
+        # 8. Find safe neighbors (excluding current position)
         neighbors = get_valid_neighbors(self._state.position, self._state.grid_size)
         safe_neighbors = [
             n for n in neighbors
             if is_safe_cell(self._state.kb, n[0], n[1]) and n != self._state.position
         ]
 
-        # 4. Choose move using strategy
+        # 9. Choose move using strategy
         chosen_move = self._strategy.choose_move(
             self._state.position,
             safe_neighbors,
             self._state.visited
         )
 
-        # 5. If no move chosen, try global frontier search
+        # 10. If no move chosen, try global frontier search
         frontier_cell = None
         if chosen_move is None and safe_neighbors:
             # Current position has no unvisited safe neighbors
@@ -393,7 +557,7 @@ class WumpusAgent:
                 # Path toward frontier cell through safe visited neighbors
                 chosen_move = self._move_toward(frontier_cell, safe_neighbors)
 
-        # 5b. If still no move and no frontier, try calculated risk
+        # 11. If still no move and no frontier, try calculated risk
         took_risk = False
         if chosen_move is None and not frontier_cell:
             # Truly stuck - try taking a calculated risk
@@ -402,29 +566,48 @@ class WumpusAgent:
                 chosen_move = risky_move
                 took_risk = True
 
-        # 5c. Safety check: never move to current position
+        # 12. Safety check: never move to current position
         if chosen_move == self._state.position:
             chosen_move = None
 
-        # 6. Generate reasoning explanation
+        # 13. Check win condition
+        if self._state.has_gold and self._state.wumpus_killed:
+            self._state.game_won = True
+
+        # 14. Generate reasoning explanation
         unvisited_safe = [n for n in safe_neighbors if n not in self._state.visited]
 
+        reasoning_parts = []
+
+        # Add gold/wumpus status
+        if percept.glitter and self._state.has_gold:
+            reasoning_parts.append("GRABBED GOLD!")
+        if percept.scream:
+            reasoning_parts.append("Heard scream - WUMPUS KILLED!")
+        if self._state.game_won:
+            reasoning_parts.append("GAME WON! (Have gold + Wumpus dead)")
+        if wumpus_location and self._state.has_gold and not self._state.has_arrow:
+            reasoning_parts.append(f"Shot arrow at wumpus location {wumpus_location}")
+
+        # Add movement reasoning
         if chosen_move:
             if took_risk:
-                reasoning = f"CALCULATED RISK: Taking educated guess on {chosen_move} (no proven safe moves)"
+                reasoning_parts.append(f"CALCULATED RISK: Taking educated guess on {chosen_move}")
             elif unvisited_safe and chosen_move in unvisited_safe:
-                reasoning = f"Exploring unvisited safe cell {chosen_move}"
+                reasoning_parts.append(f"Exploring unvisited safe cell {chosen_move}")
             elif frontier_cell:
-                reasoning = f"Navigating toward frontier cell {frontier_cell} (has unexplored safe neighbors)"
+                reasoning_parts.append(f"Navigating toward frontier cell {frontier_cell}")
             else:
-                reasoning = f"Moving to {chosen_move} to continue exploration"
+                reasoning_parts.append(f"Moving to {chosen_move}")
         else:
             if safe_neighbors:
-                reasoning = f"Dead end: All reachable safe cells explored. Visited: {len(self._state.visited)} cells"
+                reasoning_parts.append(f"Dead end: All reachable safe cells explored")
             else:
-                reasoning = "Stuck: No safe moves and risks too high. Exploration complete."
+                reasoning_parts.append("Stuck: No safe moves, risks too high")
 
-        # 7. Create immutable step record
+        reasoning = " | ".join(reasoning_parts) if reasoning_parts else "Exploring"
+
+        # 15. Create immutable step record
         step = AgentStep(
             step_number=step_number,
             position=self._state.position,
@@ -434,7 +617,7 @@ class WumpusAgent:
             reasoning=reasoning
         )
 
-        # 8. Update state if moving
+        # 16. Update state if moving
         if chosen_move:
             self._state.position = chosen_move
             self._state.visited.add(chosen_move)
@@ -597,6 +780,84 @@ class WumpusAgent:
             if min_risk <= 5:
                 return best_risky_move
 
+        return None
+
+    def _infer_wumpus_location(self) -> Optional[Tuple[int, int]]:
+        """
+        Triangulate exact wumpus location from multiple stench observations.
+
+        If we have 2+ cells with stenches, we can often narrow down to ONE
+        location that is adjacent to all of them.
+
+        Returns:
+            Wumpus location if uniquely determined, None otherwise
+        """
+        # Find all cells with stench
+        stench_cells = []
+        for fact in self._state.kb.facts:
+            if fact.startswith("S_") and not fact.startswith("not_S"):
+                parts = fact.split("_")
+                if len(parts) == 3:
+                    x, y = int(parts[1]), int(parts[2])
+                    stench_cells.append((x, y))
+
+        if len(stench_cells) < 2:
+            # Need at least 2 stenches to triangulate
+            return None
+
+        # Find intersection of all possible wumpus locations
+        # Start with neighbors of first stench cell
+        possible_wumpus = set(get_valid_neighbors(stench_cells[0], self._state.grid_size))
+
+        # Intersect with neighbors of each additional stench cell
+        for stench_cell in stench_cells[1:]:
+            neighbors = set(get_valid_neighbors(stench_cell, self._state.grid_size))
+            possible_wumpus = possible_wumpus.intersection(neighbors)
+
+        # Remove cells we know DON'T have wumpus
+        for fact in self._state.kb.facts:
+            if fact.startswith("not_W_"):
+                parts = fact.split("_")
+                if len(parts) == 3:
+                    x, y = int(parts[1]), int(parts[2])
+                    possible_wumpus.discard((x, y))
+
+        # If exactly one location remains, that's the wumpus!
+        if len(possible_wumpus) == 1:
+            return possible_wumpus.pop()
+
+        return None
+
+    def _get_shot_direction(self, target: Tuple[int, int]) -> Optional[str]:
+        """
+        Determine direction to shoot arrow from current position to target.
+
+        Agent can only shoot in straight lines: up, down, left, right.
+
+        Args:
+            target: Target (x, y) location
+
+        Returns:
+            Direction ('up', 'down', 'left', 'right') or None if not aligned
+        """
+        curr_x, curr_y = self._state.position
+        target_x, target_y = target
+
+        # Check if target is in straight line
+        if curr_x == target_x:
+            # Same column - shoot up or down
+            if curr_y < target_y:
+                return 'up'
+            elif curr_y > target_y:
+                return 'down'
+        elif curr_y == target_y:
+            # Same row - shoot left or right
+            if curr_x < target_x:
+                return 'right'
+            elif curr_x > target_x:
+                return 'left'
+
+        # Target not aligned - can't shoot straight
         return None
 
 

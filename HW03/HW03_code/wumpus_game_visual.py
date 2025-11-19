@@ -121,6 +121,12 @@ class WumpusGameVisual:
         wumpus_pos = random.choice(wumpus_positions)
         self.world.add_wumpus(wumpus_pos[0], wumpus_pos[1])
 
+        # Add gold at random position (not on pit, wumpus, or start)
+        gold_positions = [pos for pos in available_positions
+                         if pos not in pit_positions and pos != wumpus_pos]
+        gold_pos = random.choice(gold_positions)
+        self.world.add_gold(gold_pos[0], gold_pos[1])
+
         # Create agent
         self.agent = WumpusAgent(grid_size=GRID_SIZE, strategy=UnvisitedFirstStrategy())
 
@@ -217,7 +223,7 @@ class WumpusGameVisual:
             label = CELL_FONT.render("P", True, (*BLACK, alpha))
             self.screen.blit(label, (screen_x - 6, screen_y - 8))
 
-        if self.world.wumpus and pos == self.world.wumpus:
+        if self.world.wumpus and pos == self.world.wumpus and self.world.wumpus_alive:
             alpha = 255 if pos in visited else 80
             wumpus_size = max(12, CELL_SIZE // 3)
             wumpus_surf = pygame.Surface((CELL_SIZE, CELL_SIZE), pygame.SRCALPHA)
@@ -230,6 +236,14 @@ class WumpusGameVisual:
             self.screen.blit(wumpus_surf, (screen_x - CELL_SIZE // 2, screen_y - CELL_SIZE // 2))
             label = CELL_FONT.render("W", True, (*RED, alpha))
             self.screen.blit(label, (screen_x - 7, screen_y - 8))
+
+        # Draw gold (only if not grabbed by agent)
+        if self.world.gold and pos == self.world.gold:
+            gold_radius = max(6, CELL_SIZE // 5)
+            pygame.draw.circle(self.screen, GOLD, (screen_x, screen_y), gold_radius)
+            pygame.draw.circle(self.screen, BLACK, (screen_x, screen_y), gold_radius, 1)
+            label = CELL_FONT.render("G", True, BLACK)
+            self.screen.blit(label, (screen_x - 6, screen_y - 8))
 
         # Draw percepts for visited cells
         if pos in visited:
@@ -343,6 +357,36 @@ class WumpusGameVisual:
 
             stench_surf = TEXT_FONT.render(stench_text, True, stench_color)
             self.screen.blit(stench_surf, (panel_x + 20, y_offset))
+            y_offset += 25
+
+            glitter_text = f"  Glitter: {'YES' if percept.glitter else 'NO'}"
+            glitter_color = GOLD if percept.glitter else GRAY
+            glitter_surf = TEXT_FONT.render(glitter_text, True, glitter_color)
+            self.screen.blit(glitter_surf, (panel_x + 20, y_offset))
+            y_offset += 35
+
+            # Agent status
+            agent_state = self.agent._state
+            status_header = HEADER_FONT.render("Agent Status:", True, BLACK)
+            self.screen.blit(status_header, (panel_x + 20, y_offset))
+            y_offset += 30
+
+            gold_status = "Has Gold: YES" if agent_state.has_gold else "Has Gold: NO"
+            gold_color = GOLD if agent_state.has_gold else GRAY
+            gold_surf = SMALL_FONT.render(f"  {gold_status}", True, gold_color)
+            self.screen.blit(gold_surf, (panel_x + 20, y_offset))
+            y_offset += 20
+
+            arrow_status = "Has Arrow: YES" if agent_state.has_arrow else "Has Arrow: NO"
+            arrow_color = BLACK if agent_state.has_arrow else GRAY
+            arrow_surf = SMALL_FONT.render(f"  {arrow_status}", True, arrow_color)
+            self.screen.blit(arrow_surf, (panel_x + 20, y_offset))
+            y_offset += 20
+
+            wumpus_status = "Wumpus Killed: YES" if agent_state.wumpus_killed else "Wumpus Killed: NO"
+            wumpus_color = GREEN if agent_state.wumpus_killed else GRAY
+            wumpus_surf = SMALL_FONT.render(f"  {wumpus_status}", True, wumpus_color)
+            self.screen.blit(wumpus_surf, (panel_x + 20, y_offset))
             y_offset += 35
 
             # KB additions
@@ -437,9 +481,24 @@ class WumpusGameVisual:
 
         # Game status
         y += 25
-        if self.game_over:
-            status = "GAME OVER - Agent stopped"
-            status_surf = TEXT_FONT.render(status, True, YELLOW)
+        agent_state = self.agent._state if self.agent else None
+        if self.game_over and agent_state:
+            if agent_state.game_won:
+                status = "GAME WON! Agent got gold and killed Wumpus!"
+                status_surf = TEXT_FONT.render(status, True, GOLD)
+            elif not agent_state.alive:
+                if self.world.is_agent_dead(*agent_state.position):
+                    if agent_state.position in self.world.pits:
+                        status = "GAME OVER - Agent fell into pit!"
+                    else:
+                        status = "GAME OVER - Agent eaten by Wumpus!"
+                    status_surf = TEXT_FONT.render(status, True, RED)
+                else:
+                    status = "GAME OVER - Agent stopped"
+                    status_surf = TEXT_FONT.render(status, True, YELLOW)
+            else:
+                status = "GAME OVER - Agent stopped"
+                status_surf = TEXT_FONT.render(status, True, YELLOW)
         elif self.auto_play:
             status = "AUTO-PLAY MODE (press A to stop)"
             status_surf = TEXT_FONT.render(status, True, GREEN)
@@ -451,7 +510,7 @@ class WumpusGameVisual:
 
         # Legend
         y += 30
-        legend = "Legend: P=Pit, W=Wumpus, B=Breeze, S=Stench | Pink=Probable Pit, Purple=Probable Wumpus"
+        legend = "Legend: P=Pit, W=Wumpus, G=Gold, B=Breeze, S=Stench | Pink=Probable Pit, Purple=Probable Wumpus"
         legend_surf = SMALL_FONT.render(legend, True, WHITE)
         self.screen.blit(legend_surf, (20, y))
 
@@ -464,6 +523,12 @@ class WumpusGameVisual:
         step = self.agent.execute_step(self.world, self.current_step + 1)
         self.steps_history.append(step)
         self.current_step += 1
+
+        # Check if agent died or won
+        agent_state = self.agent._state
+        if not agent_state.alive or agent_state.game_won:
+            self.game_over = True
+            return
 
         # Check if agent can continue
         if step.chosen_move is None:
