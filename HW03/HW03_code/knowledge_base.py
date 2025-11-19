@@ -337,7 +337,7 @@ class WumpusKB(HornKB):
 
         return probable_wumpus
 
-    def get_confirmed_pits(self) -> Set[Tuple[int, int]]:
+    def get_confirmed_pits(self, existing_confirmed: Set[Tuple[int, int]] = None) -> Set[Tuple[int, int]]:
         """
         Find cells that MUST contain pits using logical deduction.
 
@@ -346,9 +346,14 @@ class WumpusKB(HornKB):
           the pit MUST be in the remaining neighbor (definite clause).
         - Find intersection of possible pit locations from multiple breezes.
 
+        Args:
+            existing_confirmed: Pits that were already confirmed in previous steps
+
         Returns cells that are logically confirmed to have pits.
         """
-        confirmed_pits = set()
+        if existing_confirmed is None:
+            existing_confirmed = set()
+        confirmed_pits = set(existing_confirmed)
 
         # Find all cells with breezes
         breeze_cells = []
@@ -363,14 +368,20 @@ class WumpusKB(HornKB):
         for bx, by in breeze_cells:
             neighbors = self._get_neighbors(bx, by)
             possible_pits = []
+            has_confirmed_pit_nearby = False
 
             for nx, ny in neighbors:
+                # Check if this neighbor is already a confirmed pit
+                if (nx, ny) in confirmed_pits:
+                    has_confirmed_pit_nearby = True
                 # If we haven't proven this cell safe, it's a possible pit location
-                if f"not_P_{nx}_{ny}" not in self.facts:
+                elif f"not_P_{nx}_{ny}" not in self.facts:
                     possible_pits.append((nx, ny))
 
             # Definite clause: if exactly ONE neighbor could have pit, it MUST be there
-            if len(possible_pits) == 1:
+            # BUT: Only apply this if we don't already have a confirmed pit nearby
+            # (otherwise the breeze is already explained)
+            if len(possible_pits) == 1 and not has_confirmed_pit_nearby:
                 confirmed_pits.add(possible_pits[0])
 
         # Triangulation: Find pits that appear in ALL possible sets from multiple breezes

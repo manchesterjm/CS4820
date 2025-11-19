@@ -525,7 +525,8 @@ class WumpusAgent:
         )
 
         # 5b. Use logical reasoning to find confirmed pit locations
-        confirmed_pits = self._state.kb.get_confirmed_pits()
+        # Pass existing confirmed pits so the algorithm doesn't double-count
+        confirmed_pits = self._state.kb.get_confirmed_pits(self._state.confirmed_pit_locations)
         for pit_x, pit_y in confirmed_pits:
             if (pit_x, pit_y) not in self._state.confirmed_pit_locations:
                 # Newly confirmed pit! Add to our tracking set
