@@ -121,11 +121,32 @@ class WumpusGameVisual:
         wumpus_pos = random.choice(wumpus_positions)
         self.world.add_wumpus(wumpus_pos[0], wumpus_pos[1])
 
-        # Add gold at random position (not on pit, wumpus, or start)
-        gold_positions = [pos for pos in available_positions
-                         if pos not in pit_positions and pos != wumpus_pos]
-        gold_pos = random.choice(gold_positions)
-        self.world.add_gold(gold_pos[0], gold_pos[1])
+        # Add gold at random SAFE position (not on pit/wumpus, and not adjacent to any pits)
+        # This ensures agent can actually reach and detect the gold
+        def is_safe_for_gold(pos):
+            x, y = pos
+            # Not on pit or wumpus or start
+            if pos in pit_positions or pos == wumpus_pos:
+                return False
+            # Not adjacent to any pit (agent would sense breeze and avoid)
+            for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
+                adj_x, adj_y = x + dx, y + dy
+                if (adj_x, adj_y) in pit_positions:
+                    return False
+            # Not adjacent to wumpus (agent would sense stench and avoid)
+            if wumpus_pos:
+                wx, wy = wumpus_pos
+                if abs(x - wx) + abs(y - wy) == 1:
+                    return False
+            return True
+
+        gold_positions = [pos for pos in available_positions if is_safe_for_gold(pos)]
+        if gold_positions:
+            gold_pos = random.choice(gold_positions)
+            self.world.add_gold(gold_pos[0], gold_pos[1])
+        else:
+            # Fallback: place near start if no safe positions (very rare)
+            self.world.add_gold(2, 1)
 
         # Create agent
         self.agent = WumpusAgent(grid_size=GRID_SIZE, strategy=UnvisitedFirstStrategy())
