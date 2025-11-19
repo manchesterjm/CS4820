@@ -217,10 +217,18 @@ class MovementStrategy(ABC):
 
 class UnvisitedFirstStrategy(MovementStrategy):
     """
-    Strategy: Prefer unvisited safe cells, backtrack if needed.
+    Strategy: Depth-first exploration with intelligent backtracking.
 
     SOFA: Open/Closed - Implements strategy interface
+
+    Tracks which cells have been fully explored (all safe neighbors visited).
+    Uses a path stack for backtracking to cells with unexplored safe neighbors.
     """
+
+    def __init__(self):
+        """Initialize strategy with exploration tracking."""
+        self.path_stack: List[Tuple[int, int]] = []  # Stack for backtracking
+        self.fully_explored: Set[Tuple[int, int]] = set()  # Cells with all neighbors visited
 
     def choose_move(
         self,
@@ -229,21 +237,39 @@ class UnvisitedFirstStrategy(MovementStrategy):
         visited: Set[Tuple[int, int]]
     ) -> Optional[Tuple[int, int]]:
         """
-        Choose first unvisited safe neighbor.
+        Choose move using depth-first search with backtracking.
 
-        If no unvisited safe neighbors, backtrack to a visited safe neighbor.
-        This allows the agent to explore alternative paths when stuck.
+        1. If there are unvisited safe neighbors, explore one (DFS forward)
+        2. If all safe neighbors visited, mark as fully explored and backtrack
+        3. Backtrack along path stack to find cell with unvisited safe neighbors
+        4. If no such cell exists, exploration is complete
         """
         unvisited_safe = [loc for loc in safe_neighbors if loc not in visited]
 
-        # Prefer unvisited cells for exploration
+        # Case 1: Unvisited safe neighbors available - explore (DFS forward)
         if unvisited_safe:
+            # Push current position onto stack for backtracking
+            if not self.path_stack or self.path_stack[-1] != current_position:
+                self.path_stack.append(current_position)
             return unvisited_safe[0]
 
-        # Backtrack to visited cell if no unvisited options
-        # This allows exploring alternative paths
-        visited_safe = [loc for loc in safe_neighbors if loc in visited]
-        return visited_safe[0] if visited_safe else None
+        # Case 2: All safe neighbors visited - this cell is fully explored
+        self.fully_explored.add(current_position)
+
+        # Backtrack to find a cell with unvisited safe neighbors
+        while self.path_stack:
+            backtrack_cell = self.path_stack[-1]
+
+            # Check if this cell still has unvisited safe neighbors
+            if backtrack_cell not in self.fully_explored:
+                # Found a cell to return to - it should have unexplored options
+                return backtrack_cell
+
+            # This cell is also fully explored, keep backtracking
+            self.path_stack.pop()
+
+        # No more cells to backtrack to - exploration complete
+        return None
 
 
 # ============================================================================
@@ -263,6 +289,7 @@ class WumpusAgentState:
     visited: Set[Tuple[int, int]] = field(default_factory=lambda: {(1, 1)})
     steps: List[AgentStep] = field(default_factory=list)
     grid_size: int = 4
+    previous_position: Optional[Tuple[int, int]] = None  # Track where we came from
 
 
 class WumpusAgent:
@@ -330,17 +357,17 @@ class WumpusAgent:
 
         # 5. Generate reasoning explanation
         unvisited_safe = [n for n in safe_neighbors if n not in self._state.visited]
-        visited_safe = [n for n in safe_neighbors if n in self._state.visited]
 
         if chosen_move:
             if chosen_move not in self._state.visited:
-                reasoning = f"Found {len(unvisited_safe)} unvisited safe neighbor(s), exploring {chosen_move}"
+                reasoning = f"DFS forward: Exploring unvisited safe cell {chosen_move}"
             else:
-                reasoning = f"No unvisited safe neighbors. Backtracking to {chosen_move} to explore alternative path"
-        elif safe_neighbors:
-            reasoning = f"All safe neighbors already visited: {safe_neighbors}. Cannot proceed further."
+                reasoning = f"DFS backtrack: Returning to {chosen_move} (has unexplored safe neighbors)"
         else:
-            reasoning = "No safe neighbors found. Blocked by unknown cells."
+            if safe_neighbors:
+                reasoning = f"Dead end: All safe neighbors visited. No backtrack path available."
+            else:
+                reasoning = "Blocked: No safe neighbors. Cannot infer safety of adjacent cells."
 
         # 6. Create immutable step record
         step = AgentStep(
