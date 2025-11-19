@@ -18,6 +18,7 @@ Course: CS 4820/5820 - Artificial Intelligence
 import pygame
 import sys
 import time
+import random
 from typing import Tuple, Set, Optional, List
 from wumpus_agent import (
     WumpusWorld, WumpusAgent, AgentStep, Percept,
@@ -45,14 +46,14 @@ DARK_RED = (139, 0, 0)
 GOLD = (255, 215, 0)
 
 # Window dimensions
-BOARD_SIZE = 600
+BOARD_SIZE = 800
 PANEL_WIDTH = 500
 WINDOW_WIDTH = BOARD_SIZE + PANEL_WIDTH
-WINDOW_HEIGHT = 700
+WINDOW_HEIGHT = 900
 INFO_HEIGHT = 100
 
 # Grid settings
-GRID_SIZE = 4
+GRID_SIZE = 16
 CELL_SIZE = BOARD_SIZE // GRID_SIZE
 
 # Fonts
@@ -60,7 +61,7 @@ TITLE_FONT = pygame.font.Font(None, 32)
 HEADER_FONT = pygame.font.Font(None, 24)
 TEXT_FONT = pygame.font.Font(None, 20)
 SMALL_FONT = pygame.font.Font(None, 16)
-CELL_FONT = pygame.font.Font(None, 40)
+CELL_FONT = pygame.font.Font(None, 18)  # Smaller for 16x16 grid
 
 
 class WumpusGameVisual:
@@ -78,11 +79,11 @@ class WumpusGameVisual:
         self.world = None
         self.agent = None
         self.current_step = 0
-        self.max_steps = 10
+        self.max_steps = 200  # Increased for 16x16 grid
         self.steps_history = []
         self.game_over = False
         self.auto_play = False
-        self.auto_play_delay = 1.5  # seconds between auto steps
+        self.auto_play_delay = 0.5  # Faster for larger grid
         self.last_auto_step = 0
 
         # Animation state
@@ -96,13 +97,28 @@ class WumpusGameVisual:
         self.reset_game()
 
     def reset_game(self):
-        """Reset the game to initial state."""
+        """Reset the game to initial state with randomized obstacles."""
         # Create world with obstacles
         self.world = WumpusWorld(grid_size=GRID_SIZE)
-        self.world.add_pit(3, 1)
-        self.world.add_pit(3, 3)
-        self.world.add_pit(4, 4)
-        self.world.add_wumpus(1, 3)
+
+        # Randomize pit and wumpus locations
+        # Avoid starting position (1,1)
+        available_positions = [
+            (x, y) for x in range(1, GRID_SIZE + 1)
+            for y in range(1, GRID_SIZE + 1)
+            if (x, y) != (1, 1)
+        ]
+
+        # Add random pits (approximately 15% of grid)
+        num_pits = max(3, int(GRID_SIZE * GRID_SIZE * 0.15))
+        pit_positions = random.sample(available_positions, num_pits)
+        for x, y in pit_positions:
+            self.world.add_pit(x, y)
+
+        # Add wumpus at random position (not on a pit, not at start)
+        wumpus_positions = [pos for pos in available_positions if pos not in pit_positions]
+        wumpus_pos = random.choice(wumpus_positions)
+        self.world.add_wumpus(wumpus_pos[0], wumpus_pos[1])
 
         # Create agent
         self.agent = WumpusAgent(grid_size=GRID_SIZE, strategy=UnvisitedFirstStrategy())
@@ -153,18 +169,6 @@ class WumpusGameVisual:
                 2
             )
 
-        # Draw coordinate labels
-        for i in range(1, GRID_SIZE + 1):
-            # X coordinates (bottom)
-            label = SMALL_FONT.render(str(i), True, BLACK)
-            x, y = self.grid_to_screen(i, 1)
-            self.screen.blit(label, (x - 5, BOARD_SIZE + 5))
-
-            # Y coordinates (left)
-            label = SMALL_FONT.render(str(i), True, BLACK)
-            x, y = self.grid_to_screen(1, i)
-            self.screen.blit(label, (5, y - 10))
-
     def draw_cell_content(self, grid_x: int, grid_y: int, visited: Set[Tuple[int, int]]):
         """Draw contents of a cell (pits, wumpus, percepts)."""
         screen_x, screen_y = self.grid_to_screen(grid_x, grid_y)
@@ -184,28 +188,30 @@ class WumpusGameVisual:
         # Draw starting position marker
         if pos == (1, 1):
             pygame.draw.rect(self.screen, (200, 255, 200), cell_rect)
-            start_label = SMALL_FONT.render("START", True, DARK_GREEN)
-            self.screen.blit(start_label, (screen_x - 20, screen_y + 50))
 
         # Show actual world contents (pits and wumpus) - semi-transparent if not visited
         if pos in self.world.pits:
             alpha = 255 if pos in visited else 80
-            pit_surf = pygame.Surface((CELL_SIZE - 20, CELL_SIZE - 20), pygame.SRCALPHA)
-            pygame.draw.circle(pit_surf, (*BLACK, alpha), (CELL_SIZE // 2 - 10, CELL_SIZE // 2 - 10), 30)
-            self.screen.blit(pit_surf, (screen_x - CELL_SIZE // 2 + 10, screen_y - CELL_SIZE // 2 + 10))
+            pit_radius = max(8, CELL_SIZE // 4)
+            pit_surf = pygame.Surface((CELL_SIZE, CELL_SIZE), pygame.SRCALPHA)
+            pygame.draw.circle(pit_surf, (*BLACK, alpha), (CELL_SIZE // 2, CELL_SIZE // 2), pit_radius)
+            self.screen.blit(pit_surf, (screen_x - CELL_SIZE // 2, screen_y - CELL_SIZE // 2))
             label = CELL_FONT.render("P", True, (*BLACK, alpha))
-            self.screen.blit(label, (screen_x - 12, screen_y - 20))
+            self.screen.blit(label, (screen_x - 6, screen_y - 8))
 
         if self.world.wumpus and pos == self.world.wumpus:
             alpha = 255 if pos in visited else 80
-            wumpus_surf = pygame.Surface((CELL_SIZE - 20, CELL_SIZE - 20), pygame.SRCALPHA)
+            wumpus_size = max(12, CELL_SIZE // 3)
+            wumpus_surf = pygame.Surface((CELL_SIZE, CELL_SIZE), pygame.SRCALPHA)
             pygame.draw.polygon(
                 wumpus_surf, (*RED, alpha),
-                [(CELL_SIZE // 2 - 10, 10), (CELL_SIZE // 2 - 30, CELL_SIZE - 30), (CELL_SIZE // 2 + 10, CELL_SIZE - 30)]
+                [(CELL_SIZE // 2, CELL_SIZE // 2 - wumpus_size // 2),
+                 (CELL_SIZE // 2 - wumpus_size // 2, CELL_SIZE // 2 + wumpus_size // 2),
+                 (CELL_SIZE // 2 + wumpus_size // 2, CELL_SIZE // 2 + wumpus_size // 2)]
             )
-            self.screen.blit(wumpus_surf, (screen_x - CELL_SIZE // 2 + 10, screen_y - CELL_SIZE // 2 + 10))
+            self.screen.blit(wumpus_surf, (screen_x - CELL_SIZE // 2, screen_y - CELL_SIZE // 2))
             label = CELL_FONT.render("W", True, (*RED, alpha))
-            self.screen.blit(label, (screen_x - 15, screen_y - 20))
+            self.screen.blit(label, (screen_x - 7, screen_y - 8))
 
         # Draw percepts for visited cells
         if pos in visited:
@@ -218,23 +224,31 @@ class WumpusGameVisual:
 
             if percept_text:
                 percept_str = ",".join(percept_text)
-                label = TEXT_FONT.render(percept_str, True, BLUE)
-                self.screen.blit(label, (screen_x - 10, screen_y - 40))
+                label = SMALL_FONT.render(percept_str, True, BLUE)
+                self.screen.blit(label, (screen_x - 8, screen_y - CELL_SIZE // 3))
 
     def draw_agent(self, position: Tuple[int, int]):
         """Draw the agent at given position."""
         screen_x, screen_y = self.grid_to_screen(position[0], position[1])
+        agent_radius = max(8, CELL_SIZE // 4)
 
         # Draw agent as a circle with direction indicator
-        pygame.draw.circle(self.screen, ORANGE, (screen_x, screen_y), 20)
-        pygame.draw.circle(self.screen, BLACK, (screen_x, screen_y), 20, 2)
+        pygame.draw.circle(self.screen, ORANGE, (screen_x, screen_y), agent_radius)
+        pygame.draw.circle(self.screen, BLACK, (screen_x, screen_y), agent_radius, 2)
 
-        # Draw eyes
-        pygame.draw.circle(self.screen, BLACK, (screen_x - 7, screen_y - 5), 3)
-        pygame.draw.circle(self.screen, BLACK, (screen_x + 7, screen_y - 5), 3)
+        # Draw eyes (proportional to agent size)
+        eye_offset_x = agent_radius // 3
+        eye_offset_y = agent_radius // 4
+        eye_radius = max(2, agent_radius // 6)
+        pygame.draw.circle(self.screen, BLACK, (screen_x - eye_offset_x, screen_y - eye_offset_y), eye_radius)
+        pygame.draw.circle(self.screen, BLACK, (screen_x + eye_offset_x, screen_y - eye_offset_y), eye_radius)
 
         # Draw smile
-        pygame.draw.arc(self.screen, BLACK, (screen_x - 10, screen_y - 5, 20, 15), 3.14, 6.28, 2)
+        smile_width = agent_radius
+        smile_height = agent_radius // 2
+        pygame.draw.arc(self.screen, BLACK,
+                       (screen_x - smile_width // 2, screen_y - smile_height // 2,
+                        smile_width, smile_height), 3.14, 6.28, 2)
 
     def draw_animated_agent(self):
         """Draw agent with animation between positions."""
@@ -248,12 +262,21 @@ class WumpusGameVisual:
         current_x = start_screen[0] + (end_screen[0] - start_screen[0]) * self.anim_progress
         current_y = start_screen[1] + (end_screen[1] - start_screen[1]) * self.anim_progress
 
-        # Draw agent at interpolated position
-        pygame.draw.circle(self.screen, ORANGE, (int(current_x), int(current_y)), 20)
-        pygame.draw.circle(self.screen, BLACK, (int(current_x), int(current_y)), 20, 2)
-        pygame.draw.circle(self.screen, BLACK, (int(current_x) - 7, int(current_y) - 5), 3)
-        pygame.draw.circle(self.screen, BLACK, (int(current_x) + 7, int(current_y) - 5), 3)
-        pygame.draw.arc(self.screen, BLACK, (int(current_x) - 10, int(current_y) - 5, 20, 15), 3.14, 6.28, 2)
+        # Draw agent at interpolated position (same sizing as static agent)
+        agent_radius = max(8, CELL_SIZE // 4)
+        eye_offset_x = agent_radius // 3
+        eye_offset_y = agent_radius // 4
+        eye_radius = max(2, agent_radius // 6)
+        smile_width = agent_radius
+        smile_height = agent_radius // 2
+
+        pygame.draw.circle(self.screen, ORANGE, (int(current_x), int(current_y)), agent_radius)
+        pygame.draw.circle(self.screen, BLACK, (int(current_x), int(current_y)), agent_radius, 2)
+        pygame.draw.circle(self.screen, BLACK, (int(current_x) - eye_offset_x, int(current_y) - eye_offset_y), eye_radius)
+        pygame.draw.circle(self.screen, BLACK, (int(current_x) + eye_offset_x, int(current_y) - eye_offset_y), eye_radius)
+        pygame.draw.arc(self.screen, BLACK,
+                       (int(current_x) - smile_width // 2, int(current_y) - smile_height // 2,
+                        smile_width, smile_height), 3.14, 6.28, 2)
 
     def draw_reasoning_panel(self):
         """Draw the AI reasoning panel on the right side."""
