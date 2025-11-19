@@ -81,23 +81,29 @@ The game window will open showing the initial state with the agent at position (
 
 ### Auto-Play Mode
 
-Press **A** to enable auto-play mode. The agent will automatically execute steps with a 1.5-second delay between moves. This is useful for demonstrations or watching the AI navigate the world without manual input.
+Press **A** to enable auto-play mode. The agent will automatically execute steps with a 0.5-second delay between moves. This is useful for demonstrations or watching the AI navigate the world without manual input.
 
 Press **A** again to pause auto-play and return to manual step-by-step mode.
 
 ## Game World Configuration
 
-The default world is configured with:
-- **Grid size:** 4×4
-- **Agent start:** (1, 1) - bottom-left corner
-- **Pits:** Located at (3, 1), (3, 3), (4, 4)
-- **Wumpus:** Located at (1, 3)
+The world is randomly generated with each reset:
+- **Grid size:** 16×16
+- **Agent start:** (1, 1) - bottom-left corner (always safe)
+- **Pits:** Randomly placed (~15% of grid = approximately 38 pits)
+- **Wumpus:** Randomly placed (not on a pit, not at start)
 
 ### Coordinates
 - Grid coordinates are 1-indexed
-- (1,1) is the bottom-left corner
-- (4,4) is the top-right corner
+- (1,1) is the bottom-left corner (agent starting position)
+- (16,16) is the top-right corner
 - Agent can move up, down, left, right (no diagonal moves)
+
+### Randomization
+Each time you press **R** to reset, a new random world is generated with:
+- Different pit locations
+- Different Wumpus location
+- Same difficulty (~15% pit density)
 
 ## How the AI Works
 
