@@ -217,7 +217,7 @@ class MovementStrategy(ABC):
 
 class UnvisitedFirstStrategy(MovementStrategy):
     """
-    Strategy: Prefer unvisited safe cells.
+    Strategy: Prefer unvisited safe cells, backtrack if needed.
 
     SOFA: Open/Closed - Implements strategy interface
     """
@@ -228,9 +228,22 @@ class UnvisitedFirstStrategy(MovementStrategy):
         safe_neighbors: List[Tuple[int, int]],
         visited: Set[Tuple[int, int]]
     ) -> Optional[Tuple[int, int]]:
-        """Choose first unvisited safe neighbor, or None."""
+        """
+        Choose first unvisited safe neighbor.
+
+        If no unvisited safe neighbors, backtrack to a visited safe neighbor.
+        This allows the agent to explore alternative paths when stuck.
+        """
         unvisited_safe = [loc for loc in safe_neighbors if loc not in visited]
-        return unvisited_safe[0] if unvisited_safe else None
+
+        # Prefer unvisited cells for exploration
+        if unvisited_safe:
+            return unvisited_safe[0]
+
+        # Backtrack to visited cell if no unvisited options
+        # This allows exploring alternative paths
+        visited_safe = [loc for loc in safe_neighbors if loc in visited]
+        return visited_safe[0] if visited_safe else None
 
 
 # ============================================================================
@@ -316,12 +329,18 @@ class WumpusAgent:
         )
 
         # 5. Generate reasoning explanation
+        unvisited_safe = [n for n in safe_neighbors if n not in self._state.visited]
+        visited_safe = [n for n in safe_neighbors if n in self._state.visited]
+
         if chosen_move:
-            reasoning = f"Safe neighbors: {safe_neighbors}, choosing {chosen_move}"
+            if chosen_move not in self._state.visited:
+                reasoning = f"Found {len(unvisited_safe)} unvisited safe neighbor(s), exploring {chosen_move}"
+            else:
+                reasoning = f"No unvisited safe neighbors. Backtracking to {chosen_move} to explore alternative path"
         elif safe_neighbors:
-            reasoning = f"All safe neighbors visited: {safe_neighbors}"
+            reasoning = f"All safe neighbors already visited: {safe_neighbors}. Cannot proceed further."
         else:
-            reasoning = "No safe neighbors found"
+            reasoning = "No safe neighbors found. Blocked by unknown cells."
 
         # 6. Create immutable step record
         step = AgentStep(
