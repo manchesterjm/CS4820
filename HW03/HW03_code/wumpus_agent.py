@@ -816,6 +816,9 @@ class WumpusAgent:
         - How many breeze/stench observations point to it
         - Distance from known dangers
 
+        CRITICAL: Never chooses cells that are confirmed to be dangerous
+        via logical deduction (confirmed pits or confirmed wumpus).
+
         Args:
             neighbors: All valid neighbors (may be unsafe)
 
@@ -827,13 +830,29 @@ class WumpusAgent:
         if not unvisited_neighbors:
             return None
 
-        # Get probable danger locations
+        # CRITICAL: Filter out confirmed dangerous locations
+        # These are cells we KNOW are pits or wumpus via logical deduction
+        safe_candidates = []
+        for n in unvisited_neighbors:
+            # Never move to confirmed pit
+            if n in self._state.confirmed_pit_locations:
+                continue
+            # Never move to confirmed wumpus location
+            if self._state.confirmed_wumpus_location and n == self._state.confirmed_wumpus_location:
+                continue
+            safe_candidates.append(n)
+
+        if not safe_candidates:
+            # All unvisited neighbors are confirmed dangerous - no risky move available
+            return None
+
+        # Get probable danger locations (not yet confirmed, but suspicious)
         probable_pits = self._state.kb.get_probable_pits()
         probable_wumpus = self._state.kb.get_probable_wumpus()
 
-        # Calculate risk score for each unvisited neighbor
+        # Calculate risk score for each safe candidate
         risk_scores = {}
-        for nx, ny in unvisited_neighbors:
+        for nx, ny in safe_candidates:
             risk = 0
 
             # Count how many breezes point to this cell (pit risk)
