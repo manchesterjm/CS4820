@@ -54,7 +54,7 @@ WINDOW_HEIGHT = 900
 INFO_HEIGHT = 100
 
 # Grid settings
-GRID_SIZE = 16
+GRID_SIZE = 8
 CELL_SIZE = BOARD_SIZE // GRID_SIZE
 
 # Fonts
@@ -62,7 +62,7 @@ TITLE_FONT = pygame.font.Font(None, 32)
 HEADER_FONT = pygame.font.Font(None, 24)
 TEXT_FONT = pygame.font.Font(None, 20)
 SMALL_FONT = pygame.font.Font(None, 16)
-CELL_FONT = pygame.font.Font(None, 18)  # Smaller for 16x16 grid
+CELL_FONT = pygame.font.Font(None, 24)  # Larger for 8x8 grid
 
 
 class WumpusGameVisual:
@@ -80,11 +80,11 @@ class WumpusGameVisual:
         self.world = None
         self.agent = None
         self.current_step = 0
-        self.max_steps = 200  # Increased for 16x16 grid
+        self.max_steps = 100  # Sufficient for 8x8 grid
         self.steps_history = []
         self.game_over = False
         self.auto_play = False
-        self.auto_play_delay = 0.5  # Faster for larger grid
+        self.auto_play_delay = 0.3  # Faster for smaller grid
         self.last_auto_step = 0
 
         # Animation state
