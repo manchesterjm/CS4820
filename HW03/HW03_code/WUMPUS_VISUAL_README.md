@@ -90,7 +90,7 @@ Press **A** again to pause auto-play and return to manual step-by-step mode.
 The world is randomly generated with each reset:
 - **Grid size:** 16×16
 - **Agent start:** (1, 1) - bottom-left corner (always safe)
-- **Pits:** Randomly placed (~15% of grid = approximately 38 pits)
+- **Pits:** Randomly placed (~8% of grid = approximately 20 pits)
 - **Wumpus:** Randomly placed (not on a pit, not at start)
 
 ### Coordinates
@@ -101,9 +101,9 @@ The world is randomly generated with each reset:
 
 ### Randomization
 Each time you press **R** to reset, a new random world is generated with:
-- Different pit locations
+- Different pit locations (~20 pits randomly placed)
 - Different Wumpus location
-- Same difficulty (~15% pit density)
+- Consistent difficulty (~8% pit density for good exploration)
 
 ## How the AI Works
 
