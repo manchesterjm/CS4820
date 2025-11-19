@@ -390,11 +390,22 @@ class WumpusAgent:
                 # Path toward frontier cell through safe visited neighbors
                 chosen_move = self._move_toward(frontier_cell, safe_neighbors)
 
+        # 5b. If still no move and no frontier, try calculated risk
+        took_risk = False
+        if chosen_move is None and not frontier_cell:
+            # Truly stuck - try taking a calculated risk
+            risky_move = self._choose_risky_move(neighbors)
+            if risky_move:
+                chosen_move = risky_move
+                took_risk = True
+
         # 6. Generate reasoning explanation
         unvisited_safe = [n for n in safe_neighbors if n not in self._state.visited]
 
         if chosen_move:
-            if unvisited_safe and chosen_move in unvisited_safe:
+            if took_risk:
+                reasoning = f"CALCULATED RISK: Taking educated guess on {chosen_move} (no proven safe moves)"
+            elif unvisited_safe and chosen_move in unvisited_safe:
                 reasoning = f"Exploring unvisited safe cell {chosen_move}"
             elif frontier_cell:
                 reasoning = f"Navigating toward frontier cell {frontier_cell} (has unexplored safe neighbors)"
@@ -404,7 +415,7 @@ class WumpusAgent:
             if safe_neighbors:
                 reasoning = f"Dead end: All reachable safe cells explored. Visited: {len(self._state.visited)} cells"
             else:
-                reasoning = "Blocked: No safe neighbors - cannot prove adjacent cells are safe"
+                reasoning = "Stuck: No safe moves and risks too high. Exploration complete."
 
         # 7. Create immutable step record
         step = AgentStep(
@@ -505,6 +516,76 @@ class WumpusAgent:
         )
 
         return best_neighbor
+
+    def _choose_risky_move(self, neighbors: List[Tuple[int, int]]) -> Optional[Tuple[int, int]]:
+        """
+        Choose a calculated risk when no safe moves are available.
+
+        Picks the neighbor with the lowest estimated risk based on:
+        - How many breeze/stench observations point to it
+        - Distance from known dangers
+
+        Args:
+            neighbors: All valid neighbors (may be unsafe)
+
+        Returns:
+            Least risky unvisited neighbor, or None
+        """
+        unvisited_neighbors = [n for n in neighbors if n not in self._state.visited]
+
+        if not unvisited_neighbors:
+            return None
+
+        # Get probable danger locations
+        probable_pits = self._state.kb.get_probable_pits()
+        probable_wumpus = self._state.kb.get_probable_wumpus()
+
+        # Calculate risk score for each unvisited neighbor
+        risk_scores = {}
+        for nx, ny in unvisited_neighbors:
+            risk = 0
+
+            # Count how many breezes point to this cell (pit risk)
+            breeze_count = 0
+            for visited_cell in self._state.visited:
+                vx, vy = visited_cell
+                percept = self._state.kb.facts
+                if f"B_{vx}_{vy}" in percept:
+                    # This cell has breeze, check if neighbor is adjacent
+                    if abs(nx - vx) + abs(ny - vy) == 1:
+                        breeze_count += 1
+
+            # Count how many stenches point to this cell (wumpus risk)
+            stench_count = 0
+            for visited_cell in self._state.visited:
+                vx, vy = visited_cell
+                percept = self._state.kb.facts
+                if f"S_{vx}_{vy}" in percept:
+                    if abs(nx - vx) + abs(ny - vy) == 1:
+                        stench_count += 1
+
+            # Risk score = breeze_count + stench_count * 2 (wumpus is worse)
+            risk = breeze_count + stench_count * 2
+
+            # If in probable sets, increase risk
+            if (nx, ny) in probable_pits:
+                risk += 3
+            if (nx, ny) in probable_wumpus:
+                risk += 5
+
+            risk_scores[(nx, ny)] = risk
+
+        # Choose cell with lowest risk (if risk is reasonable)
+        if risk_scores:
+            best_risky_move = min(risk_scores, key=risk_scores.get)
+            min_risk = risk_scores[best_risky_move]
+
+            # Only take risk if it's somewhat reasonable (risk <= 3)
+            # This means at most 1 breeze or part of probable set
+            if min_risk <= 3:
+                return best_risky_move
+
+        return None
 
 
 # ============================================================================

@@ -182,6 +182,23 @@ class WumpusGameVisual:
 
         pos = (grid_x, grid_y)
 
+        # Get agent's inferred probable locations
+        kb = self.agent.get_kb()
+        probable_pits = kb.get_probable_pits()
+        probable_wumpus = kb.get_probable_wumpus()
+
+        # Highlight probable danger cells (if not visited)
+        if pos not in visited:
+            if pos in probable_pits and pos in probable_wumpus:
+                # Both pit and wumpus possible - orange background
+                pygame.draw.rect(self.screen, (255, 200, 150), cell_rect)
+            elif pos in probable_pits:
+                # Probable pit - light red background
+                pygame.draw.rect(self.screen, (255, 220, 220), cell_rect)
+            elif pos in probable_wumpus:
+                # Probable wumpus - light purple background
+                pygame.draw.rect(self.screen, (255, 220, 255), cell_rect)
+
         # Highlight visited cells
         if pos in visited:
             pygame.draw.rect(self.screen, (220, 255, 220), cell_rect)
@@ -434,7 +451,7 @@ class WumpusGameVisual:
 
         # Legend
         y += 30
-        legend = "Legend: P=Pit, W=Wumpus, B=Breeze, S=Stench"
+        legend = "Legend: P=Pit, W=Wumpus, B=Breeze, S=Stench | Pink=Probable Pit, Purple=Probable Wumpus"
         legend_surf = SMALL_FONT.render(legend, True, WHITE)
         self.screen.blit(legend_surf, (20, y))
 

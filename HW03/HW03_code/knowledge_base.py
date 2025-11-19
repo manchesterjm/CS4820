@@ -285,6 +285,58 @@ class WumpusKB(HornKB):
         self.tell_fact(f"not_P_{x}_{y}")
         self.tell_fact(f"not_W_{x}_{y}")
 
+    def get_probable_pits(self) -> Set[Tuple[int, int]]:
+        """
+        Find cells that probably contain pits based on breeze observations.
+
+        Returns cells adjacent to breezes that aren't proven safe.
+        """
+        probable_pits = set()
+
+        # Find all cells with breezes
+        breeze_cells = [fact for fact in self.facts if fact.startswith("B_")]
+
+        for breeze_fact in breeze_cells:
+            # Parse "B_x_y" to get coordinates
+            parts = breeze_fact.split("_")
+            if len(parts) == 3:
+                x, y = int(parts[1]), int(parts[2])
+                neighbors = self._get_neighbors(x, y)
+
+                # Neighbors of breeze cells are probable pit locations
+                # unless proven safe
+                for nx, ny in neighbors:
+                    if f"not_P_{nx}_{ny}" not in self.facts:
+                        probable_pits.add((nx, ny))
+
+        return probable_pits
+
+    def get_probable_wumpus(self) -> Set[Tuple[int, int]]:
+        """
+        Find cells that probably contain Wumpus based on stench observations.
+
+        Returns cells adjacent to stenches that aren't proven safe.
+        """
+        probable_wumpus = set()
+
+        # Find all cells with stenches
+        stench_cells = [fact for fact in self.facts if fact.startswith("S_")]
+
+        for stench_fact in stench_cells:
+            # Parse "S_x_y" to get coordinates
+            parts = stench_fact.split("_")
+            if len(parts) == 3:
+                x, y = int(parts[1]), int(parts[2])
+                neighbors = self._get_neighbors(x, y)
+
+                # Neighbors of stench cells are probable wumpus locations
+                # unless proven safe
+                for nx, ny in neighbors:
+                    if f"not_W_{nx}_{ny}" not in self.facts:
+                        probable_wumpus.add((nx, ny))
+
+        return probable_wumpus
+
 
 # Utility functions for parsing propositional logic
 
