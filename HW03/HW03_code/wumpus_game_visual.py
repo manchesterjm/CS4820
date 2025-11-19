@@ -109,8 +109,9 @@ class WumpusGameVisual:
             if (x, y) != (1, 1)
         ]
 
-        # Add random pits (approximately 15% of grid)
-        num_pits = max(3, int(GRID_SIZE * GRID_SIZE * 0.15))
+        # Add random pits (approximately 8% of grid for better exploration)
+        # Lower density allows agent to explore larger connected safe regions
+        num_pits = max(3, int(GRID_SIZE * GRID_SIZE * 0.08))
         pit_positions = random.sample(available_positions, num_pits)
         for x, y in pit_positions:
             self.world.add_pit(x, y)
