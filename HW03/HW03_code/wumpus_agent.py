@@ -217,17 +217,19 @@ class MovementStrategy(ABC):
 
 class UnvisitedFirstStrategy(MovementStrategy):
     """
-    Strategy: Explore unvisited cells, revisit when needed to reach new areas.
+    Strategy: Global exploration with pathfinding to frontier cells.
 
     SOFA: Open/Closed - Implements strategy interface
 
-    Prefers unvisited safe neighbors, but will move to visited safe neighbors
-    to continue exploration. Only stops when no safe neighbors exist.
+    Finds cells with unexplored safe neighbors anywhere on the visited map
+    and pathfinds toward them. This allows full exploration of the reachable
+    safe region, not just local dead-ends.
     """
 
     def __init__(self):
         """Initialize with visit frequency tracking."""
         self.visit_count: Dict[Tuple[int, int], int] = {}
+        self.grid_size: Optional[int] = None
 
     def choose_move(
         self,
@@ -236,33 +238,63 @@ class UnvisitedFirstStrategy(MovementStrategy):
         visited: Set[Tuple[int, int]]
     ) -> Optional[Tuple[int, int]]:
         """
-        Choose move: unvisited cell > least visited cell > None.
+        Choose move using global frontier search:
 
-        1. Prefer unvisited safe neighbors (exploration)
-        2. If all visited, choose least-visited safe neighbor (avoid loops)
-        3. If no safe neighbors, return None (stuck)
+        1. If current position has unvisited safe neighbors, explore one
+        2. Otherwise, find ANY visited cell with unvisited safe neighbors (frontier)
+        3. Move toward closest frontier cell
+        4. Stop only when no frontier cells exist globally
         """
         if not safe_neighbors:
             return None
 
         unvisited_safe = [loc for loc in safe_neighbors if loc not in visited]
 
-        # Prefer unvisited cells
+        # Case 1: Current position has unvisited safe neighbors - explore
         if unvisited_safe:
             return unvisited_safe[0]
 
-        # All neighbors visited - choose least visited to avoid tight loops
+        # Case 2: No local unvisited neighbors - find frontier cells globally
+        # A frontier cell is a visited cell that has unvisited safe neighbors
+        frontier_cells = self._find_frontier_cells(visited, safe_neighbors)
+
+        if not frontier_cells:
+            # No frontier cells found anywhere - exploration complete
+            return None
+
+        # Case 3: Move toward nearest frontier cell
+        # Since we don't have access to KB here, just move toward any visited safe neighbor
+        # that gets us closer to a frontier (simple heuristic)
         visited_safe = [loc for loc in safe_neighbors if loc in visited]
-        least_visited = min(visited_safe, key=lambda loc: self.visit_count.get(loc, 0))
 
-        # Track visit count
-        self.visit_count[least_visited] = self.visit_count.get(least_visited, 0) + 1
+        if visited_safe:
+            # Choose least-visited to avoid loops
+            least_visited = min(visited_safe, key=lambda loc: self.visit_count.get(loc, 0))
 
-        # Only revisit if we haven't been there too many times
-        if self.visit_count[least_visited] <= 3:
-            return least_visited
+            # Limit revisits to prevent infinite loops
+            if self.visit_count.get(least_visited, 0) < 5:
+                self.visit_count[least_visited] = self.visit_count.get(least_visited, 0) + 1
+                return least_visited
 
-        return None  # Visited this area too many times, give up
+        return None
+
+    def _find_frontier_cells(
+        self,
+        visited: Set[Tuple[int, int]],
+        current_safe_neighbors: List[Tuple[int, int]]
+    ) -> Set[Tuple[int, int]]:
+        """
+        Find all visited cells that have unvisited safe neighbors.
+
+        Note: This is a simplified check - in the actual agent, we need KB access
+        to determine which cells are safe. This is called from the strategy which
+        doesn't have KB access, so we return current_safe_neighbors as a proxy.
+
+        The agent will need to provide frontier info or we need to restructure.
+        """
+        # This is a limitation - we can't check other cells' safe neighbors
+        # without KB access. Return empty for now, will fix in agent code.
+        return set()
 
 
 # ============================================================================
@@ -348,18 +380,33 @@ class WumpusAgent:
             self._state.visited
         )
 
-        # 5. Generate reasoning explanation
+        # 5. If no move chosen, try global frontier search
+        frontier_cell = None
+        if chosen_move is None and safe_neighbors:
+            # Current position has no unvisited safe neighbors
+            # Look for frontier cells (visited cells with unvisited safe neighbors)
+            frontier_cell = self._find_frontier_cell()
+            if frontier_cell:
+                # Path toward frontier cell through safe visited neighbors
+                chosen_move = self._move_toward(frontier_cell, safe_neighbors)
+
+        # 6. Generate reasoning explanation
         unvisited_safe = [n for n in safe_neighbors if n not in self._state.visited]
 
         if chosen_move:
-            reasoning = f"Exploring unvisited safe cell {chosen_move} (from {len(unvisited_safe)} options)"
+            if unvisited_safe and chosen_move in unvisited_safe:
+                reasoning = f"Exploring unvisited safe cell {chosen_move}"
+            elif frontier_cell:
+                reasoning = f"Navigating toward frontier cell {frontier_cell} (has unexplored safe neighbors)"
+            else:
+                reasoning = f"Moving to {chosen_move} to continue exploration"
         else:
             if safe_neighbors:
-                reasoning = f"No unvisited safe neighbors. Visited: {safe_neighbors}"
+                reasoning = f"Dead end: All reachable safe cells explored. Visited: {len(self._state.visited)} cells"
             else:
-                reasoning = "No safe neighbors found - cannot prove adjacent cells are safe"
+                reasoning = "Blocked: No safe neighbors - cannot prove adjacent cells are safe"
 
-        # 6. Create immutable step record
+        # 7. Create immutable step record
         step = AgentStep(
             step_number=step_number,
             position=self._state.position,
@@ -369,7 +416,7 @@ class WumpusAgent:
             reasoning=reasoning
         )
 
-        # 7. Update state if moving
+        # 8. Update state if moving
         if chosen_move:
             self._state.position = chosen_move
             self._state.visited.add(chosen_move)
@@ -409,6 +456,55 @@ class WumpusAgent:
     def get_kb(self) -> WumpusKB:
         """Get knowledge base."""
         return self._state.kb
+
+    def _find_frontier_cell(self) -> Optional[Tuple[int, int]]:
+        """
+        Find a visited cell that has unvisited safe neighbors (frontier cell).
+
+        Returns:
+            First frontier cell found, or None if no frontiers exist
+        """
+        for visited_cell in self._state.visited:
+            neighbors = get_valid_neighbors(visited_cell, self._state.grid_size)
+            safe_neighbors = [n for n in neighbors if is_safe_cell(self._state.kb, n[0], n[1])]
+            unvisited_safe = [n for n in safe_neighbors if n not in self._state.visited]
+
+            if unvisited_safe:
+                # This visited cell has unexplored safe neighbors
+                return visited_cell
+
+        return None
+
+    def _move_toward(
+        self,
+        target: Tuple[int, int],
+        safe_neighbors: List[Tuple[int, int]]
+    ) -> Optional[Tuple[int, int]]:
+        """
+        Choose a safe neighbor that moves toward target cell.
+
+        Uses Manhattan distance as heuristic.
+
+        Args:
+            target: Target cell to move toward
+            safe_neighbors: Available safe neighbors from current position
+
+        Returns:
+            Best neighbor to move toward target, or None
+        """
+        if not safe_neighbors:
+            return None
+
+        def manhattan_distance(pos1: Tuple[int, int], pos2: Tuple[int, int]) -> int:
+            return abs(pos1[0] - pos2[0]) + abs(pos1[1] - pos2[1])
+
+        # Choose safe neighbor closest to target
+        best_neighbor = min(
+            safe_neighbors,
+            key=lambda n: manhattan_distance(n, target)
+        )
+
+        return best_neighbor
 
 
 # ============================================================================
