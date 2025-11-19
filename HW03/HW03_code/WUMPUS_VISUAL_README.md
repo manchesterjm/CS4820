@@ -42,12 +42,20 @@ This is an interactive pygame visualization of the Wumpus World agent with real-
 
 ### Python Dependencies
 
+**For Python 3.12+ (Recommended):**
+```bash
+pip install pygame-ce
+```
+
+**For Python 3.11 and earlier:**
 ```bash
 pip install pygame
 ```
 
+**Note**: If you encounter build errors with `pygame` on newer Python versions (3.12+), use `pygame-ce` (pygame community edition) which has pre-built wheels for Python 3.13+.
+
 ### System Requirements
-- Python 3.7+
+- Python 3.7+ (3.13+ supported via pygame-ce)
 - Display capable of 1100×700 window
 - Keyboard for controls
 
