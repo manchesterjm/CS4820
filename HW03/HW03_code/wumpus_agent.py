@@ -369,9 +369,12 @@ class WumpusAgent:
             percept.stench
         )
 
-        # 3. Find safe neighbors
+        # 3. Find safe neighbors (excluding current position)
         neighbors = get_valid_neighbors(self._state.position, self._state.grid_size)
-        safe_neighbors = [n for n in neighbors if is_safe_cell(self._state.kb, n[0], n[1])]
+        safe_neighbors = [
+            n for n in neighbors
+            if is_safe_cell(self._state.kb, n[0], n[1]) and n != self._state.position
+        ]
 
         # 4. Choose move using strategy
         chosen_move = self._strategy.choose_move(
@@ -398,6 +401,10 @@ class WumpusAgent:
             if risky_move:
                 chosen_move = risky_move
                 took_risk = True
+
+        # 5c. Safety check: never move to current position
+        if chosen_move == self._state.position:
+            chosen_move = None
 
         # 6. Generate reasoning explanation
         unvisited_safe = [n for n in safe_neighbors if n not in self._state.visited]
@@ -476,6 +483,10 @@ class WumpusAgent:
             First frontier cell found, or None if no frontiers exist
         """
         for visited_cell in self._state.visited:
+            # Skip current position - we already checked its neighbors
+            if visited_cell == self._state.position:
+                continue
+
             neighbors = get_valid_neighbors(visited_cell, self._state.grid_size)
             safe_neighbors = [n for n in neighbors if is_safe_cell(self._state.kb, n[0], n[1])]
             unvisited_safe = [n for n in safe_neighbors if n not in self._state.visited]
