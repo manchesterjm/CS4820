@@ -442,6 +442,8 @@ class WumpusAgentState:
     game_won: bool = False
     confirmed_wumpus_location: Optional[Tuple[int, int]] = None  # Triangulated wumpus
     confirmed_pit_locations: Set[Tuple[int, int]] = field(default_factory=set)  # Logically confirmed pits
+    recent_positions: List[Tuple[int, int]] = field(default_factory=list)  # Track recent moves for oscillation detection
+    blocked_frontiers: Set[Tuple[int, int]] = field(default_factory=set)  # Frontier cells we've tried but can't reach
 
 
 class WumpusAgent:
@@ -576,7 +578,16 @@ class WumpusAgent:
                 self._state.visited
             )
 
-        # 11. If no move chosen, try global frontier search
+        # 11. Detect oscillation and mark blocked frontiers
+        oscillating = self._detect_oscillation()
+        if oscillating:
+            # We're stuck in a loop trying to reach a frontier
+            # Find which frontier we're currently targeting and mark it as blocked
+            current_frontier = self._find_frontier_cell()
+            if current_frontier:
+                self._state.blocked_frontiers.add(current_frontier)
+
+        # 12. If no move chosen, try global frontier search
         frontier_cell = None
         if chosen_move is None and safe_neighbors:
             # Current position has no unvisited safe neighbors
@@ -586,7 +597,7 @@ class WumpusAgent:
                 # Path toward frontier cell through safe visited neighbors
                 chosen_move = self._move_toward(frontier_cell, safe_neighbors)
 
-        # 12. If still no move and no frontier, try calculated risk
+        # 13. If still no move and no frontier, try calculated risk
         took_risk = False
         if chosen_move is None and not frontier_cell:
             # Truly stuck - try taking a calculated risk
@@ -595,15 +606,15 @@ class WumpusAgent:
                 chosen_move = risky_move
                 took_risk = True
 
-        # 13. Safety check: never move to current position
+        # 14. Safety check: never move to current position
         if chosen_move == self._state.position:
             chosen_move = None
 
-        # 14. Check win condition
+        # 15. Check win condition
         if self._state.has_gold and self._state.wumpus_killed:
             self._state.game_won = True
 
-        # 15. Generate reasoning explanation
+        # 16. Generate reasoning explanation
         unvisited_safe = [n for n in safe_neighbors if n not in self._state.visited]
 
         reasoning_parts = []
@@ -655,6 +666,15 @@ class WumpusAgent:
 
         # 17. Update state if moving
         if chosen_move:
+            # Track position for oscillation detection (keep last 8)
+            self._state.recent_positions.append(self._state.position)
+            if len(self._state.recent_positions) > 8:
+                self._state.recent_positions.pop(0)
+
+            # Update previous position
+            self._state.previous_position = self._state.position
+
+            # Move to new position
             self._state.position = chosen_move
             self._state.visited.add(chosen_move)
             self._state.kb.mark_safe(*chosen_move)
@@ -694,9 +714,36 @@ class WumpusAgent:
         """Get knowledge base."""
         return self._state.kb
 
+    def _detect_oscillation(self) -> Optional[Tuple[int, int]]:
+        """
+        Detect if agent is stuck in an oscillation loop.
+
+        Looks at last 6 positions to detect if we're cycling between
+        the same 2-3 cells repeatedly.
+
+        Returns:
+            The frontier cell we're stuck trying to reach, or None
+        """
+        if len(self._state.recent_positions) < 6:
+            return None
+
+        # Check last 6 positions for simple 2-cell oscillation: A->B->A->B->A->B
+        last_6 = self._state.recent_positions[-6:]
+        if (last_6[0] == last_6[2] == last_6[4] and
+            last_6[1] == last_6[3] == last_6[5] and
+            last_6[0] != last_6[1]):
+            # We're oscillating between two cells!
+            # This usually means we're trying to reach a blocked frontier
+            # Return current position as signal (caller should find frontier context)
+            return self._state.position
+
+        return None
+
     def _find_frontier_cell(self) -> Optional[Tuple[int, int]]:
         """
         Find a visited cell that has unvisited safe neighbors (frontier cell).
+
+        Skips frontiers that we've already tried to reach but failed (blocked).
 
         Returns:
             First frontier cell found, or None if no frontiers exist
@@ -704,6 +751,10 @@ class WumpusAgent:
         for visited_cell in self._state.visited:
             # Skip current position - we already checked its neighbors
             if visited_cell == self._state.position:
+                continue
+
+            # Skip frontiers we've already tried and failed to reach
+            if visited_cell in self._state.blocked_frontiers:
                 continue
 
             neighbors = get_valid_neighbors(visited_cell, self._state.grid_size)
@@ -724,7 +775,8 @@ class WumpusAgent:
         """
         Choose a safe neighbor that moves toward target cell.
 
-        Uses Manhattan distance as heuristic.
+        Uses Manhattan distance as heuristic, avoiding previous position
+        to prevent oscillation.
 
         Args:
             target: Target cell to move toward
@@ -739,9 +791,17 @@ class WumpusAgent:
         def manhattan_distance(pos1: Tuple[int, int], pos2: Tuple[int, int]) -> int:
             return abs(pos1[0] - pos2[0]) + abs(pos1[1] - pos2[1])
 
+        # Filter out previous position to avoid immediate backtracking
+        candidates = [n for n in safe_neighbors if n != self._state.previous_position]
+
+        # If all neighbors lead back to previous position, we're stuck
+        # In this case, allow backtracking as last resort
+        if not candidates:
+            candidates = safe_neighbors
+
         # Choose safe neighbor closest to target
         best_neighbor = min(
-            safe_neighbors,
+            candidates,
             key=lambda n: manhattan_distance(n, target)
         )
 
