@@ -440,6 +440,7 @@ class WumpusAgentState:
     alive: bool = True
     wumpus_killed: bool = False
     game_won: bool = False
+    confirmed_wumpus_location: Optional[Tuple[int, int]] = None  # Triangulated wumpus
 
 
 class WumpusAgent:
@@ -522,16 +523,24 @@ class WumpusAgent:
 
         # 6. Try to triangulate wumpus exact location
         wumpus_location = self._infer_wumpus_location()
+        if wumpus_location:
+            self._state.confirmed_wumpus_location = wumpus_location
 
-        # 7. If have gold and know wumpus location, shoot it!
+        # 7. If have gold and know wumpus location, try to get in position to shoot
+        shot_taken = False
         if self._state.has_gold and not self._state.wumpus_killed and wumpus_location and self._state.has_arrow:
+            # Check if we can shoot from current position
             shot_direction = self._get_shot_direction(wumpus_location)
             if shot_direction:
+                # We're aligned! Shoot now!
                 hit = world.shoot_arrow(self._state.position, shot_direction)
                 if hit:
                     self._state.wumpus_killed = True
                     self._state.game_won = True  # Have gold + killed wumpus = WIN!
                 self._state.has_arrow = False
+                shot_taken = True
+            # If not aligned, agent should navigate to shooting position
+            # This will be handled in movement logic below
 
         # 8. Find safe neighbors (excluding current position)
         neighbors = get_valid_neighbors(self._state.position, self._state.grid_size)
@@ -540,14 +549,24 @@ class WumpusAgent:
             if is_safe_cell(self._state.kb, n[0], n[1]) and n != self._state.position
         ]
 
-        # 9. Choose move using strategy
-        chosen_move = self._strategy.choose_move(
-            self._state.position,
-            safe_neighbors,
-            self._state.visited
-        )
+        # 9. Priority: If have gold and know wumpus, navigate to shooting position
+        chosen_move = None
+        if (self._state.has_gold and wumpus_location and not self._state.wumpus_killed
+            and self._state.has_arrow and not shot_taken):
+            # Try to find a safe cell from which we can shoot the wumpus
+            shooting_position = self._find_shooting_position(wumpus_location, safe_neighbors)
+            if shooting_position:
+                chosen_move = shooting_position
 
-        # 10. If no move chosen, try global frontier search
+        # 10. Choose move using strategy (if not already choosing shooting position)
+        if chosen_move is None:
+            chosen_move = self._strategy.choose_move(
+                self._state.position,
+                safe_neighbors,
+                self._state.visited
+            )
+
+        # 11. If no move chosen, try global frontier search
         frontier_cell = None
         if chosen_move is None and safe_neighbors:
             # Current position has no unvisited safe neighbors
@@ -557,7 +576,7 @@ class WumpusAgent:
                 # Path toward frontier cell through safe visited neighbors
                 chosen_move = self._move_toward(frontier_cell, safe_neighbors)
 
-        # 11. If still no move and no frontier, try calculated risk
+        # 12. If still no move and no frontier, try calculated risk
         took_risk = False
         if chosen_move is None and not frontier_cell:
             # Truly stuck - try taking a calculated risk
@@ -566,15 +585,15 @@ class WumpusAgent:
                 chosen_move = risky_move
                 took_risk = True
 
-        # 12. Safety check: never move to current position
+        # 13. Safety check: never move to current position
         if chosen_move == self._state.position:
             chosen_move = None
 
-        # 13. Check win condition
+        # 14. Check win condition
         if self._state.has_gold and self._state.wumpus_killed:
             self._state.game_won = True
 
-        # 14. Generate reasoning explanation
+        # 15. Generate reasoning explanation
         unvisited_safe = [n for n in safe_neighbors if n not in self._state.visited]
 
         reasoning_parts = []
@@ -605,9 +624,13 @@ class WumpusAgent:
             else:
                 reasoning_parts.append("Stuck: No safe moves, risks too high")
 
+        # Add wumpus location info to reasoning
+        if wumpus_location:
+            reasoning_parts.insert(0, f"WUMPUS LOCATED at {wumpus_location}!")
+
         reasoning = " | ".join(reasoning_parts) if reasoning_parts else "Exploring"
 
-        # 15. Create immutable step record
+        # 16. Create immutable step record
         step = AgentStep(
             step_number=step_number,
             position=self._state.position,
@@ -617,7 +640,7 @@ class WumpusAgent:
             reasoning=reasoning
         )
 
-        # 16. Update state if moving
+        # 17. Update state if moving
         if chosen_move:
             self._state.position = chosen_move
             self._state.visited.add(chosen_move)
@@ -858,6 +881,32 @@ class WumpusAgent:
                 return 'left'
 
         # Target not aligned - can't shoot straight
+        return None
+
+    def _find_shooting_position(
+        self,
+        target: Tuple[int, int],
+        safe_neighbors: List[Tuple[int, int]]
+    ) -> Optional[Tuple[int, int]]:
+        """
+        Find a safe neighbor that allows shooting at target.
+
+        Args:
+            target: Target wumpus location
+            safe_neighbors: Available safe neighbors from current position
+
+        Returns:
+            Safe neighbor aligned with target, or None
+        """
+        for neighbor in safe_neighbors:
+            nx, ny = neighbor
+            tx, ty = target
+
+            # Check if this neighbor is aligned with target
+            if nx == tx or ny == ty:
+                # Aligned! This is a valid shooting position
+                return neighbor
+
         return None
 
 

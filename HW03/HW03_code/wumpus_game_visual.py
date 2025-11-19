@@ -19,6 +19,7 @@ import pygame
 import sys
 import time
 import random
+import datetime
 from typing import Tuple, Set, Optional, List
 from wumpus_agent import (
     WumpusWorld, WumpusAgent, AgentStep, Percept,
@@ -93,6 +94,11 @@ class WumpusGameVisual:
         self.anim_progress = 0.0
         self.anim_speed = 0.05
 
+        # Logging
+        timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        self.log_filename = f"wumpus_game_log_{timestamp}.txt"
+        self.log_file = None
+
         # Initialize game
         self.reset_game()
 
@@ -157,6 +163,18 @@ class WumpusGameVisual:
         self.game_over = False
         self.animating = False
 
+        # Start logging
+        self.log_file = open(self.log_filename, 'w', encoding='utf-8')
+        self.log_file.write(f"=== WUMPUS WORLD GAME LOG ===\n")
+        self.log_file.write(f"Timestamp: {datetime.datetime.now()}\n")
+        self.log_file.write(f"Grid Size: {GRID_SIZE}x{GRID_SIZE}\n\n")
+        self.log_file.write(f"=== WORLD SETUP ===\n")
+        self.log_file.write(f"Pits: {sorted(list(self.world.pits))}\n")
+        self.log_file.write(f"Wumpus: {self.world.wumpus}\n")
+        self.log_file.write(f"Gold: {self.world.gold}\n")
+        self.log_file.write(f"\n=== AGENT EXECUTION ===\n\n")
+        self.log_file.flush()
+
     def grid_to_screen(self, grid_x: int, grid_y: int) -> Tuple[int, int]:
         """
         Convert grid coordinates to screen pixel coordinates (center of cell).
@@ -213,9 +231,14 @@ class WumpusGameVisual:
         kb = self.agent.get_kb()
         probable_pits = kb.get_probable_pits()
         probable_wumpus = kb.get_probable_wumpus()
+        confirmed_wumpus = self.agent._state.confirmed_wumpus_location
+
+        # Highlight CONFIRMED wumpus location with bright red/orange
+        if confirmed_wumpus and pos == confirmed_wumpus:
+            pygame.draw.rect(self.screen, (255, 100, 0), cell_rect)  # Bright orange-red
 
         # Highlight probable danger cells (if not visited)
-        if pos not in visited:
+        elif pos not in visited:
             if pos in probable_pits and pos in probable_wumpus:
                 # Both pit and wumpus possible - orange background
                 pygame.draw.rect(self.screen, (255, 200, 150), cell_rect)
@@ -531,7 +554,7 @@ class WumpusGameVisual:
 
         # Legend
         y += 30
-        legend = "Legend: P=Pit, W=Wumpus, G=Gold, B=Breeze, S=Stench | Pink=Probable Pit, Purple=Probable Wumpus"
+        legend = "Legend: P=Pit, W=Wumpus, G=Gold, B=Breeze, S=Stench | Pink=Probable Pit, Purple=Probable Wumpus, ORANGE=Confirmed Wumpus!"
         legend_surf = SMALL_FONT.render(legend, True, WHITE)
         self.screen.blit(legend_surf, (20, y))
 
@@ -545,21 +568,74 @@ class WumpusGameVisual:
         self.steps_history.append(step)
         self.current_step += 1
 
+        # Log this step
+        self.log_step(step)
+
         # Check if agent died or won
         agent_state = self.agent._state
         if not agent_state.alive or agent_state.game_won:
             self.game_over = True
+            self.log_game_end(agent_state)
             return
 
         # Check if agent can continue
         if step.chosen_move is None:
             self.game_over = True
+            self.log_game_end(agent_state)
         else:
             # Start animation
             self.animating = True
             self.anim_start_pos = step.position
             self.anim_end_pos = step.chosen_move
             self.anim_progress = 0.0
+
+    def log_step(self, step: AgentStep):
+        """Log a single agent step to file."""
+        if not self.log_file:
+            return
+
+        agent_state = self.agent._state
+        self.log_file.write(f"Step {step.step_number}:\n")
+        self.log_file.write(f"  Position: {step.position}\n")
+        self.log_file.write(f"  Percepts: {step.percept}\n")
+        self.log_file.write(f"  Safe neighbors: {list(step.safe_neighbors)}\n")
+        self.log_file.write(f"  Chosen move: {step.chosen_move}\n")
+        self.log_file.write(f"  Reasoning: {step.reasoning}\n")
+        self.log_file.write(f"  Agent state: has_gold={agent_state.has_gold}, ")
+        self.log_file.write(f"has_arrow={agent_state.has_arrow}, ")
+        self.log_file.write(f"wumpus_confirmed={agent_state.confirmed_wumpus_location}\n")
+        self.log_file.write(f"  Cells visited so far: {len(agent_state.visited)}\n")
+        self.log_file.write(f"\n")
+        self.log_file.flush()
+
+    def log_game_end(self, agent_state):
+        """Log game end statistics."""
+        if not self.log_file:
+            return
+
+        self.log_file.write(f"\n=== GAME END ===\n")
+        self.log_file.write(f"Total steps: {self.current_step}\n")
+        self.log_file.write(f"Cells explored: {len(agent_state.visited)}/{GRID_SIZE*GRID_SIZE}\n")
+        self.log_file.write(f"Coverage: {len(agent_state.visited)/(GRID_SIZE*GRID_SIZE)*100:.1f}%\n")
+        self.log_file.write(f"Has gold: {agent_state.has_gold}\n")
+        self.log_file.write(f"Wumpus killed: {agent_state.wumpus_killed}\n")
+        self.log_file.write(f"Game won: {agent_state.game_won}\n")
+        self.log_file.write(f"Agent alive: {agent_state.alive}\n")
+
+        if agent_state.game_won:
+            self.log_file.write(f"\nRESULT: VICTORY!\n")
+        elif not agent_state.alive:
+            if agent_state.position in self.world.pits:
+                self.log_file.write(f"\nRESULT: DEFEAT - Fell into pit at {agent_state.position}\n")
+            else:
+                self.log_file.write(f"\nRESULT: DEFEAT - Eaten by Wumpus at {agent_state.position}\n")
+        else:
+            self.log_file.write(f"\nRESULT: INCOMPLETE - Agent stopped exploring\n")
+
+        self.log_file.write(f"\nLog saved to: {self.log_filename}\n")
+        self.log_file.flush()
+        self.log_file.close()
+        self.log_file = None
 
     def update_animation(self):
         """Update animation state."""
