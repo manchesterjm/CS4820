@@ -232,12 +232,17 @@ class WumpusGameVisual:
         probable_pits = kb.get_probable_pits()
         probable_wumpus = kb.get_probable_wumpus()
         confirmed_wumpus = self.agent._state.confirmed_wumpus_location
+        confirmed_pits = self.agent._state.confirmed_pit_locations
 
-        # Highlight CONFIRMED wumpus location with bright red/orange
+        # Highlight CONFIRMED locations with bright colors
         if confirmed_wumpus and pos == confirmed_wumpus:
-            pygame.draw.rect(self.screen, (255, 100, 0), cell_rect)  # Bright orange-red
+            # Confirmed wumpus - bright orange-red
+            pygame.draw.rect(self.screen, (255, 100, 0), cell_rect)
+        elif pos in confirmed_pits:
+            # Confirmed pit - dark red
+            pygame.draw.rect(self.screen, (180, 0, 0), cell_rect)
 
-        # Highlight probable danger cells (if not visited)
+        # Highlight probable danger cells (if not visited and not confirmed)
         elif pos not in visited:
             if pos in probable_pits and pos in probable_wumpus:
                 # Both pit and wumpus possible - orange background
@@ -554,7 +559,7 @@ class WumpusGameVisual:
 
         # Legend
         y += 30
-        legend = "Legend: P=Pit, W=Wumpus, G=Gold, B=Breeze, S=Stench | Pink=Probable Pit, Purple=Probable Wumpus, ORANGE=Confirmed Wumpus!"
+        legend = "Legend: P=Pit, W=Wumpus, G=Gold, B=Breeze, S=Stench | Pink=Probable Pit, DARK RED=Confirmed Pit!, ORANGE=Confirmed Wumpus!"
         legend_surf = SMALL_FONT.render(legend, True, WHITE)
         self.screen.blit(legend_surf, (20, y))
 
@@ -603,7 +608,8 @@ class WumpusGameVisual:
         self.log_file.write(f"  Reasoning: {step.reasoning}\n")
         self.log_file.write(f"  Agent state: has_gold={agent_state.has_gold}, ")
         self.log_file.write(f"has_arrow={agent_state.has_arrow}, ")
-        self.log_file.write(f"wumpus_confirmed={agent_state.confirmed_wumpus_location}\n")
+        self.log_file.write(f"wumpus_confirmed={agent_state.confirmed_wumpus_location}, ")
+        self.log_file.write(f"pits_confirmed={sorted(list(agent_state.confirmed_pit_locations))}\n")
         self.log_file.write(f"  Cells visited so far: {len(agent_state.visited)}\n")
         self.log_file.write(f"\n")
         self.log_file.flush()
@@ -621,6 +627,15 @@ class WumpusGameVisual:
         self.log_file.write(f"Wumpus killed: {agent_state.wumpus_killed}\n")
         self.log_file.write(f"Game won: {agent_state.game_won}\n")
         self.log_file.write(f"Agent alive: {agent_state.alive}\n")
+        self.log_file.write(f"\n=== LOGICAL REASONING STATS ===\n")
+        self.log_file.write(f"Pits confirmed by logic: {len(agent_state.confirmed_pit_locations)}/{len(self.world.pits)}\n")
+        self.log_file.write(f"Confirmed pit locations: {sorted(list(agent_state.confirmed_pit_locations))}\n")
+        self.log_file.write(f"Actual pit locations: {sorted(list(self.world.pits))}\n")
+        correct_pits = agent_state.confirmed_pit_locations.intersection(self.world.pits)
+        self.log_file.write(f"Correctly identified pits: {len(correct_pits)}\n")
+        if len(agent_state.confirmed_pit_locations) > 0:
+            accuracy = len(correct_pits) / len(agent_state.confirmed_pit_locations) * 100
+            self.log_file.write(f"Pit identification accuracy: {accuracy:.1f}%\n")
 
         if agent_state.game_won:
             self.log_file.write(f"\nRESULT: VICTORY!\n")

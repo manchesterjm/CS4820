@@ -441,6 +441,7 @@ class WumpusAgentState:
     wumpus_killed: bool = False
     game_won: bool = False
     confirmed_wumpus_location: Optional[Tuple[int, int]] = None  # Triangulated wumpus
+    confirmed_pit_locations: Set[Tuple[int, int]] = field(default_factory=set)  # Logically confirmed pits
 
 
 class WumpusAgent:
@@ -520,6 +521,15 @@ class WumpusAgent:
             percept.breeze,
             percept.stench
         )
+
+        # 5b. Use logical reasoning to find confirmed pit locations
+        confirmed_pits = self._state.kb.get_confirmed_pits()
+        for pit_x, pit_y in confirmed_pits:
+            if (pit_x, pit_y) not in self._state.confirmed_pit_locations:
+                # Newly confirmed pit! Add to our tracking set
+                self._state.confirmed_pit_locations.add((pit_x, pit_y))
+                # Important: Don't mark as safe!
+                # The pit is confirmed to exist, so we want to AVOID it
 
         # 6. Try to triangulate wumpus exact location
         wumpus_location = self._infer_wumpus_location()
@@ -624,7 +634,10 @@ class WumpusAgent:
             else:
                 reasoning_parts.append("Stuck: No safe moves, risks too high")
 
-        # Add wumpus location info to reasoning
+        # Add confirmed locations info to reasoning
+        if confirmed_pits:
+            pit_list = ", ".join(str(p) for p in sorted(confirmed_pits))
+            reasoning_parts.insert(0, f"PITS CONFIRMED at {pit_list}")
         if wumpus_location:
             reasoning_parts.insert(0, f"WUMPUS LOCATED at {wumpus_location}!")
 
