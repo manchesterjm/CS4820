@@ -934,8 +934,9 @@ class WumpusAgent:
         for fact in self._state.kb.facts:
             if fact.startswith("not_W_"):
                 parts = fact.split("_")
-                if len(parts) == 3:
-                    x, y = int(parts[1]), int(parts[2])
+                # Format: "not_W_x_y" splits into ["not", "W", "x", "y"] = 4 parts
+                if len(parts) == 4:
+                    x, y = int(parts[2]), int(parts[3])
                     possible_wumpus.discard((x, y))
 
         # IMPROVEMENT: Use negative stench observations to narrow down further
@@ -944,16 +945,16 @@ class WumpusAgent:
         for fact in self._state.kb.facts:
             if fact.startswith("not_S_"):
                 parts = fact.split("_")
-                if len(parts) == 3:
-                    x, y = int(parts[1]), int(parts[2])
+                # Format: "not_S_x_y" splits into ["not", "S", "x", "y"] = 4 parts
+                if len(parts) == 4:
+                    x, y = int(parts[2]), int(parts[3])
                     cells_without_stench.append((x, y))
 
         # For each no-stench cell, eliminate its neighbors from candidates
         for no_stench_cell in cells_without_stench:
             neighbors = set(get_valid_neighbors(no_stench_cell, self._state.grid_size))
             for neighbor in neighbors:
-                if neighbor in possible_wumpus:
-                    possible_wumpus.discard(neighbor)
+                possible_wumpus.discard(neighbor)
 
         # If exactly one location remains, that's the wumpus!
         if len(possible_wumpus) == 1:
