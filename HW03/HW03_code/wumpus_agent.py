@@ -566,10 +566,16 @@ class WumpusAgent:
         chosen_move = None
         if (self._state.has_gold and wumpus_location and not self._state.wumpus_killed
             and self._state.has_arrow and not shot_taken):
-            # Try to find a safe cell from which we can shoot the wumpus
-            shooting_position = self._find_shooting_position(wumpus_location, safe_neighbors)
-            if shooting_position:
-                chosen_move = shooting_position
+            # Try to find a safe VISITED cell that's aligned with wumpus for shooting
+            aligned_positions = self._find_aligned_shooting_positions(wumpus_location)
+            if aligned_positions:
+                # Path toward the closest aligned position
+                chosen_move = self._move_toward(aligned_positions[0], safe_neighbors)
+            else:
+                # No aligned position in visited cells yet - try immediate neighbor
+                shooting_position = self._find_shooting_position(wumpus_location, safe_neighbors)
+                if shooting_position:
+                    chosen_move = shooting_position
 
         # 10. Choose move using strategy (if not already choosing shooting position)
         if chosen_move is None:
@@ -993,6 +999,38 @@ class WumpusAgent:
 
         # Target not aligned - can't shoot straight
         return None
+
+    def _find_aligned_shooting_positions(self, target: Tuple[int, int]) -> List[Tuple[int, int]]:
+        """
+        Find all safe VISITED cells that are aligned with target for shooting.
+
+        Agent can shoot in straight lines (up/down/left/right), so we need
+        a cell in the same row OR same column as the target.
+
+        Args:
+            target: Target wumpus location (x, y)
+
+        Returns:
+            List of visited safe cells aligned with target, sorted by distance
+        """
+        tx, ty = target
+        aligned = []
+
+        # Check all visited cells
+        for cell in self._state.visited:
+            x, y = cell
+            # Skip the target itself
+            if cell == target:
+                continue
+            # Check if aligned (same row OR same column)
+            if x == tx or y == ty:
+                # Also verify it's safe (no confirmed pit there)
+                if cell not in self._state.confirmed_pit_locations:
+                    aligned.append(cell)
+
+        # Sort by Manhattan distance to target (closest first)
+        aligned.sort(key=lambda c: abs(c[0] - tx) + abs(c[1] - ty))
+        return aligned
 
     def _find_shooting_position(
         self,
