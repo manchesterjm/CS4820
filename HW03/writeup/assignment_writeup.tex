@@ -36,7 +36,7 @@
 \maketitle
 
 \begin{abstract}
-This report presents implementations of knowledge-based agents using propositional logic and Horn clause inference. The work includes (Part A) propositional logic equivalences and model checking, (Part B) forward chaining inference for Horn clauses, (Part C) a Wumpus World reasoning agent that makes safe moves based on percepts, and (Part D) resolution-based theorem proving. All implementations follow SOFA (Single Responsibility, Open/Closed, Functional, Abstraction) software engineering principles for improved maintainability and extensibility. Testing demonstrates correct logical reasoning with inference completing in under 1ms for small knowledge bases and the Wumpus agent successfully navigating a 4$\times$4 grid.
+This report presents implementations of knowledge-based agents using propositional logic and Horn clause inference. The work includes (Part A) propositional logic equivalences and model checking, (Part B) forward chaining inference for Horn clauses, (Part C) a Wumpus World reasoning agent that makes safe moves based on percepts, and (Part D) resolution-based theorem proving. Testing demonstrates correct logical reasoning with inference completing in under 1ms for small knowledge bases and the Wumpus agent successfully navigating a 4$\times$4 grid.
 \end{abstract}
 
 \section{Introduction}
@@ -45,7 +45,7 @@ Knowledge-based agents use explicit representations of knowledge to make decisio
 
 The Wumpus World (what is it?) is a grid-based environment where an agent must navigate safely by reasoning about pits and a monster (the Wumpus) using only local percepts like breezes (near pits) and stenches (near Wumpus). The agent builds a knowledge base from observations and uses logical inference to determine which neighboring cells are safe to visit.
 
-This work implements four key components: (1) propositional logic evaluation with truth tables for verifying logical equivalences, (2) forward chaining inference for Horn clauses with O(n) time complexity, (3) a knowledge-based Wumpus agent that performs two-step reasoning, and (4) resolution-based theorem proving using conjunctive normal form (CNF). All implementations were refactored using SOFA principles to separate concerns between computation, presentation, and orchestration.
+This work implements four key components: (1) propositional logic evaluation with truth tables for verifying logical equivalences, (2) forward chaining inference for Horn clauses with O(n) time complexity, (3) a knowledge-based Wumpus agent that performs two-step reasoning, and (4) resolution-based theorem proving using conjunctive normal form (CNF).
 
 \section{Part A: Propositional Logic}
 
@@ -432,139 +432,6 @@ Result: NOT ENTAILED (0.000043s)
 
 Resolution has exponential worst-case complexity: O($2^n$) clauses can be generated for n symbols. However, for small problems (n $<$ 10), resolution completes quickly. The implementation includes a 100-iteration limit to prevent infinite loops on complex formulas.
 
-\section{SOFA Refactoring}
-
-All implementations follow SOFA software engineering principles:
-
-\subsection{Single Responsibility Principle (SRP)}
-
-Each class/function has one reason to change. Example refactoring:
-
-\textbf{Before:} Model checking function mixed computation and printing
-\begin{lstlisting}[language=Python]
-def model_check(kb, query, symbols, verbose=True):
-    # MIXING: computation + I/O
-    for model in all_models(symbols):
-        if kb_satisfied(model):
-            if verbose:
-                print(f"Model: {model}")  # I/O
-            if not satisfies(query, model):
-                counterexamples.append(model)
-\end{lstlisting}
-
-\textbf{After:} Separated into pure computation and presentation
-
-\begin{lstlisting}[language=Python]
-# PURE: Computation only
-def model_check_pure(kb, query, symbols):
-    """No I/O, returns immutable results."""
-    satisfying = []
-    counterex = []
-    for model in generate_all_models(symbols):
-        if model.satisfies_kb(kb):
-            satisfying.append(model)
-            if not evaluate(query, model):
-                counterex.append(model)
-    return entailed, satisfying, counterex
-
-# SEPARATE: Presentation
-class ModelCheckPrinter:
-    @staticmethod
-    def print_results(kb, query, ...):
-        print("=== Model Checking ===")
-        # Only formatting, no logic
-\end{lstlisting}
-
-Benefits: Logic testable without I/O, presentation can change independently.
-
-\subsection{Open/Closed Principle (OCP)}
-
-Open for extension, closed for modification. Used strategy pattern for algorithms:
-
-\begin{lstlisting}[language=Python]
-class HornInferenceStrategy(ABC):
-    @abstractmethod
-    def infer(self, kb, query):
-        pass
-
-class ForwardChainingStrategy(HornInferenceStrategy):
-    def infer(self, kb, query):
-        # Forward chaining implementation
-
-class BackwardChainingStrategy(HornInferenceStrategy):
-    def infer(self, kb, query):
-        # Backward chaining implementation
-
-# Can add new strategies without modifying engine
-engine = HornInferenceEngine(kb, ForwardChainingStrategy())
-\end{lstlisting}
-
-Benefits: Easy to add new algorithms (e.g., DPLL, WalkSAT) without changing existing code.
-
-\subsection{Functional Programming (FP)}
-
-Immutable data structures and pure functions:
-
-\begin{lstlisting}[language=Python]
-@dataclass(frozen=True)  # Immutable!
-class InferenceStep:
-    iteration: int
-    fact_processed: str
-    new_facts_derived: Tuple[str, ...]  # Tuple, not list
-    rule_applications: Tuple[...]
-
-# Pure function - no side effects
-def resolve_clauses(c1: Clause, c2: Clause):
-    """Same inputs always produce same output."""
-    for lit1 in c1.literals:
-        if lit1.negate() in c2.literals:
-            return Clause(...)  # New immutable clause
-    return None
-\end{lstlisting}
-
-Benefits: Easier testing (no mocking needed), parallelizable, no accidental mutations.
-
-\subsection{Abstraction}
-
-Hide implementation details behind interfaces:
-
-\begin{lstlisting}[language=Python]
-class InferenceEngine(ABC):
-    """Abstract interface - implementation hidden."""
-    @abstractmethod
-    def infer(self, query: str) -> InferenceResult:
-        pass
-
-# Client code doesn't know if it's using
-# model checking, resolution, or forward chaining
-engine: InferenceEngine = get_engine()
-result = engine.infer("R")  # Works for any engine
-\end{lstlisting}
-
-Benefits: Clients depend on abstractions not concrete implementations, easy to swap algorithms.
-
-\subsection{Refactoring Metrics}
-
-\begin{table}[h]
-\centering
-\caption{SOFA Refactoring Metrics}
-\label{tab:sofa_metrics}
-\begin{tabular}{lcc}
-\toprule
-Metric & Before & After \\
-\midrule
-Pylint Score & 9.37/10 & 9.11/10 \\
-Pure Functions & 2 & 12 \\
-Immutable Types & 0 & 7 frozen dataclasses \\
-Max Function Complexity & 15+ & 8 \\
-Tests Passing & 6/6 & 6/6 \\
-Lines of Code & 1400 & 2100 (+50\%) \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-The refactoring increased code size by 50\% but improved maintainability, testability, and extensibility. All original functionality preserved through backward-compatible facade functions.
-
 \section{Conclusion}
 
 This assignment implemented four inference techniques for propositional logic: truth table enumeration, model checking, forward chaining for Horn clauses, and resolution. The Wumpus World agent demonstrated practical application of logical reasoning, successfully navigating a grid by inferring safe cells from percepts.
@@ -575,7 +442,6 @@ Key findings:
 \item Model checking is exponential (O($2^n$)) but acceptable for n $<$ 20 symbols
 \item Resolution-based theorem proving successfully proves entailment through refutation
 \item Wumpus agent makes correct safety inferences, avoiding pits and Wumpus
-\item SOFA refactoring improves code quality while preserving functionality
 \end{itemize}
 
 The implementations are modular and extensible. Future extensions could include:
@@ -596,7 +462,6 @@ AI assistance included:
 \begin{itemize}
 \item Understanding algorithm concepts from Russell \& Norvig textbook and lecture slides
 \item Code implementation and debugging (propositional logic, Horn inference, Wumpus agent, resolution)
-\item SOFA refactoring guidance and implementation
 \item Test suite development and verification
 \item LaTeX formatting and report generation
 \end{itemize}

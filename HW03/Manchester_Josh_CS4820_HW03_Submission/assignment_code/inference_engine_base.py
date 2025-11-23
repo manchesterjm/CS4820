@@ -1,5 +1,5 @@
 """
-Abstract base classes for inference engines (SOFA: Abstraction + Open/Closed).
+Abstract base classes for inference engines.
 
 This module defines interfaces that allow extending inference methods
 without modifying existing code.
@@ -16,14 +16,10 @@ from typing import List, Any
 from dataclasses import dataclass
 
 
-@dataclass(frozen=True)  # SOFA: Functional - immutable
+@dataclass(frozen=True)
 class InferenceResult:
     """
     Immutable result from inference query.
-
-    SOFA Principles:
-    - Functional: Frozen dataclass ensures immutability
-    - Single Responsibility: Only holds inference result data
     """
     entailed: bool
     trace: List[str]
@@ -38,11 +34,6 @@ class InferenceResult:
 class InferenceEngine(ABC):
     """
     Abstract base for all inference engines.
-
-    SOFA Principles:
-    - Abstraction: Defines interface without implementation
-    - Open/Closed: Open for extension (subclass), closed for modification
-    - Single Responsibility: Focused on inference contract
     """
 
     @abstractmethod
@@ -67,10 +58,6 @@ class InferenceEngine(ABC):
 class KnowledgeBase(ABC):
     """
     Abstract knowledge base interface.
-
-    SOFA Principles:
-    - Abstraction: Hide internal representation
-    - Single Responsibility: KB operations only
     """
 
     @abstractmethod

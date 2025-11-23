@@ -29,17 +29,21 @@ All algorithms were implemented according to specifications from:
 ## File Structure
 
 ```
-HW03_code/
+assignment_code/
 ├── propositional_logic.py       # Part A: KB agents, equivalences, model checking
 ├── horn_inference.py            # Part B: Forward chaining on Horn clauses
-├── wumpus_agent.py              # Part C: Wumpus World reasoning agent
+├── wumpus_agent.py              # Part C: Wumpus World reasoning agent (core logic)
 ├── resolution.py                # Part D: Resolution-based inference
 ├── knowledge_base.py            # KB data structures and utilities
+├── inference_engine_base.py     # Base class for inference engines
 ├── test_all.py                  # Comprehensive test suite
 ├── run_experiments.py           # Main experiment runner (generates results)
 ├── run_all.ps1                  # PowerShell script to run all programs
+├── HW03_runlog.txt              # Program output
 └── README.md                    # This file
 ```
+
+**Note:** An interactive pygame version of the Wumpus World game is available in the `../interactive_game/` directory.
 
 ## Quick Start
 

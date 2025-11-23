@@ -12,16 +12,20 @@
 
 This submission package contains:
 
-1. **`Manchester_Josh_CS4820_HW03_Writeup.pdf`** (173 KB)
+1. **`Manchester_Josh_CS4820_HW03_Writeup.pdf`** (148 KB)
    - Complete AAAI-formatted report covering all four parts
-   - ~15 pages including tables, code listings, and analysis
+   - ~12 pages including tables, code listings, and analysis
    - References to Russell & Norvig textbook and Professor Atyabi's Lecture 8 slides
 
-2. **`HW03_code/`** - Complete source code implementation
+2. **`assignment_code/`** - Required assignment implementation (Parts A-D)
    - All Python files for Parts A, B, C, D
-   - Test suite (6/6 tests passing)
    - Demonstration output (HW03_runlog.txt)
    - README with detailed usage instructions
+
+3. **`interactive_game/`** - Bonus: Interactive Wumpus World game
+   - Visual pygame implementation of Wumpus World
+   - Knowledge-based agent with real-time reasoning display
+   - README with game instructions
 
 ---
 
@@ -29,23 +33,36 @@ This submission package contains:
 
 ### Prerequisites
 - Python 3.7 or higher
-- No external packages required (standard library only)
+- **For assignment code (Parts A-D):** No external packages required (standard library only)
+- **For interactive game (bonus):** Install requirements with `pip install -r requirements.txt`
 
-### Run All Tests
+### Run Assignment Code (Required Parts A-D)
+
 ```bash
-cd HW03_code/
-python test_all.py
-```
+cd assignment_code/
 
-**Expected:** All 6 tests pass (100%)
-
-### Generate Demonstration Output
-```bash
-cd HW03_code/
+# Run all demonstrations
 python run_experiments.py
+
+# Or run individual parts
+python propositional_logic.py    # Part A
+python horn_inference.py          # Part B
+python wumpus_agent.py            # Part C
+python resolution.py              # Part D
 ```
 
-**Expected:** Formatted output showing all four parts in action
+### Run Interactive Game (Bonus)
+
+```bash
+# Install requirements (pygame-ce)
+pip install -r requirements.txt
+
+# Run the game
+cd interactive_game/
+python wumpus_game_visual.py
+```
+
+**Controls:** SPACE (step), A (auto-play), R (reset), Q (quit)
 
 ---
 
@@ -80,14 +97,7 @@ python run_experiments.py
 
 ## Code Quality Metrics
 
-- **Pylint Score:** 9.11/10 ✅
-- **Tests Passing:** 6/6 (100%) ✅
-- **SOFA Refactoring:** All four principles applied
-  - Single Responsibility
-  - Open/Closed
-  - Functional Programming
-  - Abstraction
-- **Lines of Code:** ~2,100 lines (refactored)
+- **Lines of Code:** ~2,100 lines
 - **Documentation:** Comprehensive docstrings and comments
 
 ---
@@ -97,20 +107,25 @@ python run_experiments.py
 ### Documentation
 - `Manchester_Josh_CS4820_HW03_Writeup.pdf` - Main report
 - `README.md` - This file
+- `requirements.txt` - Python package requirements (pygame-ce for interactive game only)
 
-### Source Code (HW03_code/)
+### Assignment Code (assignment_code/)
 - `inference_engine_base.py` - Abstract base classes
 - `propositional_logic.py` - Part A implementation (526 lines)
 - `horn_inference.py` - Part B implementation (570 lines)
 - `wumpus_agent.py` - Part C implementation (450 lines)
 - `resolution.py` - Part D implementation (485 lines)
 - `knowledge_base.py` - KB data structures (372 lines)
-- `test_all.py` - Test suite (235 lines)
 - `run_experiments.py` - Demonstration runner (129 lines)
 - `HW03_runlog.txt` - Complete program output (11 KB)
+- `README.md` - Detailed instructions
 
-### Archived
-- `archived_original/` - Original implementations before SOFA refactoring
+### Interactive Game (interactive_game/)
+- `wumpus_game_visual.py` - Pygame interactive game
+- `wumpus_agent.py` - Core agent logic
+- `knowledge_base.py` - KB data structures
+- `inference_engine_base.py` - Base inference engine
+- `README.md` - Game instructions and features
 
 ---
 
@@ -127,12 +142,6 @@ All algorithms follow specifications from:
 3. **Wumpus Agent:** Uses Horn inference to determine safe moves
 4. **Resolution:** Proof by refutation with CNF conversion
 
-### SOFA Refactoring Highlights
-- Separated computation from presentation (SRP)
-- Strategy pattern for extensible algorithms (OCP)
-- Immutable dataclasses for all data structures (FP)
-- Abstract interfaces hiding implementation details (Abstraction)
-
 ---
 
 ## AI Disclosure
@@ -141,7 +150,6 @@ This code was developed with assistance from **Claude Code (Sonnet 4.5)**, versi
 
 AI assistance included:
 - Algorithm implementation based on textbook specifications
-- SOFA refactoring guidance and implementation
 - Code documentation and testing
 - Report writing and LaTeX formatting
 
@@ -162,33 +170,6 @@ All inference completes in **< 1 millisecond** for small knowledge bases.
 
 ---
 
-## Testing Instructions
-
-### Run Individual Part Tests
-```bash
-cd HW03_code/
-
-# Part A
-python -c "from test_all import test_part_a_equivalences; test_part_a_equivalences()"
-
-# Part B
-python -c "from test_all import test_part_b_generic_kb; test_part_b_generic_kb()"
-
-# Part C
-python -c "from test_all import test_part_c_wumpus_agent; test_part_c_wumpus_agent()"
-
-# Part D
-python -c "from test_all import test_part_d_resolution; test_part_d_resolution()"
-```
-
-### Run Code Quality Check
-```bash
-cd HW03_code/
-pylint *.py --max-line-length=100 --score=yes
-```
-
----
-
 ## Contact Information
 
 **Josh Manchester**
@@ -204,13 +185,10 @@ For any questions about the implementation, please contact the student.
 ## Submission Checklist
 
 ✅ PDF report included (Manchester_Josh_CS4820_HW03_Writeup.pdf)
-✅ All source code included (HW03_code/ directory)
+✅ All source code included
 ✅ README with usage instructions
-✅ All tests passing (6/6)
-✅ Code quality verified (9.11/10 Pylint)
 ✅ AI disclosure included
 ✅ All four parts implemented (A, B, C, D)
-✅ SOFA refactoring complete
 ✅ References to textbook and lecture slides
 
 **Ready for Canvas submission!**

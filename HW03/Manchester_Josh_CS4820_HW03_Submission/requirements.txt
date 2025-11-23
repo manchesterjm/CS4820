@@ -1,0 +1,13 @@
+# CS 4820/5820 - HW03 Requirements
+#
+# NOTE: The core assignment code (Parts A-D) requires NO external packages.
+# Only the bonus interactive game requires pygame-ce.
+#
+# To run assignment code (Parts A-D):
+#   - No installation needed (uses Python standard library only)
+#
+# To run interactive game (bonus):
+#   pip install -r requirements.txt
+
+# Interactive Wumpus World game (bonus feature only)
+pygame-ce>=2.4.0

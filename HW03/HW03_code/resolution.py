@@ -1,7 +1,7 @@
 """
-Refactored resolution-based inference using SOFA principles.
+Refactored resolution-based inference.
 
-SOFA Improvements:
+Design improvements:
 - Single Responsibility: Separated parsing, resolution logic, and presentation
 - Open/Closed: Extensible CNF converters through strategy pattern
 - Functional: Immutable clauses, pure resolution operations
@@ -21,7 +21,7 @@ import time
 
 
 # ============================================================================
-# SOFA: Functional - Immutable data structures
+# Immutable data structures
 # ============================================================================
 
 @dataclass(frozen=True)
@@ -29,7 +29,7 @@ class Literal:
     """
     Immutable literal representation.
 
-    SOFA: Functional - Frozen dataclass ensures immutability
+    Frozen dataclass ensures immutability.
     """
     symbol: str
     is_negated: bool
@@ -58,7 +58,7 @@ class Clause:
     """
     Immutable clause (disjunction of literals).
 
-    SOFA: Functional - Frozen tuple of literals
+    Frozen tuple of literals.
     """
     literals: Tuple[Literal, ...]
 
@@ -86,7 +86,7 @@ class ResolutionStep:
     """
     Immutable record of one resolution step.
 
-    SOFA: Functional - Complete snapshot of resolution operation
+    Complete snapshot of resolution operation.
     """
     clause1: Clause
     clause2: Clause
@@ -100,14 +100,14 @@ class ResolutionStep:
 
 
 # ============================================================================
-# SOFA: Functional - Pure helper functions
+# Pure helper functions
 # ============================================================================
 
 def parse_literal(lit_str: str) -> Literal:
     """
     Pure function: Parse literal string to Literal object.
 
-    SOFA: Functional - No side effects, deterministic
+    No side effects, deterministic.
 
     Args:
         lit_str: Literal string ("P", "-P", "not P", "!P")
@@ -132,7 +132,7 @@ def resolve_clauses(c1: Clause, c2: Clause) -> Optional[Tuple[Clause, Literal]]:
     """
     Pure function: Apply resolution rule to two clauses.
 
-    SOFA: Functional - Pure operation, returns new immutable clause
+    Pure operation, returns new immutable clause.
 
     Resolution rule (Russell & Norvig Figure 7.12):
     - If c1 contains literal L and c2 contains -L,
@@ -177,16 +177,15 @@ def resolve_clauses(c1: Clause, c2: Clause) -> Optional[Tuple[Clause, Literal]]:
 
 
 # ============================================================================
-# SOFA: Abstraction - CNF conversion strategy interface
+# CNF conversion strategy interface
 # ============================================================================
 
 class CNFConverter(ABC):
     """
     Abstract strategy for CNF conversion.
 
-    SOFA:
-    - Abstraction: Defines interface without implementation
-    - Open/Closed: New converters extend without modifying resolver
+    Defines interface without implementation.
+    New converters extend without modifying resolver.
     """
 
     @abstractmethod
@@ -207,7 +206,7 @@ class SimpleCNFConverter(CNFConverter):
     """
     Simple CNF converter for common patterns.
 
-    SOFA: Open/Closed - Implements CNFConverter interface
+    Implements CNFConverter interface.
 
     Handles:
     - Implications: "P => Q" becomes ["-P | Q"]
@@ -254,7 +253,7 @@ class SimpleCNFConverter(CNFConverter):
 
 
 # ============================================================================
-# SOFA: Single Responsibility - Resolution engine (no I/O)
+# Resolution engine (no I/O)
 # ============================================================================
 
 @dataclass
@@ -262,7 +261,7 @@ class ResolutionState:
     """
     Mutable state for resolution algorithm.
 
-    SOFA: Single Responsibility - Only tracks algorithm state
+    Only tracks algorithm state.
     """
     clauses: List[Clause]
     steps: List[ResolutionStep]
@@ -273,10 +272,9 @@ class ResolutionEngine:
     """
     Resolution-based theorem prover.
 
-    SOFA:
-    - Single Responsibility: Only resolution logic, no parsing or printing
-    - Open/Closed: Uses CNFConverter strategy
-    - Functional: Operates on immutable clauses
+    Only resolution logic, no parsing or printing.
+    Uses CNFConverter strategy.
+    Operates on immutable clauses.
 
     Algorithm (Proof by Refutation):
     1. Convert KB to CNF
@@ -305,7 +303,7 @@ class ResolutionEngine:
         """
         Prove KB |= query using resolution.
 
-        SOFA: Functional - Returns immutable results
+        Returns immutable results.
 
         Args:
             kb: Knowledge base sentences
@@ -390,14 +388,14 @@ class ResolutionEngine:
 
 
 # ============================================================================
-# SOFA: Single Responsibility - Separate presentation
+# Separate presentation
 # ============================================================================
 
 class ResolutionPrinter:
     """
     Formats and prints resolution traces.
 
-    SOFA: Single Responsibility - Only handles output formatting
+    Only handles output formatting.
     """
 
     @staticmethod
@@ -444,7 +442,7 @@ class ResolutionPrinter:
 
 
 # ============================================================================
-# SOFA: Facade - Simplified interface (backward compatible)
+# Simplified interface (backward compatible)
 # ============================================================================
 
 def resolution_entailment(
@@ -455,7 +453,7 @@ def resolution_entailment(
     """
     Resolution inference with optional output.
 
-    SOFA: Facade pattern - Simple interface to complex subsystem
+    Facade pattern - Simple interface to complex subsystem.
 
     Args:
         kb: Knowledge base sentences
@@ -545,7 +543,7 @@ def test_resolution_not_entailed() -> None:
 if __name__ == "__main__":
     """Demonstrate refactored resolution."""
     print("=" * 80)
-    print("Refactored Resolution Inference (SOFA Principles)")
+    print("Refactored Resolution Inference")
     print("=" * 80)
     print()
 
@@ -560,7 +558,7 @@ if __name__ == "__main__":
     print("Part D: Resolution-Based Inference - COMPLETE")
     print("=" * 80)
     print()
-    print("SOFA principles applied:")
+    print("Design principles applied:")
     print("  - Single Responsibility: Parser, Engine, Printer separated")
     print("  - Open/Closed: Extensible through CNFConverter strategy")
     print("  - Functional: Immutable Literal, Clause, ResolutionStep")

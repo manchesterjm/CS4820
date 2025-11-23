@@ -1,11 +1,5 @@
 """
-Refactored Horn clause inference using SOFA principles.
-
-SOFA Improvements:
-- Single Responsibility: Separated algorithm, state, and presentation
-- Open/Closed: Strategy pattern for forward/backward chaining
-- Functional: Immutable inference states, pure helper functions
-- Abstraction: Clear interfaces for different inference strategies
+Horn clause inference implementation.
 
 Author: Josh Manchester
 Course: CS 4820/5820 - Artificial Intelligence
@@ -22,15 +16,13 @@ from inference_engine_base import InferenceEngine, InferenceResult
 
 
 # ============================================================================
-# SOFA: Functional - Immutable state snapshots
+# Immutable state snapshots
 # ============================================================================
 
 @dataclass(frozen=True)
 class InferenceStep:
     """
     Immutable snapshot of one inference step.
-
-    SOFA: Functional - Frozen dataclass for immutability
     """
     iteration: int
     fact_processed: str
@@ -47,8 +39,6 @@ class InferenceStep:
 class InferenceTrace:
     """
     Complete inference trace (immutable).
-
-    SOFA: Functional - Immutable history of inference
     """
     steps: Tuple[InferenceStep, ...]
     query_found_at_step: int  # -1 if not found
@@ -60,7 +50,7 @@ class InferenceTrace:
 
 
 # ============================================================================
-# SOFA: Single Responsibility - Separate algorithm state
+# Algorithm state
 # ============================================================================
 
 @dataclass
@@ -68,7 +58,6 @@ class ForwardChainingState:
     """
     Mutable state for forward chaining algorithm.
 
-    SOFA: Single Responsibility - Only tracks algorithm state
     Note: Mutable for performance during algorithm execution,
           but converted to immutable InferenceTrace at end
     """
@@ -81,8 +70,6 @@ class ForwardChainingState:
     def to_immutable_trace(self, query: str, query_found: bool) -> InferenceTrace:
         """
         Convert mutable state to immutable trace.
-
-        SOFA: Functional - Create immutable snapshot of final state
         """
         query_step = -1
         for i, step in enumerate(self.steps):
@@ -99,14 +86,12 @@ class ForwardChainingState:
 
 
 # ============================================================================
-# SOFA: Single Responsibility - Pure helper functions
+# Helper functions
 # ============================================================================
 
 def initialize_rule_counts(rules: List[Tuple[List[str], str]]) -> Dict[int, int]:
     """
     Pure function: Initialize premise counts for rules.
-
-    SOFA: Functional - Pure function, no side effects
 
     Args:
         rules: List of (premises, conclusion) tuples
@@ -124,8 +109,6 @@ def find_applicable_rules(
     """
     Pure function: Find rules that have fact in their premises.
 
-    SOFA: Functional - Pure function
-
     Args:
         fact: The fact to search for
         rules: List of rules
@@ -141,16 +124,15 @@ def find_applicable_rules(
 
 
 # ============================================================================
-# SOFA: Abstraction - Strategy interface for different inference methods
+# Strategy interface for different inference methods
 # ============================================================================
 
 class HornInferenceStrategy(ABC):
     """
     Abstract strategy for Horn clause inference.
 
-    SOFA:
-    - Abstraction: Defines interface without implementation
-    - Open/Closed: New strategies extend without modifying existing code
+    Defines interface without implementation.
+    New strategies extend without modifying existing code.
     """
 
     @abstractmethod
@@ -178,17 +160,16 @@ class HornInferenceStrategy(ABC):
 
 
 # ============================================================================
-# SOFA: Open/Closed - Concrete strategy implementations
+# Concrete strategy implementations
 # ============================================================================
 
 class ForwardChainingStrategy(HornInferenceStrategy):
     """
     Forward chaining strategy (data-driven).
 
-    SOFA:
-    - Open/Closed: Implements strategy interface
-    - Single Responsibility: Only forward chaining logic
-    - Functional: Uses immutable results
+    Implements strategy interface.
+    Only handles forward chaining logic.
+    Uses immutable results.
     """
 
     def infer(
@@ -280,9 +261,8 @@ class BackwardChainingStrategy(HornInferenceStrategy):
     """
     Backward chaining strategy (goal-driven).
 
-    SOFA:
-    - Open/Closed: Alternative strategy implementation
-    - Single Responsibility: Only backward chaining logic
+    Alternative strategy implementation.
+    Only handles backward chaining logic.
     """
 
     def infer(
@@ -353,14 +333,14 @@ class BackwardChainingStrategy(HornInferenceStrategy):
 
 
 # ============================================================================
-# SOFA: Single Responsibility - Separate presentation
+# Separate presentation
 # ============================================================================
 
 class InferenceTracePrinter:
     """
     Formats and prints inference traces.
 
-    SOFA: Single Responsibility - Only handles output formatting
+    Only handles output formatting.
     """
 
     @staticmethod
@@ -413,17 +393,16 @@ class InferenceTracePrinter:
 
 
 # ============================================================================
-# SOFA: Open/Closed - Extensible inference engine using strategy
+# Extensible inference engine using strategy
 # ============================================================================
 
 class HornInferenceEngine(InferenceEngine):
     """
     Horn clause inference engine using strategy pattern.
 
-    SOFA:
-    - Open/Closed: Extends InferenceEngine, uses strategy for algorithm
-    - Single Responsibility: Coordinates strategy and KB
-    - Abstraction: Hides strategy details from clients
+    Extends InferenceEngine, uses strategy for algorithm.
+    Coordinates strategy and KB.
+    Hides strategy details from clients.
     """
 
     def __init__(self, kb: HornKB, strategy: HornInferenceStrategy):
@@ -488,7 +467,7 @@ class HornInferenceEngine(InferenceEngine):
 
 
 # ============================================================================
-# SOFA: Facade - Simplified interface (backward compatible)
+# Simplified interface (backward compatible)
 # ============================================================================
 
 def forward_chaining(
@@ -499,7 +478,7 @@ def forward_chaining(
     """
     Simplified forward chaining interface (backward compatible).
 
-    SOFA: Facade pattern - Simple interface to complex subsystem
+    Facade pattern - Simple interface to complex subsystem.
 
     Args:
         kb: Horn clause knowledge base
@@ -526,7 +505,7 @@ if __name__ == "__main__":
     from knowledge_base import HornKB
 
     print("=" * 80)
-    print("Refactored Horn Inference (SOFA Principles)")
+    print("Refactored Horn Inference")
     print("=" * 80)
     print()
 
@@ -565,5 +544,5 @@ if __name__ == "__main__":
     print()
 
     print("=" * 80)
-    print("All tests PASSED - SOFA refactoring successful!")
+    print("All tests PASSED - refactoring successful!")
     print("=" * 80)

@@ -285,6 +285,130 @@ class WumpusKB(HornKB):
         self.tell_fact(f"not_P_{x}_{y}")
         self.tell_fact(f"not_W_{x}_{y}")
 
+    def get_probable_pits(self) -> Set[Tuple[int, int]]:
+        """
+        Find cells that probably contain pits based on breeze observations.
+
+        Returns cells adjacent to breezes that aren't proven safe.
+        """
+        probable_pits = set()
+
+        # Find all cells with breezes
+        breeze_cells = [fact for fact in self.facts if fact.startswith("B_")]
+
+        for breeze_fact in breeze_cells:
+            # Parse "B_x_y" to get coordinates
+            parts = breeze_fact.split("_")
+            if len(parts) == 3:
+                x, y = int(parts[1]), int(parts[2])
+                neighbors = self._get_neighbors(x, y)
+
+                # Neighbors of breeze cells are probable pit locations
+                # unless proven safe
+                for nx, ny in neighbors:
+                    if f"not_P_{nx}_{ny}" not in self.facts:
+                        probable_pits.add((nx, ny))
+
+        return probable_pits
+
+    def get_probable_wumpus(self) -> Set[Tuple[int, int]]:
+        """
+        Find cells that probably contain Wumpus based on stench observations.
+
+        Returns cells adjacent to stenches that aren't proven safe.
+        """
+        probable_wumpus = set()
+
+        # Find all cells with stenches
+        stench_cells = [fact for fact in self.facts if fact.startswith("S_")]
+
+        for stench_fact in stench_cells:
+            # Parse "S_x_y" to get coordinates
+            parts = stench_fact.split("_")
+            if len(parts) == 3:
+                x, y = int(parts[1]), int(parts[2])
+                neighbors = self._get_neighbors(x, y)
+
+                # Neighbors of stench cells are probable wumpus locations
+                # unless proven safe
+                for nx, ny in neighbors:
+                    if f"not_W_{nx}_{ny}" not in self.facts:
+                        probable_wumpus.add((nx, ny))
+
+        return probable_wumpus
+
+    def get_confirmed_pits(self, existing_confirmed: Set[Tuple[int, int]] = None) -> Set[Tuple[int, int]]:
+        """
+        Find cells that MUST contain pits using logical deduction.
+
+        Uses constraint satisfaction:
+        - If a cell has breeze and all neighbors but one are safe,
+          the pit MUST be in the remaining neighbor (definite clause).
+        - Find intersection of possible pit locations from multiple breezes.
+
+        Args:
+            existing_confirmed: Pits that were already confirmed in previous steps
+
+        Returns cells that are logically confirmed to have pits.
+        """
+        if existing_confirmed is None:
+            existing_confirmed = set()
+        confirmed_pits = set(existing_confirmed)
+
+        # Find all cells with breezes
+        breeze_cells = []
+        for fact in self.facts:
+            if fact.startswith("B_") and not fact.startswith("not_B"):
+                parts = fact.split("_")
+                if len(parts) == 3:
+                    x, y = int(parts[1]), int(parts[2])
+                    breeze_cells.append((x, y))
+
+        # For each breeze cell, find possible pit locations
+        for bx, by in breeze_cells:
+            neighbors = self._get_neighbors(bx, by)
+            possible_pits = []
+            has_confirmed_pit_nearby = False
+
+            for nx, ny in neighbors:
+                # Check if this neighbor is already a confirmed pit
+                if (nx, ny) in confirmed_pits:
+                    has_confirmed_pit_nearby = True
+                # If we haven't proven this cell safe, it's a possible pit location
+                elif f"not_P_{nx}_{ny}" not in self.facts:
+                    possible_pits.append((nx, ny))
+
+            # Definite clause: if exactly ONE neighbor could have pit, it MUST be there
+            # BUT: Only apply this if we don't already have a confirmed pit nearby
+            # (otherwise the breeze is already explained)
+            if len(possible_pits) == 1 and not has_confirmed_pit_nearby:
+                confirmed_pits.add(possible_pits[0])
+
+        # Triangulation: Find pits that appear in ALL possible sets from multiple breezes
+        # If we have multiple breeze observations that narrow down to a single cell
+        if len(breeze_cells) >= 2:
+            # Build possibility sets for each breeze
+            possibility_sets = []
+            for bx, by in breeze_cells:
+                neighbors = self._get_neighbors(bx, by)
+                possible = set()
+                for nx, ny in neighbors:
+                    if f"not_P_{nx}_{ny}" not in self.facts:
+                        possible.add((nx, ny))
+                if possible:
+                    possibility_sets.append(possible)
+
+            # Find cells that appear in multiple possibility sets
+            # If a cell is the ONLY common element in intersecting sets, it's confirmed
+            for i, set1 in enumerate(possibility_sets):
+                for j, set2 in enumerate(possibility_sets[i+1:], i+1):
+                    intersection = set1.intersection(set2)
+                    # If intersection has exactly one cell, that's a confirmed pit
+                    if len(intersection) == 1:
+                        confirmed_pits.add(intersection.pop())
+
+        return confirmed_pits
+
 
 # Utility functions for parsing propositional logic
 

@@ -1,7 +1,7 @@
 """
-Refactored propositional logic using SOFA principles.
+Refactored propositional logic.
 
-SOFA Improvements:
+Design improvements:
 - Single Responsibility: Separated logic evaluation, printing, and orchestration
 - Open/Closed: Extensible through composition
 - Functional: Pure functions, immutable data structures
@@ -20,7 +20,7 @@ import time
 
 
 # ============================================================================
-# SOFA: Functional - Pure data structures (immutable)
+# Pure data structures (immutable)
 # ============================================================================
 
 @dataclass(frozen=True)
@@ -67,14 +67,14 @@ class Model:
 
 
 # ============================================================================
-# SOFA: Functional - Pure functions (no side effects)
+# Pure functions (no side effects)
 # ============================================================================
 
 def evaluate_propositional_formula(formula: str, model: Dict[str, bool]) -> bool:
     """
     Pure function: Evaluate propositional formula in a model.
 
-    SOFA: Functional - No side effects, deterministic output
+    No side effects, deterministic output.
 
     Args:
         formula: Propositional formula string
@@ -140,7 +140,7 @@ def generate_all_models(symbols: List[str]) -> Tuple[Model, ...]:
     """
     Pure function: Generate all possible truth assignments.
 
-    SOFA: Functional - Returns immutable tuple of models
+    Returns immutable tuple of models.
 
     Args:
         symbols: List of propositional symbols
@@ -163,9 +163,8 @@ def check_equivalence(
     """
     Pure function: Check logical equivalence using truth tables.
 
-    SOFA:
-    - Functional: Pure function, returns immutable result
-    - Single Responsibility: Only computes equivalence
+    Pure function, returns immutable result.
+    Only computes equivalence.
 
     Args:
         left_formula: Left side of equivalence
@@ -208,9 +207,8 @@ def model_check_pure(
     """
     Pure function: Model checking without side effects.
 
-    SOFA:
-    - Functional: Pure, no printing
-    - Single Responsibility: Only checks entailment
+    Pure, no printing.
+    Only checks entailment.
 
     Args:
         kb: Knowledge base sentences
@@ -234,14 +232,14 @@ def model_check_pure(
 
 
 # ============================================================================
-# SOFA: Single Responsibility - Separate presentation from logic
+# Separate presentation from logic
 # ============================================================================
 
 class TruthTablePrinter:
     """
     Handles truth table formatting.
 
-    SOFA: Single Responsibility - Only formats and prints
+    Only formats and prints.
     """
 
     @staticmethod
@@ -317,7 +315,7 @@ class ModelCheckPrinter:
     """
     Handles model checking output formatting.
 
-    SOFA: Single Responsibility - Only formats and prints
+    Only formats and prints.
     """
 
     @staticmethod
@@ -368,17 +366,16 @@ class ModelCheckPrinter:
 
 
 # ============================================================================
-# SOFA: Open/Closed - Extensible inference engine
+# Extensible inference engine
 # ============================================================================
 
 class ModelCheckingEngine(InferenceEngine):
     """
     Model checking inference engine.
 
-    SOFA:
-    - Open/Closed: Extends InferenceEngine without modifying it
-    - Single Responsibility: Only model checking
-    - Abstraction: Implements abstract interface
+    Extends InferenceEngine without modifying it.
+    Only handles model checking.
+    Implements abstract interface.
     """
 
     def __init__(self, kb: List[str], symbols: List[str]):
@@ -422,14 +419,14 @@ class ModelCheckingEngine(InferenceEngine):
 
 
 # ============================================================================
-# SOFA: Facade pattern - Simplified interface
+# Simplified interface
 # ============================================================================
 
 def check_demorgan_equivalence(show_table: bool = True) -> bool:
     """
     Check De Morgan's Law with optional table display.
 
-    SOFA: Facade - Simplified interface combining multiple operations
+    Facade - Simplified interface combining multiple operations.
 
     Args:
         show_table: Whether to print truth table
@@ -451,7 +448,7 @@ def check_contraposition_equivalence(show_table: bool = True) -> bool:
     """
     Check Contraposition with optional table display.
 
-    SOFA: Facade - Simplified interface
+    Facade - Simplified interface.
 
     Args:
         show_table: Whether to print truth table
@@ -478,7 +475,7 @@ def model_check_with_output(
     """
     Model checking with optional output.
 
-    SOFA: Facade - Combines pure function with presentation
+    Facade - Combines pure function with presentation.
 
     Args:
         kb: Knowledge base
@@ -506,7 +503,7 @@ def model_check_with_output(
 if __name__ == "__main__":
     """Demonstrate refactored propositional logic."""
     print("=" * 80)
-    print("Refactored Propositional Logic (SOFA Principles)")
+    print("Refactored Propositional Logic")
     print("=" * 80)
     print()
 
@@ -536,5 +533,5 @@ if __name__ == "__main__":
 
     print()
     print("=" * 80)
-    print("All tests PASSED - SOFA refactoring successful!")
+    print("All tests PASSED - refactoring successful!")
     print("=" * 80)
